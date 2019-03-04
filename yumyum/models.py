@@ -2,48 +2,33 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
-#need a category class for recipe?
-#need a type class for ingredient?
-
-class Recipe(models.Model):
-	SERVINGS = (
-	 ('1','one'),
-	 ('2','two'),
-	 ('3','three'),
-	 ('4','four'),
-	 ('5','five'),
-	 ('6','six'),
-	)
-	#picture = models.ImageField(upload_to='recipe_images', blank = True)
-	title = models.CharField(max_length=128)
-	servings = models.IntegerField(choices=SERVINGS)
-	#category = models.ManyToManyField(Category, on_delete=models.PROTECT)
-	cooking_time = models.IntegerField(default=60) #in minutes
-	direction = models.TextField(max_length=1000)
-	slug = models.SlugField(unique=True)
-
-	def save(self, *args, **kwargs):
-		self.slug = slugify(self.title)
-		super(Recipe, self).save(*args, **kwargs)
+class Category(models.Model):
+	name = models.TextField(max_length = 64)
 
 	def __str__(self):
-		return self.title
+		return self.name
+
+class Type(models.Model):
+	name = models.TextField(max_length = 64)
+
+	def __str__(self):
+		return self.name
 
 class Ingredient(models.Model):
 	name = models.CharField(max_length=128)
 	quantity = models.CharField(max_length=128)
-	type = models.CharField(max_length=32)
+	type = models.ManyToManyField(Type)
 
 	def __str__(self):
 		return self.name
 
 class Review(models.Model):
 	RATINGS = (
-		('1','one'),
-		('2','two'),
-		('3','three'),
-	 	('4','four'),
-		('5','five'),
+		(1,'1'),
+		(2,'1'),
+		(3,'3'),
+	 	(4,'4'),
+		(5,'5'),
 	)
 	rating = models.IntegerField(choices=RATINGS)
 	comment_title = models.CharField(max_length=100)
@@ -52,6 +37,33 @@ class Review(models.Model):
 
 	def __str__(self):
 		return self.comment_title
+
+class Recipe(models.Model):
+	SERVINGS = (
+	 (1,'1'),
+	 (2,'2'),
+	 (3,'3'),
+	 (4,'4'),
+	 (5,'5'),
+	 (6,'6'),
+	)
+	#picture = models.ImageField(upload_to='recipe_images', blank = True)
+	title = models.CharField(max_length=128)
+	servings = models.IntegerField(choices=SERVINGS)
+	category = models.ManyToManyField(Category)
+	cooking_time = models.IntegerField(default=60) #in minutes
+	direction = models.TextField(max_length=1000)
+	slug = models.SlugField(unique=True)
+	#ingredient = models.ManyToManyField(Ingredient)
+	#review =
+
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.title)
+		super(Recipe, self).save(*args, **kwargs)
+
+	def __str__(self):
+		return self.title
+
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)

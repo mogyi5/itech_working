@@ -1,6 +1,6 @@
 from django.contrib import admin
 #from rango.models import Category, Page
-from yumyum.models import Recipe, Ingredient, Review
+from yumyum.models import Recipe, Review, Category, Ingredient
 from yumyum.models import UserProfile
 
 # class CategoryAdmin(admin.ModelAdmin):
