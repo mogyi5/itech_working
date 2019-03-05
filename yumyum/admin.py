@@ -1,6 +1,6 @@
 from django.contrib import admin
 #from rango.models import Category, Page
-from yumyum.models import Recipe, Review, Category, Ingredient
+from yumyum.models import Category, Type, Ingredient, Recipe, RecipeIngredient, Review
 from yumyum.models import UserProfile
 
 # class CategoryAdmin(admin.ModelAdmin):
@@ -19,6 +19,11 @@ class RecipeAdmin(admin.ModelAdmin):
 	prepopulated_fields = {'slug':('title',)}
 
 admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(Ingredient)
+admin.site.register(RecipeIngredient)
+admin.site.register(Category)
+admin.site.register(Type)
+admin.site.register(Review)
 admin.site.register(UserProfile)
 
 # Register your models here.
