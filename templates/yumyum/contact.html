@@ -1,0 +1,19 @@
+{% extends 'yumyum/base.html' %}
+{% load staticfiles %}
+
+{%block title_block %}
+Contact
+{% endblock %}
+
+{% block body_block %}
+
+<h1>Contact Us</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <div class="form-actions">
+    <button type="submit">Send</button>
+  </div>
+</form>
+
+{% endblock %}

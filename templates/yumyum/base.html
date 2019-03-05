@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+{%load staticfiles%}
+{%load rango_template_tags%}
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="You have limited groceries home? You think you can not do any good food with them? That's where you are wrong! Use this webapp now and find out more!">
+  <meta name="author" content="Bootstrap authors: Mark Otto, Jacob Thornton, and Bootstrap contributors/ Website authors: Linda, Reka, Adamos">
+  <meta name="generator" content="Jekyll v3.8.5">
+  <title>YumYum - {% block title %}Recipes on the go!{% endblock %}</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+  <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/carousel/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="Carousel%20Template%20%C2%B7%20Bootstrap_files/bootstrap.css" rel="stylesheet">
+
+  <!-- Brand font -->
+  <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
+
+  <style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+  <!-- Custom styles for this template -->
+  <link href="Carousel%20Template%20%C2%B7%20Bootstrap_files/carousel.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-dark">
+      <img src="{% static 'images/logo.png' %}" width="auto" height="35px">
+      <a class="navbar-brand" href="{% url 'index'%}">YumYum</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'index'%}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact'%}">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-right" href="{% url 'signup'%}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login'%}">Login</a>
+          </li>
+          {%if user.is_authenticated%}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cook'%}" style="color:#A64AC9; font-weight:bold;">Start Cooking!</a>
+          </li>
+          {%endif%}
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- End of navigation -->
+
+  <main role="main">
+    {%block body_block%}{%endblock%}
+    <hr class="featurette-divider">
+
+    <!-- FOOTER -->
+    <footer class="container">
+      <p class="float-right"><a href="">Back to top</a></p>
+      <p>© 2019 YumYum, Inc. · <a href="{% url 'privacy'%}">Privacy</a> · <a href="{% url 'terms'%}">Terms</a></p>
+    </footer>
+  </main>
+  <script src="Carousel%20Template%20%C2%B7%20Bootstrap_files/jquery-3.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script>
+    window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')
+  </script>
+  <script src="Carousel%20Template%20%C2%B7%20Bootstrap_files/bootstrap.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
