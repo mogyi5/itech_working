@@ -1,14 +1,26 @@
+﻿DB HAS BEEN POPULATED WITH SOME THINGS.
+
 TO RUN THIS AFTER CHANGES TO THE MODEL :
 
 RUN THE COMMANDS
+  ****DELETE db.sqlite3*********
   python manage.py makemigrations
-  python manage.py migrate --run-syncdb
+  python manage.py migrate
+  python populate_yumyum.py
   python manage.py runserver
 
 THE PROJECT NAME IS: yumyum
 THE SUPERUSER DETAILS CAN BE CHANGED IN: populate_yumyum.py
 
 SEE CURRENT DB LAYOUT IN models.py IT MAY OR MAY NOT BE PERFECT
+ TABLES: Type (for an ingredient)
+	 Category (for a recipe)
+	 Ingredient (all ingredients)
+	 Recipe (all recipes)
+	 RecipeIngredient (the ingredients in a specific recipe - taking foreign keys from both recipe and ingredient)
+	 Reviews (reviews for a recipe from a user)
+	 UserProfile (profiles for a user)
+	 
 
 PAGES WE CURRENTLY HAVE:
   Homepage --------------------www.yumyum.com

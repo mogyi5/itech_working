@@ -3,7 +3,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 class Category(models.Model):
-	name = models.TextField(max_length = 64)
+	name = models.TextField(max_length = 32)
 
 	class Meta:
 		ordering = ['name']
@@ -13,7 +13,7 @@ class Category(models.Model):
 
 
 class Type(models.Model):
-	name = models.TextField(max_length = 64)
+	name = models.TextField(max_length = 32)
 
 	class Meta:
 		ordering = ['name']
@@ -22,11 +22,11 @@ class Type(models.Model):
 		return self.name
 
 class Ingredient(models.Model):
-	name = models.CharField(max_length=128)
+	name = models.CharField(max_length=32)
 	type = models.ForeignKey(Type, null=True)
 
 	class Meta:
-		ordering = ['name', 'type']
+		ordering = ['type', 'name']
 
 	def __str__(self):
 		return self.name
@@ -66,24 +66,27 @@ class RecipeIngredient(models.Model):
 	 ('ml', 'ml'),
 	 ('l', 'l'),
 	 ('g','g'),
-	 ('kg','kg')
+	 ('kg','kg'),
+	 ('pieces', 'pieces'),
+	 ('pinch', 'pinch'),
+	 ('cloves', 'cloves'),
+	 ('slices','slices')
 	)
 	recipe = models.ForeignKey(Recipe, null = True)
-	ingredient = models.ManyToManyField(Ingredient)
+	ingredient = models.ForeignKey(Ingredient, null=True)
 	quantity = models.IntegerField()
 	unit = models.CharField(choices = UNITS, max_length=30)
-	type = models.ManyToManyField(Type)
 
 	class Meta:
 		ordering = ['recipe']
 
 	def __str__(self):
-		return self.name
+		return self.ingredient
 
 class Review(models.Model):
 	RATINGS = (
 		(1,'1'),
-		(2,'1'),
+		(2,'2'),
 		(3,'3'),
 	 	(4,'4'),
 		(5,'5'),
@@ -105,41 +108,3 @@ class UserProfile(models.Model):
 
 	def __str__(self):
 		return self.user.username
-
-#OURS ABOVE
-#------------------------------------------------
-#RANGO BELOW
-# class Category(models.Model):
-# 	name = models.CharField(max_length=128, unique=True)
-# 	views = models.IntegerField(default=0)
-# 	likes = models.IntegerField(default=0)
-# 	slug = models.SlugField(unique=True)
-#
-# 	def save(self, *args, **kwargs):
-# 		self.slug = slugify(self.name)
-# 		super(Category, self).save(*args, **kwargs)
-#
-# 	class Meta:
-# 		verbose_name_plural = 'categories'
-#
-# 	def __str__(self):
-# 		return self.name
-#
-# class Page(models.Model):
-# 	category = models.ForeignKey(Category)
-# 	title = models.CharField(max_length=128)
-# 	url = models.URLField()
-# 	views = models.IntegerField(default=0)
-#
-# 	def __str__(self):
-# 		return self.title
-#
-# class UserProfile(models.Model):
-# 	user = models.OneToOneField(User)
-#
-#
-# 	website = models.URLField(blank=True)
-# 	picture = models.ImageField(upload_to='profile_images', blank = True)
-#
-# 	def __str__(self):
-# 		return self.user.username
