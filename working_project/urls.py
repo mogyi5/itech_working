@@ -15,7 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
+from yumyum import views
 
 urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^yumyum/', include('yumyum.urls')),
+    # above maps any URLs starting
+    # with yumyum/ to be handled by 
+    # the yumyum application
     url(r'^admin/', admin.site.urls),
 ]
