@@ -33,11 +33,11 @@ def cook(request):
     context_dict = {}
     return render(request, 'yumyum/cook.html',context_dict)
 
-def show_recipe(request, title):
+def show_recipe(request, recipe_title_slug):
     context_dict = {}
 
     try:
-    	recipe = Recipe.objects.get(title=title)
+    	recipe = Recipe.objects.get(slug=recipe_title_slug)
     	context_dict['recipe'] = recipe
     except Recipe.DoesNotExist:
     	context_dict['recipe'] = None
@@ -53,10 +53,14 @@ def add_recipe(request):
             recipe = recipe_form.save(commit=False)
             if 'picture' in request.FILES:
                 recipe.picture = request.FILES['picture']
+            title = recipe_form.cleaned_data['title']
+            cooking_time = recipe_form.cleaned_data['cooking_time']
+            direction = recipe_form.cleaned_data['direction']
             recipe.save()
             ri = ri_form.save(commit=False)
             ri.recipe = recipe  
             ri.save()
+            
         else:
             print(ri_form.errors, recipe_form.errors)
     else:
@@ -102,9 +106,9 @@ def search(request):
              result_list = run_query(query)
     return render(request, 'rango/search.html', {'result_list': result_list})
 
-def add_review(request, title):
+def add_review(request, recipe_title_slug):
     try:
-        recipe = Recipe.objects.get(title=title)
+        recipe = Recipe.objects.get(slug=recipe_title_slug)
     except Recipe.DoesNotExist:
         recipe = None
     form = ReviewForm(request.POST)
