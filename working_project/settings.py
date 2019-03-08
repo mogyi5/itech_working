@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'yumyum',
-    #'registration',
+    'registration',
 ]
 
 MIDDLEWARE = [
@@ -138,4 +138,4 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 REGISTRATION_AUTO_LOGIN = True
 
-LOGIN_REDIRECT_URL = '/rango/'
+LOGIN_REDIRECT_URL = '/yumyum/'

@@ -23,8 +23,6 @@ from yumyum import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^yumyum/', include('yumyum.urls')),
-    # above maps any URLs starting
-    # with yumyum/ to be handled by 
-    # the yumyum application
+    url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^admin/', admin.site.urls),
 ]
