@@ -1,3 +1,4 @@
+
 """
 Django settings for working_project project.
 
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'working_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,9 +134,7 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = '/accounts/login/'
 REGISTRATION_OPEN = True
-
 ACCOUNT_ACTIVATION_DAYS = 7
-
 REGISTRATION_AUTO_LOGIN = True
-
 LOGIN_REDIRECT_URL = '/yumyum/'
+
