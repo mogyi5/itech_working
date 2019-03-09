@@ -44,7 +44,7 @@ class Recipe(models.Model):
 	title = models.CharField(max_length=128)
 	servings = models.IntegerField(choices=SERVINGS)
 	category = models.ForeignKey(Category)
-	cooking_time = models.IntegerField(default=60) #in minutes
+	cooking_time = models.IntegerField(default=0) #in minutes
 	direction = models.TextField(max_length=1000)
 	slug = models.SlugField(unique=True)
 	user = models.ForeignKey(User)
