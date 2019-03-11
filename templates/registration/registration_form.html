@@ -1,9 +1,37 @@
 {% extends "yumyum/base.html" %}
 {% block body_block %}
-<h1>Register Here</h1>
-<form method="post" action=".">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit"/>
+<!--<form method="post" action=".">-->
+<!--{% csrf_token %}-->
+<!--{{ form.as_p }}-->
+<!--<input type="submit" value="Submit"/>-->
+<!--</form>-->
+        <!--<p class="label-txt">ENTER YOUR EMAIL</p>-->
+        <!--<input type="text" class="input">-->
+        <!--<div class="line-box">-->
+        <!--<div class="line"></div>-->
+        <!--</div>-->
+        <!--</label>-->
+        <!--<label class="reglabel">-->
+        <!--<p class="label-txt">ENTER YOUR NAME</p>-->
+        <!--<input type="text" class="input">-->
+        <!--<div class="line-box">-->
+        <!--<div class="line"></div>-->
+        <!--</div>-->
+        <!--</label>-->
+        <!--<label class="reglabel">-->
+        <!--<p class="label-txt">ENTER YOUR PASSWORD</p>-->
+        <!--<input type="text" class="input">-->
+        <!--<div class="line-box">-->
+        <!--<div class="line"></div>-->
+        <!--</div>-->
+
+
+
+<form class="regform" method="post" action=".">
+    <label class="reglabel" style="color:white;">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </label>
+    <button class="btn btn-lg btn-primary" type="submit">submit</button>
 </form>
 {% endblock %}

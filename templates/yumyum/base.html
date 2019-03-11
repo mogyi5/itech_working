@@ -3,6 +3,7 @@
 {%load staticfiles%}
 
 <head>
+    <!--META DATA-->
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,14 +14,29 @@
     <meta name="generator" content="Jekyll v3.8.5">
     <title>YumYum - {% block title %}Recipes on the go!{% endblock %}</title>
 
+    <!--Login css-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--Contact us css-->
+    <link href="{% static 'design/contactus.css' %}" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!--Registration css-->
+    <link href="{% static 'design/registration.css' %}" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <!-- favicon -->
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/carousel/">
+    <!--Carousel -->
+    <!--<link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/carousel/">-->
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'design/bootstrap.css' %}" rel="stylesheet">
+
 
     <!-- Brand font -->
     <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
@@ -40,6 +56,27 @@
           font-size: 3.5rem;
         }
       }
+
+	.login-form {
+		width: 340px;
+    	margin: 50px auto;
+	}
+    .login-form form {
+    	margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .login-form h2 {
+        margin: 0 0 15px;
+    }
+    .form-control, .btn {
+        min-height: 38px;
+        border-radius: 2px;
+    }
+    .btn {
+        font-size: 15px;
+        font-weight: bold;
 
     </style>
 
@@ -102,6 +139,8 @@
         crossorigin="anonymous"></script>
 <script>
     window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')
+
+
 
 </script>
 <script src="{% static 'design/bootstrap.js' %}"
