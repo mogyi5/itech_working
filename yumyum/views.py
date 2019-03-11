@@ -89,6 +89,7 @@ def profile(request, username):
     except User.DoesNotExist:
         return redirect('index')
 
+    recipes = Recipe.objects.filter(user = user)
     userprofile = UserProfile.objects.get_or_create(user=user)[0]
     form = UserProfileForm({'about': userprofile.about, 'picture': userprofile.picture})
 
@@ -100,7 +101,7 @@ def profile(request, username):
         else:
             print(form.errors)
 
-    return render(request, 'yumyum/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form})
+    return render(request, 'yumyum/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form, 'recipes': recipes})
 
 # def search(request):
 #     result_list = []

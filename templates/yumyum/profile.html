@@ -17,5 +17,12 @@
     {{userprofile.about}}</p>
     {% endif %}
   </div>
-  <div id="edit_profile"></div>
+  <h3>Uploaded Recipes</h3>
+  {% if recipes %}
+  {% for r in recipes %}
+  <p><strong><a href= "/yumyum/recipe/{{r.slug}}/">{{r.title}}</a>: {{r.category}}</strong></p>
+  {%endfor%}
+  {%endif%}
+  <div id="edit_profile">
+  </div>
   {% endblock %}
