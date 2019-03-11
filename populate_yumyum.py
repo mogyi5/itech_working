@@ -149,6 +149,7 @@ def populate():
     Comments = {
     "Tasty!" : {"rating": 4, "comment_body": "Made it for my fussy son and he loved it! So easy and quick!", "user": user1, "recipe":"Welsh Rarebit"},
     "Best meal I have ever had!" : {"rating": 5, "comment_body": "I literally cried, this was so good...", "user": user2, "recipe":"Chicken & Creamed Spinach"},
+    "SO GOOD": {"rating": 5, "comment_body": "This is like cocaine for my tastebuds I cannot get enough please send help", "user": user2, "recipe":"Welsh Rarebit"},
     }
 
 # Add a couple of reviews
