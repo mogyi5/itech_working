@@ -9,17 +9,41 @@ Add Recipe
 
 <div>
   <h1>Add a Recipe</h1>
-  <form role="form" id="recipe_form" method="post" action="{% url 'add_recipe' %}">
+  <form role="form" id="recipe_form" method="post" action=".">
     {% csrf_token %}
-    {% for hidden in form.hidden_fields %}
+    <!--  for the recipeingredient-->
+    <h5>Add an ingredient</h5>
+    <!-- {% for hidden in ri_form.hidden_fields %}
     {{ hidden }}
-    {% endfor %}
+    {% endfor %} -->
 
-    {% for field in form.visible_fields %}
+    <div id="ings" class="">
+      <div id = "ing" class = "">
+        {% for field in ri_form.visible_fields %}
+        {{ field.errors }}
+        {{ field.help_text }}
+        {{ field }}
+        {% endfor %}
+        <button id="remove-btn" class="btn btn-primary" type="button" onClick="removeDiv(this)">-</button>
+      </div>
+    </div>
+
+    <button id="add-btn" class="btn btn-primary" type="button">+</button>
+
+    <br/>
+    <!--  for the recipe itself-->
+    <h5>Add the directions</h5>
+    <!-- {% for hidden in recipe_form.hidden_fields %}
+    {{ hidden }}
+    {% endfor %} -->
+
+    {% for field in recipe_form.visible_fields %}
     {{ field.errors }}
     {{ field.help_text }}
     {{ field }}
+    <br/>
     {% endfor %}
+
 
     <button class="btn btn-primary" type="submit" name="submit">Add recipe!</button>
   </form>

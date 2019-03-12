@@ -39,13 +39,15 @@ def show_recipe(request, recipe_title_slug):
     context_dict = {}
 
     try:
-    	recipe = Recipe.objects.get(slug=recipe_title_slug)
-    	context_dict['recipe'] = recipe
+        recipe = Recipe.objects.get(slug=recipe_title_slug)
+        reviews = Review.objects.filter(recipe = recipe).order_by('rating')
+        context_dict['recipe'] = recipe
+        context_dict['reviews'] = reviews
     except Recipe.DoesNotExist:
-    	context_dict['recipe'] = None
+        context_dict['recipe'] = None
+        context_dict['reviews'] = None
 
     return render(request, 'yumyum/recipe.html', context_dict)
-
 
 def add_recipe(request):
     if request.method == 'POST':
@@ -78,7 +80,7 @@ def privacy(request):
 
 def terms(request):
     context_dict = {}
-    return render(request, 'yumyum/terms.html',context_dict)
+    return render(request, 'yumyum/terms.html', context_dict)
 
 @login_required
 def profile(request, username):
@@ -87,6 +89,7 @@ def profile(request, username):
     except User.DoesNotExist:
         return redirect('index')
 
+    recipes = Recipe.objects.filter(user = user)
     userprofile = UserProfile.objects.get_or_create(user=user)[0]
     form = UserProfileForm({'about': userprofile.about, 'picture': userprofile.picture})
 
@@ -98,7 +101,7 @@ def profile(request, username):
         else:
             print(form.errors)
 
-    return render(request, 'yumyum/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form})
+    return render(request, 'yumyum/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form, 'recipes': recipes})
 
 # def search(request):
 #     result_list = []
@@ -109,27 +112,27 @@ def profile(request, username):
 #              result_list = run_query(query)
 #     return render(request, 'yumyum/search.html', {'result_list': result_list})
 
-# def add_review(request, recipe_title_slug):
-#     try:
-#         recipe = Recipe.objects.get(slug=recipe_title_slug)
-#     except Recipe.DoesNotExist:
-#         recipe = None
-#     form = ReviewForm(request.POST)
-#     if form.is_valid():
-#         rating = form.cleaned_data['rating']
-#         comment_title = form.cleaned_data['comment_title']
-#         comment_body = form.cleaned_data['comment_body']
-#         review = Review()
-#         review.recipe = recipe
-#         review.user_name = user
-#         review.rating = rating
-#         review.comment_title = comment_title
-#         review.comment_body = comment_body
-#         review.pub_date = datetime.datetime.now()
-#         review.save()
-#         return HttpResponseRedirect(reverse('show_recipe', args=(recipe.title,)))
-#
-#     return render(request, 'yumyum/review.html', {'recipe': recipe, 'form': form})
+def add_review(request, recipe_title_slug):
+    try:
+        recipe = Recipe.objects.get(slug=recipe_title_slug)
+    except Recipe.DoesNotExist:
+        recipe = None
+    form = ReviewForm(request.POST)
+    if form.is_valid():
+        rating = form.cleaned_data['rating']
+        comment_title = form.cleaned_data['comment_title']
+        comment_body = form.cleaned_data['comment_body']
+        review = Review()
+        review.recipe = recipe
+        review.user_name = user
+        review.rating = rating
+        review.comment_title = comment_title
+        review.comment_body = comment_body
+        review.pub_date = datetime.datetime.now()
+        review.save()
+        return HttpResponseRedirect(reverse('show_recipe', args=(recipe.title,)))
+
+    return render(request, 'yumyum/review.html', {'recipe': recipe, 'form': form})
 
 def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', '1'))
