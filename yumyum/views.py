@@ -147,3 +147,23 @@ def get_server_side_cookie(request, cookie, default_val=None):
     if not val:
         val = default_val
     return val
+
+def get_recipe_list(max_results=0, start_with=''):
+    cat_list = []
+    if starts_with:
+        cat_list = Recipe.objects.filter(name__istartswith=starts_with)
+
+    if max_results > 0:
+        if len(cat_list) > max_results:
+            cat_list = cat_list[:max_results]
+    return cat_list
+
+def suggest_recipe(request):
+    cat_list = []
+    starts_with = ''
+
+    if request.method == 'GET':
+        starts_with = request.GET['suggestion']
+    cat_list = get_recipe_list(8, starts_with)
+
+    return render(request, 'yumyum/cats.html', {'cats': cat_list })
