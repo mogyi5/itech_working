@@ -42,8 +42,22 @@
   <script src="{% static "js/yumyum-jquery.js" %}"></script>
   <script src="{% static "js/yumyum-ajax.js "%}"></script>
 
+  <!-- for the add ingredient page -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="{% static "js/jquery.formset.js" %}"></script>
+
   <!-- Brand font -->
   <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
+
+  <script>
+  $(function () {
+    $('.ri-formset').formset({
+      addText: 'add ingredient',
+      deleteText: 'remove'
+    });
+  });
+  </script>
+
 
   <style>
   .bd-placeholder-img {

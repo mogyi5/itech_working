@@ -1,6 +1,14 @@
 {% extends 'yumyum/base.html' %}
 {% load staticfiles %}
 
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
 {%block title_block %}
 Add Recipe
 {% endblock %}
@@ -9,33 +17,46 @@ Add Recipe
 
 <div>
   <h1>Add a Recipe</h1>
-  <form role="form" id="recipe_form" method="post" action=".">
+  <form method="post">
     {% csrf_token %}
     <!--  for the recipeingredient-->
-    <h5>Add an ingredient</h5>
-    <!-- {% for hidden in ri_form.hidden_fields %}
-    {{ hidden }}
-    {% endfor %} -->
 
-    <div id="ings" class="">
-      <div id = "ing" class = "">
-        {% for field in ri_form.visible_fields %}
-        {{ field.errors }}
-        {{ field.help_text }}
-        {{ field }}
+    <h5>Add ingredients</h5>
+
+        {{ ri_formset.management_form }}
+
+        {% for ri_form in ri_formset %}
+            <div class="ri-formset">
+                {{ ri_form.ingredient }}
+                {% if ri_form.ingredient.errors %}
+                    {% for error in ri_form.ingredient.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+
+                {{ ri_form.quantity }}
+                {% if ri_form.quantity.errors %}
+                    {% for error in ri_form.quantity.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+
+                {{ ri_form.unit }}
+                {% if ri_form.unit.errors %}
+                    {% for error in ri_form.unit.errors %}
+                        {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+            </div>
         {% endfor %}
-        <button id="remove-btn" class="btn btn-primary" type="button" onClick="removeDiv(this)">-</button>
-      </div>
-    </div>
 
-    <button id="add-btn" class="btn btn-primary" type="button">+</button>
-
-    <br/>
+        {% if ri_formset.non_form_errors %}
+            {% for error in ri_formset.non_form_errors %}
+                {{ error|escape }}
+            {% endfor %}
+        {% endif %}
     <!--  for the recipe itself-->
     <h5>Add the directions</h5>
-    <!-- {% for hidden in recipe_form.hidden_fields %}
-    {{ hidden }}
-    {% endfor %} -->
 
     {% for field in recipe_form.visible_fields %}
     {{ field.errors }}

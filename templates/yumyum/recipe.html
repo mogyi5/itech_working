@@ -10,12 +10,12 @@ Recipe
 <h1>{{recipe.title}}</h1>
 <img src="{{ MEDIA_URL }}{{recipe.picture}}" width="300" height="300" alt="{{recipe.title}}" />
 <br/>
-<div>
-  <!-- {% if recipe.user.username == user.username %}
-  <form method="post" action="." enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Update" />
+<!-- <div> -->
+<!-- {% if recipe.user.username == user.username %}
+<form method="post" action="." enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Update" />
 </form>
 {% else %} -->
 <p><strong>Servings:</strong>
@@ -27,7 +27,7 @@ Recipe
   <strong>Direction:</strong>
   {{recipe.direction}} <br/>
   <strong>Uploaded by:</strong>
-   <a href= "/yumyum/profile/{{recipe.user}}/">{{recipe.user}}</a>  <br/>
+  <a href= "/yumyum/profile/{{recipe.user}}/">{{recipe.user}}</a>  <br/>
 </p>
 
 <div class="fb-share-button" data-href="window.location.href" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
@@ -42,12 +42,27 @@ Recipe
   {{r.comment_body}}
 </p>
 {%endfor%}
+{% else %}
+<p>There are no reviews yet!</p>
 {%endif%}
-<h3>Add a review!</h3>
 
+{%if user.is_authenticated%}
 
+{% if intcount > 0 %}
+<h2>Thanks for submitting a review!</h2>
+{% else %}
 
+<div>
+<h2>Add your review</h2>
+<form action="." method="post">
+  {{ review_form.as_ul }}
+  {% csrf_token %}
+  <p><input type="submit" value="Add review" onClick="removeDiv(this)"></p>
+</form>
+</div>
+{% endif %}
 
+{% endif %}
 
 <!-- <p><strong>Website:</strong> <a href="{{userprofile.website}}">
 {{userprofile.website}}</a></p>

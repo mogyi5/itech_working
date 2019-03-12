@@ -96,6 +96,7 @@ class Review(models.Model):
 	comment_body = models.TextField(max_length=1000)
 	user = models.ForeignKey(User)
 	recipe = models.ForeignKey(Recipe, null= True)
+	active = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.comment_title
