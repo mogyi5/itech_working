@@ -6,7 +6,7 @@ from yumyum.models import Ingredient, Recipe, RecipeIngredient, Review, UserProf
 #Maybe done?
 #When user makes a new recipe, the form will be recipeingredientform and recipeform together
 #because of the nature of the database.
-class RecipeIngredientForm(forms.ModelForm):
+class RecipeIngredientForm(forms.ModelForm): 
 
     class Meta:
         model = RecipeIngredient

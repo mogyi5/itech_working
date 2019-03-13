@@ -2,6 +2,8 @@
 
 TO RUN AFTER PULLING: 
 
+  pip install django-inlinecss - the first time
+
   python manage.py makemigrations
   python manage.py migrate
   python populate_yumyum.py

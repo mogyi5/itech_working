@@ -1,44 +1,43 @@
 {% extends 'yumyum/base.html' %}
 {% load staticfiles %}
+{% load inlinecss %}
+{% inlinecss "static/design/user_profile.css" %}
+
 {% block title %}{{ selecteduser.username }} Profile{% endblock %}
 {% block body_block %}
 <br>
 <br>
 <h1 class="title-pen" style="font-family: 'Yellowtail', cursive; font-size: 4.5em;"> User Profile for <span>{{selecteduser.username}}</span></h1>
 <div class="user-profile">
-    <img class="avatar" src="{{ MEDIA_URL }}{{userprofile.picture }}" alt="user profile picture"/>
-    <div class="username"></div>
-    <div class="description">
-        {{userprofile.about}}
-    </div>
-    <ul class="data">
-        <h5>Uploaded Recipes</h5>
-        {% if recipes %}
-        {% for r in recipes %}
-        <li>
-            <span class="entypo-heart"><strong><a
-                    href="/yumyum/recipe/{{r.slug}}/">{{r.title}}</a>: {{r.category}}</strong></span>
-        </li>
-        <br>
-        {%endfor%}
-        {%endif%}
+  <img class="avatar" src="{{ MEDIA_URL }}{{userprofile.picture }}" alt="user profile picture"/>
+  <div class="username"></div>
+  <div class="description">
+    {{userprofile.about}}
+  </div>
+  <ul class="data">
+    <h5>Uploaded Recipes</h5>
+    {% if recipes %}
+    {% for r in recipes %}
+    <li>
+      <span class="entypo-heart"><strong><a
+        href="/yumyum/recipe/{{r.slug}}/">{{r.title}}</a>: {{r.category}}</strong></span>
+      </li>
+      <br>
+      {%endfor%}
+      {%endif%}
     </ul>
+    {% if selecteduser.username == user.username %}
     <div class="editprofile" style="text-align:center">
-        <h3>Edit your profile</h3>
-        {% if selecteduser.username == user.username %}
-        <form method="post" action="." enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Update"/>
-        </form>
-        {% else %}
-        <p><strong>About:</strong>
-            {{userprofile.about}}</p>
-        {% endif %}
+      <h3>Edit your profile</h3>
+      <form method="post" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Update"/>
+      </form>
     </div>
-    <div id="edit_profile">
-    </div>
-</div>
+    {% endif %}
+  </div>
 
 
-{% endblock %}
+  {% endblock %}
+  {% endinlinecss %}
