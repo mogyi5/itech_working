@@ -1,9 +1,7 @@
-﻿DB HAS BEEN POPULATED WITH SOME THINGS.
+﻿***********BEFORE YOU PUSH DELETE db.sqlite3 & THE FILES IN yumyum/pycache (except __init__)***************************
 
-TO RUN THIS AFTER CHANGES TO THE MODEL :
+TO RUN AFTER PULLING: 
 
-RUN THE COMMANDS
-  ****DELETE db.sqlite3*********
   python manage.py makemigrations
   python manage.py migrate
   python populate_yumyum.py
