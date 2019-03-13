@@ -1,0 +1,100 @@
+/* CSS design by @jofpin */
+@import url(https://fonts.googleapis.com/css?family=Raleway|Varela+Round|Coda);
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+}
+
+
+.title-pen {
+  color: #333;
+  font-family: "Coda", sans-serif;
+  text-align: center;
+}
+.title-pen span {
+  color: #FCAF15;
+}
+
+.user-profile {
+  margin: auto;
+  width: 25em; 
+  height: 11em;
+  background: #fff;
+  border-radius: .3em;
+}
+
+.user-profile  .username {
+  margin: auto;
+  margin-top: -4.40em;
+  margin-left: 5.80em;
+  color: black;
+  font-size: 1.53em;
+  font-family: "Coda", sans-serif;
+  font-weight: bold;
+}
+.user-profile  .bio {
+  margin: auto;
+  display: inline-block;
+  margin-left: 10.43em;
+  color: #e76043; 
+  font-size: .87em;
+  font-family: "varela round", sans-serif;
+}
+.user-profile > .description {
+  margin: auto;
+  margin-top: 1.35em;
+  margin-right: 4.43em;
+  width: 14em;
+  color: black; 
+  font-size: .87em;
+  font-family: "varela round", sans-serif;
+}
+.user-profile > img.avatar {
+	padding: .7em;
+  margin-left: .5em;
+  margin-top: 2.5em;
+  height: 7em;
+  width: 7em;
+  border-radius: 18em;
+}
+
+.user-profile ul.data {
+    color:black;
+    padding-top: 1em;
+	margin: 2em auto;
+	height: auto;
+  background: #FCAF15;
+  text-align: left;
+  border-radius: 0 0 .3em .3em;
+}
+.user-profile li {
+    color: black;
+    font-size: 80%;
+	margin: 0 auto;
+  /* padding-bottom: 1.30em;  */
+  width: 33.33334%;
+  display: table-cell;
+  text-align: left;
+}
+
+.user-profile span {
+	font-family: "varela round", sans-serif;
+	color: black;
+  white-space: nowrap;
+  font-size: 1.27em;
+  font-weight: bold;
+}
+.user-profile span:hover {
+  color: black;
+}
+
+.editprofile {
+    position: -webkit-sticky;
+    padding-top: 1em;
+    margin: 1em;
+}
+
+.entypo-heart {
+    line-height: 1px;
+}

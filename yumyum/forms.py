@@ -43,11 +43,14 @@ class ContactForm(forms.Form):
 
 #make a user
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField(widget=forms.CharField)
+    email = forms.CharField()
+    password1 = forms.CharField(widget=forms.CharField)
+    password2 = forms.CharField(widget=forms.CharField)
 
     class Meta:
         model = User
-        fields = ('username','email', 'password')
+        fields = ('username','email', 'password1', 'password2')
 
 #make a user profile
 class UserProfileForm(forms.ModelForm):

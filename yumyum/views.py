@@ -235,3 +235,12 @@ def get_server_side_cookie(request, cookie, default_val=None):
     if not val:
         val = default_val
     return val
+
+def get_registration(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('')
+        else:
+            form = UserForm()
+            return render(request, '', {'form' : form})

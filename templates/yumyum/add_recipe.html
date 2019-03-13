@@ -2,11 +2,11 @@
 {% load staticfiles %}
 
 {% if messages %}
-  <ul class="messages">
+<ul class="messages">
     {% for message in messages %}
-      <li class="{{ message.tags }}">{{ message }}</li>
+    <li class="{{ message.tags }}">{{ message }}</li>
     {% endfor %}
-  </ul>
+</ul>
 {% endif %}
 
 {%block title_block %}
@@ -15,59 +15,59 @@ Add Recipe
 
 {% block body_block %}
 
-<div>
-  <h1>Add a Recipe</h1>
-  <form method="post">
-    {% csrf_token %}
-    <!--  for the recipeingredient-->
 
-    <h5>Add ingredients</h5>
+<div class="form-style-10">
+    <h1>Add a recipe, chef!<span>Add today a recipe and help millions to find your tasteful recipe!</span></h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="section"><span>1</span>Add Ingredients</div>
+        <div class="inner-wrap">
+            {{ ri_formset.management_form }}
 
-        {{ ri_formset.management_form }}
-
-        {% for ri_form in ri_formset %}
+            {% for ri_form in ri_formset %}
             <div class="ri-formset">
                 {{ ri_form.ingredient }}
                 {% if ri_form.ingredient.errors %}
-                    {% for error in ri_form.ingredient.errors %}
-                        {{ error|escape }}
-                    {% endfor %}
+                {% for error in ri_form.ingredient.errors %}
+                {{ error|escape }}
+                {% endfor %}
                 {% endif %}
 
                 {{ ri_form.quantity }}
                 {% if ri_form.quantity.errors %}
-                    {% for error in ri_form.quantity.errors %}
-                        {{ error|escape }}
-                    {% endfor %}
+                {% for error in ri_form.quantity.errors %}
+                {{ error|escape }}
+                {% endfor %}
                 {% endif %}
 
                 {{ ri_form.unit }}
                 {% if ri_form.unit.errors %}
-                    {% for error in ri_form.unit.errors %}
-                        {{ error|escape }}
-                    {% endfor %}
+                {% for error in ri_form.unit.errors %}
+                {{ error|escape }}
+                {% endfor %}
                 {% endif %}
             </div>
-        {% endfor %}
-
-        {% if ri_formset.non_form_errors %}
-            {% for error in ri_formset.non_form_errors %}
-                {{ error|escape }}
             {% endfor %}
-        {% endif %}
-    <!--  for the recipe itself-->
-    <h5>Add the directions</h5>
 
-    {% for field in recipe_form.visible_fields %}
-    {{ field.errors }}
-    {{ field.help_text }}
-    {{ field }}
-    <br/>
-    {% endfor %}
+            {% if ri_formset.non_form_errors %}
+            {% for error in ri_formset.non_form_errors %}
+            {{ error|escape }}
+            {% endfor %}
+            {% endif %}
+        </div>
 
+        <div class="section"><span>2</span>Add Directions</div>
+        <div class="inner-wrap">
+            {% for field in recipe_form.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+            {{ field }}
+            {% endfor %}
+        </div>
 
-    <button class="btn btn-primary" type="submit" name="submit">Add recipe!</button>
-  </form>
+<button class="btn btn-primary" type="submit" name="submit">Add recipe!</button>
+            <!--<input class="btn btn-lg btn-primary" type="submit" name="Add recipe"/>-->
+    </form>
 </div>
 
 {% endblock %}
