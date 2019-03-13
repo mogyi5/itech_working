@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'yumyum',
     'registration',
+    'django_inlinecss',
 ]
 
 MIDDLEWARE = [
@@ -137,4 +138,3 @@ REGISTRATION_OPEN = True
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 LOGIN_REDIRECT_URL = '/yumyum/'
-

@@ -126,10 +126,11 @@ def show_recipe(request, recipe_title_slug):
         recipe = Recipe.objects.get(slug=recipe_title_slug)
         reviews = Review.objects.filter(recipe = recipe, active = True).order_by('-rating')
         current_user = request.user
-        count_revs = Review.objects.filter(recipe=recipe, user = current_user).count()
-        intcount = int(count_revs)
-        print(intcount)
-        context_dict['intcount'] = intcount
+        if request.user.is_authenticated():
+            count_revs = Review.objects.filter(recipe=recipe, user = current_user).count()
+            intcount = int(count_revs)
+            print(intcount)
+            context_dict['intcount'] = intcount
         context_dict['recipe'] = recipe
         context_dict['reviews'] = reviews
     except Recipe.DoesNotExist:

@@ -57,7 +57,7 @@ Recipe
 <form action="." method="post">
   {{ review_form.as_ul }}
   {% csrf_token %}
-  <p><input type="submit" value="Add review" onClick="removeDiv(this)"></p>
+  <p><input type="submit" value="Add review" onClick="removeDiv(this);"></p>
 </form>
 </div>
 {% endif %}
