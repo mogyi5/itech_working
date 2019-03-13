@@ -124,15 +124,16 @@ def show_recipe(request, recipe_title_slug):
 
     try:
         recipe = Recipe.objects.get(slug=recipe_title_slug)
+        ingredients = RecipeIngredient.objects.filter(recipe=recipe)
         reviews = Review.objects.filter(recipe = recipe, active = True).order_by('-rating')
         current_user = request.user
         if request.user.is_authenticated():
             count_revs = Review.objects.filter(recipe=recipe, user = current_user).count()
             intcount = int(count_revs)
-            print(intcount)
             context_dict['intcount'] = intcount
         context_dict['recipe'] = recipe
         context_dict['reviews'] = reviews
+        context_dict['recipe_ingredients'] = ingredients
     except Recipe.DoesNotExist:
         return redirect('index')
         context_dict['recipe'] = None
@@ -158,7 +159,6 @@ def show_recipe(request, recipe_title_slug):
         newr = False
 
     context_dict['newr'] = newr
-
     context_dict['review_form'] = review_form
 
     return render(request, 'yumyum/recipe.html', context_dict)
