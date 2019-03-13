@@ -149,11 +149,15 @@ def show_recipe(request, recipe_title_slug):
             new_review.user = current_user
             # Save the comment to the database
             new_review.save()
+            newr = True
         else:
             print(form.errors)
 
     else:
         review_form = ReviewForm()
+        newr = False
+
+    context_dict['newr'] = newr
 
     context_dict['review_form'] = review_form
 
@@ -196,29 +200,6 @@ def profile(request, username):
 #              # Run our Webhose function to get the results list!
 #              result_list = run_query(query)
 #     return render(request, 'yumyum/search.html', {'result_list': result_list})
-
-# @login_required
-# def add_review(request, recipe_title_slug):
-#     try:
-#         recipe = Recipe.objects.get(slug=recipe_title_slug)
-#     except Recipe.DoesNotExist:
-#         recipe = None
-#     form = ReviewForm(request.POST)
-#     if form.is_valid():
-#         rating = form.cleaned_data['rating']
-#         comment_title = form.cleaned_data['comment_title']
-#         comment_body = form.cleaned_data['comment_body']
-#         review = Review()
-#         review.recipe = recipe
-#         review.user_name = user
-#         review.rating = rating
-#         review.comment_title = comment_title
-#         review.comment_body = comment_body
-#         review.pub_date = datetime.datetime.now()
-#         review.save()
-#         return HttpResponseRedirect(reverse('show_recipe', args=(recipe.title,)))
-#
-#     return render(request, 'yumyum/review.html', {'recipe': recipe, 'form': form})
 
 def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', '1'))

@@ -10,14 +10,6 @@ Recipe
 <h1>{{recipe.title}}</h1>
 <img src="{{ MEDIA_URL }}{{recipe.picture}}" width="300" height="300" alt="{{recipe.title}}" />
 <br/>
-<!-- <div> -->
-<!-- {% if recipe.user.username == user.username %}
-<form method="post" action="." enctype="multipart/form-data">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Update" />
-</form>
-{% else %} -->
 <p><strong>Servings:</strong>
   {{recipe.servings}} <br/>
   <strong>Category:</strong>
@@ -46,9 +38,9 @@ Recipe
 <p>There are no reviews yet!</p>
 {%endif%}
 
-{%if user.is_authenticated%}
+{%if user.is_authenticated and user.username != recipe.user.username%}
 
-{% if intcount > 0 %}
+{% if intcount > 0 or newr %}
 <h2>Thanks for submitting a review!</h2>
 {% else %}
 
@@ -63,11 +55,5 @@ Recipe
 {% endif %}
 
 {% endif %}
-
-<!-- <p><strong>Website:</strong> <a href="{{userprofile.website}}">
-{{userprofile.website}}</a></p>
-{% endif %}
-</div>
-<div id="edit_profile"></div> -->
 
 {% endblock %}
