@@ -41,7 +41,11 @@ Recipe
 </p>
 {%endfor%}
 {% else %}
+{%if user.is_authenticated %}
 <p>There are no reviews yet!</p>
+{%else%}
+<p>There are no reviews yet! <a href="{% url 'auth_login' %}">Sign in</a> to add a review!</p>
+{%endif%}
 {%endif%}
 
 {%if user.is_authenticated and user.username != recipe.user.username%}

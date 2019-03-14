@@ -35,9 +35,11 @@ def populate():
 
     Categories = {"Light":{
     "Curried Fish & Leek Noodles" : { "servings":2, "cooking_time":10, "direction":"Defrost the frozen fish fillet in the fridge overnight. The next day, season the fish with salt and pepper and dust with the curry powder. Pan-fry it in a splash of olive oil over a medium heat until cooked. It will take about 5 minutes on each side, depending on the thickness of the fillet. Add the leek ribbons to the frying pan and cook them along with the fish. Serve the fish on a bed of leek noodles.", "user":user2, "img":File(open('./media/recipe_images/curried-fish.JPG','rb'))},
+    "Maple Tamarind Glazed Salmon" : { "servings":4, "cooking_time":30, "direction":" Preheat the oven to 425F degrees and line a baking sheet with parchment paper. Season the salmon portions lightly with salt and pepper and lay a couple of inches apart on the prepared baking sheet. Whisk all of the ingredients for the glaze together until well combined. Liberally brush the glaze all over the salmon pieces. Bake for 10 minutes, then reapply another layer of the glaze and bake for an additional 10 minutes. Serve immediately.", "user":user3, "img":File(open('./static/images/slide3.JPG','rb'))},
     },
     "Pasta":{
-    "Smoked Mackerel & Kale Carbonara": { "servings":2, "cooking_time":15, "direction":"Bring a large pan of salted water to the boil and cook the spaghetti until al denta, throwing in the kale about 2 minutes before it's ready. Meanwhile, grab a bowl and mix the egg yolks with the grated parmesan and plenty of cracked black pepper. When the spaghetti and kale are cooked, transfer them to the bowl using tongs and mix everything together (the heat of the spaghetti will cook the egg yolk and create the sauce). Add a tablespoon of the cooking water to the pasta along with the flaked smoked mackerel, season if required, and serve with a drizzle of olive oil.", "user":user1,"img":File(open('./media/recipe_images/carbonara.JPG','rb'))}
+    "Smoked Mackerel & Kale Carbonara": { "servings":2, "cooking_time":15, "direction":"Bring a large pan of salted water to the boil and cook the spaghetti until al dente, throwing in the kale about 2 minutes before it's ready. Meanwhile, grab a bowl and mix the egg yolks with the grated parmesan and plenty of cracked black pepper. When the spaghetti and kale are cooked, transfer them to the bowl using tongs and mix everything together (the heat of the spaghetti will cook the egg yolk and create the sauce). Add a tablespoon of the cooking water to the pasta along with the flaked smoked mackerel, season if required, and serve with a drizzle of olive oil.", "user":user1,"img":File(open('./media/recipe_images/carbonara.JPG','rb'))},
+    "Basically Spaghetti Pomodoro": { "servings":4, "cooking_time":35, "direction":"Bring a large pan of salted water to the boil. Meanwhile, open the can of tomatoes, drain contents in a colander set over a medium bowl. Poke a hole in the tomatoes and shake to drain liquid and seeds from the inside of each tomato. Set aside. Heat oil in a large pan, add smashed cloves of garlic and cook, stirring often until garlic is golden - about 3 minutes. Stir in the red pepper flakes and add drained tomatoes; increade heat to medium-high. Cook, stirring occasionally, until tomatoes are starting to break down, 6-8 minutes. Add reserved tomato liquid, add salt, basil, and reduce heat to a simmer. Cook until liquid is reduced, 8-10 minutes. Add pasta to the pot of water and cook, stirring occasionally.Just before it's done, scoop out one cup of cooking fluid with a heatproof measuring cup. When al dente, transfer the pasta to the pot with the tomatoes, and add half of the reserved cooking liquid. Cook the pasta, tossing constantly, until liquid is mostly absorbed. Slowly sprinkle in half of the parmesan, and toss until it melts into the sauce. Add more pasta water, until the sauce oozes. Remove pot from heat and add butter. Add finished pasta to plates and top with remaining cheese and basil leaves.", "user":user1,"img":File(open('./static/images/slide2.JPG','rb'))},
     },
     "Main":{
     "Chicken & Creamed Spinach": {"servings": 2, "cooking_time": 40, "direction": "Season the chicken thigh with salt and pepper. Pan-fry it skin-side down in a splash of olive oil over a medium heat. After about 10 minutes, when the skin is golden brown, turn it over and cook it for a further 10 minutes. Add the garlic and, just as it starts to brown, throw in the cannellini beans and then the spinach. Once the spinach has wilted and the chicken in cooked through, pour over the cream, season again with salt and pepper, then simmer for a few minutes to thicken the sauce a bit and serve.", "user": user1,"img":File(open('./media/recipe_images/creamed.JPG','rb'))},
@@ -46,6 +48,7 @@ def populate():
     "Vegetarian":{
     "Welsh Rarebit": { "servings":2, "cooking_time":5, "direction":"Preheat your Grill to high. Mix the grated cheese and cream together in a bowl to create a cheesy spread with the consistency of mashed potato. Spread it onto the bread slices, top each slice with two halves of spring onion, splash with Worcestershire sauce, then cook under the grill for a few minutes until the cheese melts and starts to brown. Remove from the grill, sprinkle with cracked black pepper and serve straightaway.", "user":user3,"img":File(open('./media/recipe_images/welsh.JPG','rb'))},
     "White Bean Dauphinoise": { "servings": 2, "cooking_time": 35, "direction": "Preheat your oven to 190C/gas mark 5. Throw the cannellini beans into an ovenproof dish with the garlic. Pour over the cream and sprinkle over most of the grated parmesan. Season with salt and pepper then stir everything together and bake in the oven for about 25 minutes. Once cooked, serve sprinkled with the remaining parmesan and some cracked black pepper.", "user":user2, "img":File(open('./media/recipe_images/dauphinoise.JPG','rb'))},
+    "Grilled Vegetable Wrap": { "servings":2, "cooking_time": 25, "direction": "1. Preheat grill or broiler. Toss together asparagus, bell pepper, squash, and oil on large baking sheet. Season with salt and pepper, if desired. Grill or broil vegetables 4 to 6 minutes per side, turning once. 2. Mash together beans, garlic, and chile sauce in small bowl until smooth. 3. Spread half of bean mixture over each tortilla. Top each with 3 basil leaves, 1/2 cup roasted vegetables, 4 onion slices, and 1/2 cup arugula. Fold bottom third of tortillas over vegetables, and roll up tightly, tucking in sides as you go. Cut wraps in half on diagonal. Serve immediately, or wrap each half in foil or wax paper, and chill until ready to eat.", "user":user1, "img":File(open('./static/images/slide1.JPG','rb'))},
     },
     }
 
@@ -56,7 +59,7 @@ def populate():
 
     # Create ingredients by type
     Types = {"Dairy": {
-    "Milk", "Cheddar", "Mozzarella", "Brie", "Single Cream", "Whipping Cream", "Parmesan"
+    "Milk", "Cheddar", "Mozzarella", "Brie", "Single Cream", "Whipping Cream", "Parmesan", "Butter"
     },
     "Meat": {
     "Beef Mince", "Lamb Chops", "Pork Steak", "Chicken Nuggets", "Chicken Breast", "Chicken Thighs", "Chicken Wings", "Bacon", "Fish Fillet", "Smoked Mackerel"
@@ -65,16 +68,16 @@ def populate():
     "Bananas", "Apples", "Oranges", "Lemons", "Raspberries", "Kiwis", "Mandarins", "Strawberries"
     },
     "Vegetables":{
-    "Spring Onions", "Onions", "Carrots", "Cabbage", "Iceberg Lettuce", "Bell Peppers", "Peas", "Potatoes", "Spinach", "Leeks", "Kale", "Cannellini Beans"
+    "Spring Onions", "Onions", "Carrots", "Cabbage", "Iceberg Lettuce", "Bell Peppers", "Peas", "Potatoes", "Spinach", "Leeks", "Kale", "Cannellini Beans", "Asparagus Spears", "Squash", "Red Onions", "Arugula Leaves"
     },
     "Seasoning":{
-    "Cumin", "Black Pepper", "White Pepper", "Salt", "Paprika", "Cayenne Pepper", "Cinnamon", "Cayenne Pepper", "Garlic", "Curry Powder"
+    "Cumin", "Black Pepper", "White Pepper", "Salt", "Paprika", "Cayenne Pepper", "Cinnamon", "Cayenne Pepper", "Garlic", "Curry Powder", "Basil Leaves", "Grated Ginger", "Chilli Flakes", "Chinese Five Spice"
     },
     "Sauces":{
-    "Worcestershire Sauce", "Sweet Chilli Sauce", "Soy Sauce", "Vinegar", "Cooking Wine", "Tomato Sauce"
+    "Worcestershire Sauce", "Sweet Chilli Sauce", "Soy Sauce", "Vinegar", "Cooking Wine", "Tomato Sauce", "Sriracha Sauce", "Maple Syrup"
     },
     "Cupboard":{
-    "Bread", "Flour", "Sugar", "Yeast", "Honey", "Lentils", "Canned Beans", "Canned Sweetcorn", "Dried Spaghetti", "Rice", "Olive Oil", "Eggs"
+    "Bread", "Flour", "Sugar", "Yeast", "Honey", "Lentils", "Canned Beans", "Canned Sweetcorn", "Dried Spaghetti", "Rice", "Olive Oil", "Eggs", "Tortillas", "Tamarind Paste", "Canned Tomatoes"
     }
     }
 
@@ -136,6 +139,39 @@ def populate():
     "Parmesan":{"quantity":50, "unit":'g'},
     "Salt":{"quantity":1, "unit":'pinch'},
     "Black Pepper":{"quantity":1, "unit":'pinch'}
+    },
+    "Grilled Vegetable Wrap":{
+    "Asparagus Spears":{"quantity":12, "unit":'pieces'},
+    "Bell Peppers":{"quantity":1, "unit":'pieces'},
+    "Squash":{"quantity":1, "unit":'pieces'},
+    "Olive Oil":{"quantity":1, "unit":'tbsp.'},
+    "Canned Beans":{"quantity":250, "unit":'g'},
+    "Garlic":{"quantity":1, "unit":'cloves'},
+    "Sriracha Sauce":{"quantity":1/2, "unit":'tsp'},
+    "Tortillas":{"quantity":2, "unit":'pieces'},
+    "Basil Leaves":{"quantity":6, "unit":'pieces'},
+    "Red Onions":{"quantity":1/2, "unit":'pieces'},
+    "Arugula Leaves":{"quantity":75, "unit":'g'},
+    },
+    "Maple Tamarind Glazed Salmon":{
+    "Tamarind Paste":{"quantity":4, "unit":'tbsp.'},
+    "Maple Syrup":{"quantity":3, "unit":'tbsp.'},
+    "Grated Ginger":{"quantity":1, "unit":'tsp'},
+    "Chilli Flakes":{"quantity":1, "unit":'pinch'},
+    "Chinese Five Spice":{"quantity":1/2, "unit":'tsp'},
+    "Salt":{"quantity":1, "unit":'pinch'},
+    "Black Pepper":{"quantity":1, "unit":'pinch'}
+    },
+    "Basically Spaghetti Pomodoro":{
+    "Canned Tomatoes":{"quantity":400, "unit":'g'},
+    "Garlic":{"quantity":4, "unit":'cloves'},
+    "Olive Oil":{"quantity":3, "unit":'tbsp.'},
+    "Chilli Flakes":{"quantity":1, "unit":'pinch'},
+    "Basil Leaves":{"quantity":10, "unit":'pieces'},
+    "Dried Spaghetti":{"quantity":450, "unit":'g'},
+    "Parmesan":{"quantity":150, "unit":'g'},
+    "Butter":{"quantity":2, "unit":'tbsp.'},
+    "Salt":{"quantity":3, "unit":'tbsp.'},
     },
     }
 
