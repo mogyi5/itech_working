@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from yumyum.models import Category,Type,Ingredient,Recipe,RecipeIngredient,Review, UserProfile
-from yumyum.forms import RecipeIngredientForm,RecipeForm,ReviewForm,ContactForm,UserForm,UserProfileForm
+from yumyum.forms import RecipeIngredientForm,RecipeForm,ReviewForm,ContactForm,UserProfileForm
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -217,12 +217,3 @@ def get_server_side_cookie(request, cookie, default_val=None):
     if not val:
         val = default_val
     return val
-
-def get_registration(request):
-    if request.method == 'POST':
-        form = UserForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('')
-        else:
-            form = UserForm()
-            return render(request, '', {'form' : form})

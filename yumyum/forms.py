@@ -6,7 +6,7 @@ from yumyum.models import Ingredient, Recipe, RecipeIngredient, Review, UserProf
 #Maybe done?
 #When user makes a new recipe, the form will be recipeingredientform and recipeform together
 #because of the nature of the database.
-class RecipeIngredientForm(forms.ModelForm): 
+class RecipeIngredientForm(forms.ModelForm):
 
     class Meta:
         model = RecipeIngredient
@@ -42,15 +42,15 @@ class ContactForm(forms.Form):
     cc_myself = forms.BooleanField(required=False)
 
 #make a user
-class UserForm(forms.ModelForm):
-    username = forms.CharField(widget=forms.CharField)
-    email = forms.CharField()
-    password1 = forms.CharField(widget=forms.CharField)
-    password2 = forms.CharField(widget=forms.CharField)
-
-    class Meta:
-        model = User
-        fields = ('username','email', 'password1', 'password2')
+# class UserForm(forms.ModelForm):
+#     username = forms.CharField(widget=forms.CharField)
+#     email = forms.CharField()
+#     password1 = forms.CharField(widget=forms.CharField)
+#     password2 = forms.CharField(widget=forms.CharField)
+#
+#     class Meta:
+#         model = User
+#         fields = ('username','email', 'password1', 'password2')
 
 #make a user profile
 class UserProfileForm(forms.ModelForm):
