@@ -49,7 +49,8 @@ Recipe
         {% else %}
 
         <div style="text-align:center;">
-            <h3 style="font-family: 'Yellowtail', cursive; font-size: 2em; padding-top:10px; color:black;">Add your review</h3>
+            <h3 style="font-family: 'Yellowtail', cursive; font-size: 2em; padding-top:10px; color:black;">Add your
+                review</h3>
             <form action="." method="post">
                 <p>Rating</p>
                 {{ review_form.rating }}
@@ -82,18 +83,42 @@ Recipe
 
 </div>
 
-<h3 style="text-align:center;font-family: 'Yellowtail', cursive; font-size: 2em; padding-top:10px; color:black;">Share this!</h3><br>
+<h3 style="text-align:center;font-family: 'Yellowtail', cursive; font-size: 2em; padding-top:10px; color:black;">Share
+    this!</h3><br>
 <div class="socialbuttons">
-    <div class="fb-share-button" data-href="window.location.href" data-layout="button" data-size="large"
-         data-mobile-iframe="true"><a target="_blank"
-                                      href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
-                                      class="fb-xfbml-parse-ignore">Share</a></div>
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false"
-       data-layout="button" data-size="large" data-mobile-iframe="true">Tweet</a>
+
+    <!--facebook button-->
+
+    <a style="box-sizing: unset;" target="_blank" data-href="window.location.href" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" data-mobile-iframe="true" data-size="large" class="fa fa-facebook"></a>
+
+   <!--twitter button-->
+
+    <a style="box-sizing: unset;" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="fa fa-twitter" data-show-count="false"
+           data-layout="button" data-size="large" data-mobile-iframe="true"></a>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" data-pin-tall="true"></a>
-    <script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
+
+    <!--pinterest button-->
+
+    <a style="box-sizing: unset;" href="https://www.pinterest.com/pin/create/button/" class="fa fa-pinterest" data-pin-do="buttonBookmark" data-pin-tall="true"></a>
+    <!--<script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>-->
 </div>
+
+
+<!--&lt;!&ndash;FB ICON&ndash;&gt;-->
+       <!--<div class="fb-share-button" data-href="window.location.href" data-layout="button" data-size="large"-->
+             <!--data-mobile-iframe="true"><a target="_blank"-->
+                                          <!--href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"-->
+                                          <!--class="fb-xfbml-parse-ignore">Share</a></div>-->
+
+<!--&lt;!&ndash;TWITTER ICON&ndash;&gt;-->
+       <!--<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false"-->
+           <!--data-layout="button" data-size="large" data-mobile-iframe="true">Tweet</a>-->
+        <!--<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+
+
+<!--&lt;!&ndash;PINTEREST ICON&ndash;&gt;-->
+       <!--<a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" data-pin-tall="true"></a>-->
+        <!--<script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>-->
 
 <!--<h1>{{recipe.title}}</h1>-->
 <!--<img src="{{ MEDIA_URL }}{{recipe.picture}}" width="300" height="300" alt="{{recipe.title}}"/>-->
