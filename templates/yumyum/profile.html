@@ -1,24 +1,106 @@
 {% extends 'yumyum/base.html' %}
 {% load staticfiles %}
+{% load inlinecss %}
+{% inlinecss "static/design/user_profile.css" %}
+
 {% block title %}{{ selecteduser.username }} Profile{% endblock %}
 {% block body_block %}
-<h1>{{selecteduser.username}} Profile</h1>
-<img src="{{ MEDIA_URL }}{{userprofile.picture }}"
-width="300"
-height="300"
-alt="{{selecteduser.username}}" />
-<br/>
-<div>
-{% if selecteduser.username == user.username %}
-<form method="post" action="." enctype="multipart/form-data">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Update" />
-</form>
-{% else %}
-<p><strong>About:</strong>
-{{userprofile.about}}</p>
-{% endif %}
+
+<style>
+.hidden{
+    display:none;
+}
+
+.unhidden{
+    display:block;
+}
+
+</style>
+
+<script type="text/javascript">
+function unhide(clickedButton, divID) {
+var item = document.getElementById(divID);
+if (item) {
+    if(item.className=='hidden'){
+        item.className = 'unhidden' ;
+        clickedButton.value = 'Edit Profile'
+    }else{
+        item.className = 'hidden';
+        clickedButton.value = 'Edit Profile'
+    }
+}}
+
+
+</script>
+
+
+<br>
+<br>
+
+<h1 class="title-pen" style="font-family: 'Yellowtail', cursive; font-size: 4.5em;"> User Profile for <span
+        style="color:#FCAF15">{{selecteduser.username}}</span></h1>
+<div class="user-profile">
+    <img class="avatar" src="{{ MEDIA_URL }}{{userprofile.picture }}" alt="user profile picture"/>
+    <div class="description">
+        {{userprofile.about}}
+        <br>
+        <br>
+        <h5 style="text-align: center;font-family: 'Yellowtail', cursive; font-size: 2em;">Uploaded Recipes</h5>
+    </div>
+    <ul class="data" style="color:black;">
+        {% if recipes %}
+        {% for r in recipes %}
+        <li><a href="/yumyum/recipe/{{r.slug}}/">{{r.title}}</a>: {{r.category}}</li>
+        <br>
+        {%endfor%}
+        {%endif%}
+    </ul>
+    {% if selecteduser.username == user.username %}
+    <div style="text-align: center;">
+        <input type="button" onclick="unhide(this, 'about')" class="btn btn-lg btn-primary" style="color:black;"
+               value="Edit Profile">
+    </div>
+    <div id="about" class="hidden">
+        <div class="editprofile" style="text-align:center;">
+            <form method="post" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" style="background-color:#FCAF15;color:black" value="Update"/>
+            </form>
+        </div>
+        {% endif %}
+    </div>
 </div>
-<div id="edit_profile"></div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 {% endblock %}
+{% endinlinecss %}

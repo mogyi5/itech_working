@@ -1,97 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'yumyum/base.html' %}
+{% load staticfiles %}
 
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="You have limited groceries home? You think you can not do any good food with them? That's where you are wrong! Use this webapp now and find out more!">
-  <meta name="author" content="Bootstrap authors: Mark Otto, Jacob Thornton, and Bootstrap contributors/ Website authors: Linda, Reka, Adamos">
-  <meta name="generator" content="Jekyll v3.8.5">
-  <title>YumYum</title>
+{%block title_block %}
+Recipe
+{% endblock %}
 
-<!-- favicon -->
-  <link rel="shortcut icon" href="Carousel%20Template%20%C2%B7%20Bootstrap_files/img/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="Carousel%20Template%20%C2%B7%20Bootstrap_files/img/favicon.ico" type="image/x-icon">
+{% block body_block %}
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/carousel/">
+<h1>{{recipe.title}}</h1>
+<img src="{{ MEDIA_URL }}{{recipe.picture}}" width="300" height="300" alt="{{recipe.title}}" />
+<br/>
+<p>   <strong>Servings:</strong>
+  {{rcipe.servings}} <br/>
+  <strong>Category:</strong>
+  {{recipe.category}} <br/>
+  <strong>Cooking Time:</strong>
+  {{recipe.cooking_time}} minutes <br/></p>
+<h3>Ingredients</h3>
+{%for i in recipe_ingredients %}
+<strong> {{i.ingredient}}</strong>  {{i.quantity}} {{i.unit}} <br/>
+{%endfor%}
+<h3>Method</h3>
+<p>
+  <strong>Direction:</strong>
+  {{recipe.direction}} <br/>
+  <strong>Uploaded by:</strong>
+  <a href= "/yumyum/profile/{{recipe.user}}/">{{recipe.user}}</a>  <br/>
+</p>
 
-  <!-- Bootstrap core CSS -->
-  <link href="Carousel%20Template%20%C2%B7%20Bootstrap_files/bootstrap.css" rel="stylesheet">
+<div class="fb-share-button" data-href="window.location.href" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false"  data-layout="button" data-size="large" data-mobile-iframe="true">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" data-pin-tall="true" ></a><script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
 
-  <!-- Brand font -->
-  <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
 
-  <style>
-    .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
+<h3>Reviews</h3>
+{%if reviews%}
+{% for r in reviews %}
+<p><strong><a href= "/yumyum/profile/{{r.user}}/">{{r.user}}</a>: {{r.comment_title}}    Rating: {{r.rating}}</strong><br>
+  {{r.comment_body}}
+</p>
+{%endfor%}
+{% else %}
+{%if user.is_authenticated %}
+<p>There are no reviews yet!</p>
+{%else%}
+<p>There are no reviews yet! <a href="{% url 'auth_login' %}">Sign in</a> to add a review!</p>
+{%endif%}
+{%endif%}
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
+{%if user.is_authenticated and user.username != recipe.user.username%}
 
-  <!-- Custom styles for this template -->
-  <link href="Carousel%20Template%20%C2%B7%20Bootstrap_files/carousel.css" rel="stylesheet">
+{% if intcount > 0 or newr %}
+<h2>Thanks for submitting a review!</h2>
+{% else %}
 
-</head>
+<div>
+<h2>Add your review</h2>
+<form action="." method="post">
+  {{ review_form.as_ul }}
+  {% csrf_token %}
+  <p><input type="submit" value="Add review" onClick="removeDiv(this);"></p>
+</form>
+</div>
+{% endif %}
 
-<body>
-  <!-- Navigation -->
-  <header>
-    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-dark">
-      <img src="Carousel%20Template%20%C2%B7%20Bootstrap_files/img/logo.png" width="auto" height="35px">
-      <a class="navbar-brand" href="index.html">YumYum</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-right" href="signup.html">Register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login.html">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="cook.html" style="color:#A64AC9; font-weight:bold;">Start Cooking!</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-<!-- End of navigation -->
+{% endif %}
 
-  <main role="main">
-
-    <hr class="featurette-divider">
-
-    <!-- FOOTER -->
-    <footer class="container">
-      <p class="float-right"><a href="">Back to top</a></p>
-      <p>© 2019 YumYum, Inc. · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
-    </footer>
-  </main>
-  <script src="Carousel%20Template%20%C2%B7%20Bootstrap_files/jquery-3.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script>
-    window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')
-  </script>
-  <script src="Carousel%20Template%20%C2%B7%20Bootstrap_files/bootstrap.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-
-</body>
-
-</html>
+{% endblock %}

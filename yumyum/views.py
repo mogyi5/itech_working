@@ -1,13 +1,97 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.forms.formsets import formset_factory
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from yumyum.models import Category,Type,Ingredient,Recipe,RecipeIngredient,Review, UserProfile
-from yumyum.forms import RecipeIngredientForm,RecipeForm,ReviewForm,ContactForm,UserForm,UserProfileForm
+from yumyum.forms import RecipeIngredientForm,RecipeForm,ReviewForm,ContactForm,UserProfileForm
 from datetime import datetime
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
+from django.contrib import messages
+from django.db import IntegrityError, transaction
+from yumyum.forms import RIFSet
+
+@login_required
+def add_recipe(request):
+
+    user = request.user
+
+    if request.method == 'POST':
+        recipe_form = RecipeForm(request.POST, request.FILES)
+        ri_formset = RIFSet(request.POST,  request.FILES)
+
+        if recipe_form.is_valid() and ri_formset.is_valid():
+            # Save user info
+            recipe = recipe_form.save(commit=False)
+            if 'picture' in request.FILES:
+                recipe.picture = request.FILES['picture']
+            title = recipe_form.cleaned_data['title']
+            cooking_time = recipe_form.cleaned_data['cooking_time']
+            direction = recipe_form.cleaned_data['direction']
+            recipe.user = user
+            recipe.save()
+
+            # Now save the data for each form in the formset
+            new_ingredients = []
+
+            for ri in ri_formset:
+                ingredient = ri.cleaned_data.get('ingredient')
+                quantity = ri.cleaned_data.get('quantity')
+                unit = ri.cleaned_data.get('unit')
+
+                if ingredient and quantity and unit:
+                    new_ingredients.append(RecipeIngredient(recipe=recipe , ingredient=ingredient, quantity=quantity, unit = unit))
+
+            try:
+                with transaction.atomic():
+                    #Replace the old with the new
+                    RecipeIngredient.objects.bulk_create(new_ingredients)
+                    # And notify our users that it worked
+                    messages.success(request, 'You have added a recipe.')
+
+            except IntegrityError: #If the transaction failed
+                messages.error(request, 'There was an error adding the recipe.')
+                return redirect(reverse('index'))
+
+    else:
+        recipe_form = RecipeForm()
+        ri_formset = RIFSet(request.GET or None)
+
+    context_dict = {
+        'recipe_form': recipe_form,
+        'ri_formset': ri_formset,
+
+    }
+
+    return render(request, 'yumyum/add_recipe.html', context_dict)
+
+# def add_recipe(request):
+#     if request.method == 'POST':
+#         ri_form = RecipeIngredientForm(data=request.POST)
+#         recipe_form = RecipeForm(data=request.POST)
+#
+#         if ri_form.is_valid() and recipe_form.is_valid():
+#             recipe = recipe_form.save(commit=False)
+#             if 'picture' in request.FILES:
+#                 recipe.picture = request.FILES['picture']
+#             title = recipe_form.cleaned_data['title']
+#             cooking_time = recipe_form.cleaned_data['cooking_time']
+#             direction = recipe_form.cleaned_data['direction']
+#             recipe.save()
+#             ri = ri_form.save(commit=False)
+#             ri.recipe = recipe
+#             ri.save()
+#
+#         else:
+#             print(ri_form.errors, recipe_form.errors)
+#     else:
+#         ri_form = RecipeIngredientForm()
+#         recipe_form = RecipeForm()
+#     return render(request, 'yumyum/add_recipe.html', {'ri_form': ri_form,
+#                'recipe_form': recipe_form})
+
+
 
 def index(request):
     request.session.set_test_cookie()
@@ -39,38 +123,45 @@ def show_recipe(request, recipe_title_slug):
     context_dict = {}
 
     try:
-    	recipe = Recipe.objects.get(slug=recipe_title_slug)
-    	context_dict['recipe'] = recipe
+        recipe = Recipe.objects.get(slug=recipe_title_slug)
+        ingredients = RecipeIngredient.objects.filter(recipe=recipe)
+        reviews = Review.objects.filter(recipe = recipe, active = True).order_by('-rating')
+        current_user = request.user
+        if request.user.is_authenticated():
+            count_revs = Review.objects.filter(recipe=recipe, user = current_user).count()
+            intcount = int(count_revs)
+            context_dict['intcount'] = intcount
+        context_dict['recipe'] = recipe
+        context_dict['reviews'] = reviews
+        context_dict['recipe_ingredients'] = ingredients
     except Recipe.DoesNotExist:
-    	context_dict['recipe'] = None
+        return redirect('index')
+        context_dict['recipe'] = None
+        context_dict['reviews'] = None
+
+    if request.method == 'POST':
+        # A comment was posted
+        review_form = ReviewForm(data=request.POST)
+        if review_form.is_valid():
+            # Create Comment object but don't save to database yet
+            new_review = review_form.save(commit=False)
+            # Assign the current post to the comment
+            new_review.recipe = recipe
+            new_review.user = current_user
+            # Save the comment to the database
+            new_review.save()
+            newr = True
+        else:
+            print(form.errors)
+
+    else:
+        review_form = ReviewForm()
+        newr = False
+
+    context_dict['newr'] = newr
+    context_dict['review_form'] = review_form
 
     return render(request, 'yumyum/recipe.html', context_dict)
-
-
-def add_recipe(request):
-    if request.method == 'POST':
-        ri_form = RecipeIngredientForm(data=request.POST)
-        recipe_form = RecipeForm(data=request.POST)
-
-        if ri_form.is_valid() and recipe_form.is_valid():
-            recipe = recipe_form.save(commit=False)
-            if 'picture' in request.FILES:
-                recipe.picture = request.FILES['picture']
-            title = recipe_form.cleaned_data['title']
-            cooking_time = recipe_form.cleaned_data['cooking_time']
-            direction = recipe_form.cleaned_data['direction']
-            recipe.save()
-            ri = ri_form.save(commit=False)
-            ri.recipe = recipe
-            ri.save()
-
-        else:
-            print(ri_form.errors, recipe_form.errors)
-    else:
-        ri_form = RecipeIngredientForm()
-        recipe_form = RecipeForm()
-    return render(request, 'yumyum/add_recipe.html', {'ri_form': ri_form,
-               'recipe_form': recipe_form})
 
 def privacy(request):
     context_dict = {}
@@ -78,7 +169,7 @@ def privacy(request):
 
 def terms(request):
     context_dict = {}
-    return render(request, 'yumyum/terms.html',context_dict)
+    return render(request, 'yumyum/terms.html', context_dict)
 
 @login_required
 def profile(request, username):
@@ -87,6 +178,7 @@ def profile(request, username):
     except User.DoesNotExist:
         return redirect('index')
 
+    recipes = Recipe.objects.filter(user = user)
     userprofile = UserProfile.objects.get_or_create(user=user)[0]
     form = UserProfileForm({'about': userprofile.about, 'picture': userprofile.picture})
 
@@ -98,7 +190,7 @@ def profile(request, username):
         else:
             print(form.errors)
 
-    return render(request, 'yumyum/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form})
+    return render(request, 'yumyum/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form, 'recipes': recipes})
 
 # def search(request):
 #     result_list = []
@@ -108,28 +200,6 @@ def profile(request, username):
 #              # Run our Webhose function to get the results list!
 #              result_list = run_query(query)
 #     return render(request, 'yumyum/search.html', {'result_list': result_list})
-
-# def add_review(request, recipe_title_slug):
-#     try:
-#         recipe = Recipe.objects.get(slug=recipe_title_slug)
-#     except Recipe.DoesNotExist:
-#         recipe = None
-#     form = ReviewForm(request.POST)
-#     if form.is_valid():
-#         rating = form.cleaned_data['rating']
-#         comment_title = form.cleaned_data['comment_title']
-#         comment_body = form.cleaned_data['comment_body']
-#         review = Review()
-#         review.recipe = recipe
-#         review.user_name = user
-#         review.rating = rating
-#         review.comment_title = comment_title
-#         review.comment_body = comment_body
-#         review.pub_date = datetime.datetime.now()
-#         review.save()
-#         return HttpResponseRedirect(reverse('show_recipe', args=(recipe.title,)))
-#
-#     return render(request, 'yumyum/review.html', {'recipe': recipe, 'form': form})
 
 def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', '1'))
