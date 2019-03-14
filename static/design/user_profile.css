@@ -9,7 +9,7 @@
 
 .user-profile {
   margin: auto;
-	width: 25em; 
+	width: 25em;
   height: 11em;
   background: #fff;
   border-radius: .3em;
@@ -28,14 +28,14 @@
   margin: auto;
   display: inline-block;
   margin-left: 10.43em;
-  color: #e76043; 
+  color: #e76043;
   font-size: .87em;
   font-family: "varela round", sans-serif;
 }
 .user-profile > .description {
   margin: auto;
   margin-top: 1.35em;
-  color: black; 
+  color: black;
   font-size: .87em;
   font-family: "varela round", sans-serif;
   text-align: justify;
@@ -44,12 +44,13 @@
 	padding: .7em;
   margin-left: .3em;
   margin-top: .3em;
-  height: 6.23em;
-  width: 6.23em;
-  border-radius: 18em;
+  height: 8.23em;
+  width: 8.23em;
+  border-radius: 20em;
   display: block;
   margin-left: auto;
   margin-right: auto;
+  object-fit: cover;
 }
 
 .user-profile ul.data {
@@ -62,7 +63,7 @@
 }
 .user-profile li {
 	margin: 0 auto;
-  padding: 1.30em; 
+  padding: 1.30em;
   width: 33.33334%;
   display: table-cell;
   text-align: center;
@@ -77,4 +78,10 @@
 }
 .user-profile span:hover {
   color: #daebea;
+}
+
+.cover {
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
 }
