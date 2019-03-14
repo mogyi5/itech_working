@@ -18,7 +18,6 @@ Add Recipe
 
 {% block body_block %}
 
-
 <div class="form-style-10">
     <h1>Add a recipe, chef!<span>Add today a recipe and help millions to find your tasteful recipe!</span></h1>
     <form method="post">
@@ -29,50 +28,84 @@ Add Recipe
 
             {% for ri_form in ri_formset %}
             <div class="ri-formset">
-                <p>Ingredient</p>
-                {{ ri_form.ingredient }}
-                {% if ri_form.ingredient.errors %}
-                {% for error in ri_form.ingredient.errors %}
-                {{ error|escape }}
+                <div class="grid-container">
+                    <div>
+                        <p>Ingredient</p>
+                        {{ ri_form.ingredient }}
+                        {% if ri_form.ingredient.errors %}
+                        {% for error in ri_form.ingredient.errors %}
+                        {{ error|escape }}
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p>Quantity</p>
+                        {{ ri_form.quantity }}
+                        {% if ri_form.quantity.errors %}
+                        {% for error in ri_form.quantity.errors %}
+                        {{ error|escape }}
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p>Unit</p>
+                        {{ ri_form.unit }}
+                        {% if ri_form.unit.errors %}
+                        {% for error in ri_form.unit.errors %}
+                        {{ error|escape }}
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
                 {% endfor %}
-                {% endif %}
 
-                <p>Quantity</p>
-                {{ ri_form.quantity }}
-                {% if ri_form.quantity.errors %}
-                {% for error in ri_form.quantity.errors %}
-                {{ error|escape }}
-                {% endfor %}
-                {% endif %}
-
-                <p>Unit</p>
-                {{ ri_form.unit }}
-                {% if ri_form.unit.errors %}
-                {% for error in ri_form.unit.errors %}
+                {% if ri_formset.non_form_errors %}
+                {% for error in ri_formset.non_form_errors %}
                 {{ error|escape }}
                 {% endfor %}
                 {% endif %}
             </div>
-            {% endfor %}
 
-            {% if ri_formset.non_form_errors %}
-            {% for error in ri_formset.non_form_errors %}
-            {{ error|escape }}
-            {% endfor %}
-            {% endif %}
+            <div class="section"><span>2</span>Add Directions</div>
+            <div class="inner-wrap">
+                <div class="grid-container2">
+
+
+                    <div>
+                        <p>Add Picture</p>
+                        {{ recipe_form.picture.errors }}
+                        {{ recipe_form.picture }}
+                    </div>
+                    <div>
+                        <p>Recipe Title</p>
+                        {{ recipe_form.title.errors }}
+                        {{ recipe_form.title }}
+                    </div>
+                    <div>
+                        <p>Servings</p>
+                        {{ recipe_form.servings.errors }}
+                        {{ recipe_form.servings }}
+                    </div>
+                    <div>
+                        <p>Recipe Category</p>
+                        {{ recipe_form.category.errors }}
+                        {{ recipe_form.category }}
+                    </div>
+                    <div>
+                        <p>Time</p>
+                        {{ recipe_form.cooking_time.errors }}
+                        {{ recipe_form.cooking_time }}
+                    </div>
+                    <br>
+
+                </div>
+                <p style="text-align:center;">Directions</p>
+                {{ recipe_form.direction.errors }}
+                {{ recipe_form.direction }}
+            </div>
+
+            <button class="btn btn-primary" type="submit" name="submit">Add recipe!</button>
         </div>
-
-        <div class="section"><span>2</span>Add Directions</div>
-        <div class="inner-wrap">
-            {% for field in recipe_form.visible_fields %}
-            {{ field.errors }}
-            {{ field.help_text }}
-            {{ field }}
-            {% endfor %}
-        </div>
-
-        <button class="btn btn-primary" type="submit" name="submit">Add recipe!</button>
-        <!--<input class="btn btn-lg btn-primary" type="submit" name="Add recipe"/>-->
     </form>
 </div>
 

@@ -7,63 +7,157 @@ Recipe
 
 {% block body_block %}
 
-<h1>{{recipe.title}}</h1>
-<img src="{{ MEDIA_URL }}{{recipe.picture}}" width="300" height="300" alt="{{recipe.title}}" />
-<br/>
-<p>   <strong>Servings:</strong>
-  {{rcipe.servings}} <br/>
-  <strong>Category:</strong>
-  {{recipe.category}} <br/>
-  <strong>Cooking Time:</strong>
-  {{recipe.cooking_time}} minutes <br/></p>
-<h3>Ingredients</h3>
-{%for i in recipe_ingredients %}
-<strong> {{i.ingredient}}</strong>  {{i.quantity}} {{i.unit}} <br/>
-{%endfor%}
-<h3>Method</h3>
-<p>
-  <strong>Direction:</strong>
-  {{recipe.direction}} <br/>
-  <strong>Uploaded by:</strong>
-  <a href= "/yumyum/profile/{{recipe.user}}/">{{recipe.user}}</a>  <br/>
-</p>
+<br>
+<br>
+<br>
+<br>
 
-<div class="fb-share-button" data-href="window.location.href" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false"  data-layout="button" data-size="large" data-mobile-iframe="true">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" data-pin-tall="true" ></a><script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
+<div class="grid-containerRecipe">
+    <div class="Title">
+        <h1>{{recipe.title}} by <a href="/yumyum/profile/{{recipe.user}}/">{{recipe.user}}</a></h1>
+    </div>
+    <div class="image">
+        <img src="{{ MEDIA_URL }}{{recipe.picture}}" width="300" height="300" alt="{{recipe.title}}"/>
+    </div>
+    <div class="method">
+        <h3 style="text-align:center;font-family: 'Yellowtail', cursive; font-size: 2em; color:black;">Directions</h3>
+        <p style="text-align: left;">
+            {{recipe.direction}} <br/>
+        </p>
+    </div>
+    <div class="comments">
+        <h3 style="text-align:center;font-family: 'Yellowtail', cursive; font-size: 2em; color:black;">Reviews</h3>
+        {%if reviews%}
+        {% for r in reviews %}
+        <p><strong><a href="/yumyum/profile/{{r.user}}/">{{r.user}}</a>: {{r.comment_title}} Rating:
+            {{r.rating}}</strong><br>
+            {{r.comment_body}}
+        </p>
+        {%endfor%}
+        {% else %}
+        {%if user.is_authenticated %}
+        <p>There are no reviews yet!</p>
+        {%else%}
+        <p>There are no reviews yet! <a href="{% url 'auth_login' %}">Sign in</a> to add a review!</p>
+        {%endif%}
+        {%endif%}
+
+        {%if user.is_authenticated and user.username != recipe.user.username%}
+
+        {% if intcount > 0 or newr %}
+        <h2>Thanks for submitting a review!</h2>
+        {% else %}
+
+        <div style="text-align:center;">
+            <h3 style="font-family: 'Yellowtail', cursive; font-size: 2em; padding-top:10px; color:black;">Add your review</h3>
+            <form action="." method="post">
+                <p>Rating</p>
+                {{ review_form.rating }}
+                <p>Title</p>
+                {{review_form.comment_title}}
+                <p>Add your review</p>
+                {{review_form.comment_body}}
+                {% csrf_token %}
+                <br><a type="submit" class="btn btn-lg btn-primary" value="" onClick="removeDiv(this);">Add review</a>
+            </form>
+        </div>
+        {% endif %}
+
+        {% endif %}
+    </div>
+    <div class="ingredients">
+        <h3 style="font-family: 'Yellowtail', cursive; font-size: 2em;">Ingredients</h3>
+        {%for i in recipe_ingredients %}
+        <strong> {{i.ingredient}}</strong> {{i.quantity}} {{i.unit}} <br/>
+        {%endfor%}
+    </div>
+    <div class="servingsetc">
+        <ul>
+            <li><strong>Servings:</strong> {{recipe.servings}}</li>
+            <li><strong>Category:</strong> {{recipe.category}}</li>
+            <li><strong>Cooking Time:</strong> {{recipe.cooking_time}} minutes</li>
+        </ul>
+    </div>
 
 
-<h3>Reviews</h3>
-{%if reviews%}
-{% for r in reviews %}
-<p><strong><a href= "/yumyum/profile/{{r.user}}/">{{r.user}}</a>: {{r.comment_title}}    Rating: {{r.rating}}</strong><br>
-  {{r.comment_body}}
-</p>
-{%endfor%}
-{% else %}
-{%if user.is_authenticated %}
-<p>There are no reviews yet!</p>
-{%else%}
-<p>There are no reviews yet! <a href="{% url 'auth_login' %}">Sign in</a> to add a review!</p>
-{%endif%}
-{%endif%}
-
-{%if user.is_authenticated and user.username != recipe.user.username%}
-
-{% if intcount > 0 or newr %}
-<h2>Thanks for submitting a review!</h2>
-{% else %}
-
-<div>
-<h2>Add your review</h2>
-<form action="." method="post">
-  {{ review_form.as_ul }}
-  {% csrf_token %}
-  <p><input type="submit" value="Add review" onClick="removeDiv(this);"></p>
-</form>
 </div>
-{% endif %}
 
-{% endif %}
+<h3 style="text-align:center;font-family: 'Yellowtail', cursive; font-size: 2em; padding-top:10px; color:black;">Share this!</h3><br>
+<div class="socialbuttons">
+    <div class="fb-share-button" data-href="window.location.href" data-layout="button" data-size="large"
+         data-mobile-iframe="true"><a target="_blank"
+                                      href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+                                      class="fb-xfbml-parse-ignore">Share</a></div>
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false"
+       data-layout="button" data-size="large" data-mobile-iframe="true">Tweet</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" data-pin-tall="true"></a>
+    <script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
+</div>
+
+<!--<h1>{{recipe.title}}</h1>-->
+<!--<img src="{{ MEDIA_URL }}{{recipe.picture}}" width="300" height="300" alt="{{recipe.title}}"/>-->
+<!--<br/>-->
+<!--<p><strong>Servings:</strong>-->
+<!--{{rcipe.servings}} <br/>-->
+<!--<strong>Category:</strong>-->
+<!--{{recipe.category}} <br/>-->
+<!--<strong>Cooking Time:</strong>-->
+<!--{{recipe.cooking_time}} minutes <br/></p>-->
+<!--<h3>Ingredients</h3>-->
+<!--{%for i in recipe_ingredients %}-->
+<!--<strong> {{i.ingredient}}</strong>  {{i.quantity}} {{i.unit}} <br/>-->
+<!--{%endfor%}-->
+<!--<h3>Method</h3>-->
+<!--<p>-->
+<!--<strong>Direction:</strong>-->
+<!--{{recipe.direction}} <br/>-->
+<!--<strong>Uploaded by:</strong>-->
+<!--<a href="/yumyum/profile/{{recipe.user}}/">{{recipe.user}}</a> <br/>-->
+<!--</p>-->
+
+<!--<div class="fb-share-button" data-href="window.location.href" data-layout="button" data-size="large"-->
+<!--data-mobile-iframe="true"><a target="_blank"-->
+<!--href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"-->
+<!--class="fb-xfbml-parse-ignore">Share</a></div>-->
+<!--<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false"-->
+<!--data-layout="button" data-size="large" data-mobile-iframe="true">Tweet</a>-->
+<!--<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+<!--<a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" data-pin-tall="true"></a>-->
+<!--<script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>-->
+
+
+<!--<h3>Reviews</h3>-->
+<!--{%if reviews%}-->
+<!--{% for r in reviews %}-->
+<!--<p><strong><a href="/yumyum/profile/{{r.user}}/">{{r.user}}</a>: {{r.comment_title}} Rating: {{r.rating}}</strong><br>-->
+<!--{{r.comment_body}}-->
+<!--</p>-->
+<!--{%endfor%}-->
+<!--{% else %}-->
+<!--{%if user.is_authenticated %}-->
+<!--<p>There are no reviews yet!</p>-->
+<!--{%else%}-->
+<!--<p>There are no reviews yet! <a href="{% url 'auth_login' %}">Sign in</a> to add a review!</p>-->
+<!--{%endif%}-->
+<!--{%endif%}-->
+
+<!--{%if user.is_authenticated and user.username != recipe.user.username%}-->
+
+<!--{% if intcount > 0 or newr %}-->
+<!--<h2>Thanks for submitting a review!</h2>-->
+<!--{% else %}-->
+
+<!--<div>-->
+<!--<h2>Add your review</h2>-->
+<!--<form action="." method="post">-->
+<!--{{ review_form.as_ul }}-->
+<!--{% csrf_token %}-->
+<!--<p><input type="submit" value="Add review" onClick="removeDiv(this);"></p>-->
+<!--</form>-->
+<!--</div>-->
+<!--{% endif %}-->
+
+<!--{% endif %}-->
 
 {% endblock %}
