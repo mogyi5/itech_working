@@ -50,7 +50,7 @@ if (item) {
     <ul class="data" style="color:black;">
         {% if recipes %}
         {% for r in recipes %}
-        <li><a href="/yumyum/recipe/{{r.slug}}/">{{r.title}}</a>: {{r.category}}</li>
+        <a href="/yumyum/recipe/{{r.slug}}/">{{r.title}}</a>: {{r.category}}
         <br>
         {%endfor%}
         {%endif%}
