@@ -1,8 +1,11 @@
 ﻿***********BEFORE YOU PUSH DELETE db.sqlite3 & THE FILES IN yumyum/pycache (except __init__)***************************
 
+pythonanywhere: 	yumyum, itech1234
+
 TO RUN AFTER PULLING: 
 
   pip install django-inlinecss - the first time
+  pip install django social-auth-app-django
 
   python manage.py makemigrations
   python manage.py migrate

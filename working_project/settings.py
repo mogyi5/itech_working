@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'yumyum',
     'registration',
     'django_inlinecss',
+    'social_django', # add this
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 ROOT_URLCONF = 'working_project.urls'
@@ -69,7 +78,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.media'
+                'django.template.context_processors.media',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -138,3 +150,7 @@ REGISTRATION_OPEN = True
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 LOGIN_REDIRECT_URL = '/yumyum/'
+
+# social stuff
+SOCIAL_AUTH_FACEBOOK_KEY = '2520887367939560'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'f5b07e6be274d9ae60a4aa022cb90d3c'
