@@ -8,6 +8,14 @@ Contact
 {% endblock %}
 
 {% block body_block %}
+<br/>
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
 
 <div class="container contact">
     <div class="row">
@@ -20,15 +28,15 @@ Contact
         </div>
         <div class="col-md-9" style="border-color: gray;border-style: solid;">
             <div class="contact-form">
-                <div class="form-group">
+                <form role="form" action="" method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-lg btn-primary">Submit</button>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>

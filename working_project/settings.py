@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'yumyum',
     'registration',
     'django_inlinecss',
-    'social_django', # add this
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -87,7 +87,17 @@ TEMPLATES = [
     },
 ]
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
 WSGI_APPLICATION = 'working_project.wsgi.application'
+
+# for the contact form
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'testing@example.com'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+EMAIL_PORT = 1025
 
 
 # Database

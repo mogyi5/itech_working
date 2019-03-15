@@ -1,5 +1,15 @@
 {% extends "yumyum/base.html" %}
 {% block body_block %}
+<script>
+    function redirect(){
+       window.location.href = "{% url 'index'%}";
+    }
+
+    setTimeout(redirect, 3000);
+</script>
+
+<br/>
 <h1>Registration Complete</h1>
-<p>You are now registered</p>
+<p>You are now one of us! <br/>
+ Redirecting to main page...</p>
 {% endblock %}

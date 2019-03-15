@@ -11,6 +11,9 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db import IntegrityError, transaction
 from yumyum.forms import RIFSet
+from django.core.mail import EmailMessage
+from django.template.loader import get_template
+from time import sleep
 
 @login_required
 def add_recipe(request):
@@ -48,11 +51,12 @@ def add_recipe(request):
                     #Replace the old with the new
                     RecipeIngredient.objects.bulk_create(new_ingredients)
                     # And notify our users that it worked
-                    messages.success(request, 'You have added a recipe.')
+                messages.success(request, 'You have added a recipe successfully!')
+                sleep(1)
+                return redirect(reverse('show_recipe', args=(recipe.slug,)))
 
             except IntegrityError: #If the transaction failed
                 messages.error(request, 'There was an error adding the recipe.')
-                return redirect(reverse('index'))
 
     else:
         recipe_form = RecipeForm()
@@ -63,35 +67,7 @@ def add_recipe(request):
         'ri_formset': ri_formset,
 
     }
-
     return render(request, 'yumyum/add_recipe.html', context_dict)
-
-# def add_recipe(request):
-#     if request.method == 'POST':
-#         ri_form = RecipeIngredientForm(data=request.POST)
-#         recipe_form = RecipeForm(data=request.POST)
-#
-#         if ri_form.is_valid() and recipe_form.is_valid():
-#             recipe = recipe_form.save(commit=False)
-#             if 'picture' in request.FILES:
-#                 recipe.picture = request.FILES['picture']
-#             title = recipe_form.cleaned_data['title']
-#             cooking_time = recipe_form.cleaned_data['cooking_time']
-#             direction = recipe_form.cleaned_data['direction']
-#             recipe.save()
-#             ri = ri_form.save(commit=False)
-#             ri.recipe = recipe
-#             ri.save()
-#
-#         else:
-#             print(ri_form.errors, recipe_form.errors)
-#     else:
-#         ri_form = RecipeIngredientForm()
-#         recipe_form = RecipeForm()
-#     return render(request, 'yumyum/add_recipe.html', {'ri_form': ri_form,
-#                'recipe_form': recipe_form})
-
-
 
 def index(request):
     request.session.set_test_cookie()
@@ -105,15 +81,35 @@ def index(request):
     return response
 
 def contact(request):
-    form = ContactForm()
+    form_class  = ContactForm
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = form_class(data=request.POST)
+
         if form.is_valid():
-            form.save(commit=True)
-            return index(request)
+            subject = request.POST.get('subject','')
+            message = request.POST.get('message','')
+            sender = request.POST.get('sender','')
+
+            template = get_template('contact_template.txt')
+            context = { 'subject': subject,
+                        'message': message ,
+                        'sender': sender,
+            }
+            content = template.render(context)
+
+            email = EmailMessage(
+                "Contact form:" + subject,
+                message,
+                "YumYum",
+                ['youremail@gmail.com'],
+                headers = {'Reply-To': sender }
+            )
+            email.send()
+            messages.success(request, 'Your contact form was sent successfully!')
         else:
+            messages.warning(request, 'Please correct the error below.')
             print(form.errors)
-    return render(request, 'yumyum/contact.html', {'form': form})
+    return render(request, 'yumyum/contact.html', {'form': form_class})
 
 def cook(request):
     context_dict = {}

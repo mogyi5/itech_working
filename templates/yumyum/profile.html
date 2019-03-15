@@ -29,8 +29,6 @@ if (item) {
         clickedButton.value = 'Edit Profile'
     }
 }}
-
-
 </script>
 
 
@@ -40,7 +38,7 @@ if (item) {
 <h1 class="title-pen" style="font-family: 'Yellowtail', cursive; font-size: 4.5em;"> User Profile for <span
         style="color:#FCAF15">{{selecteduser.username}}</span></h1>
 <div class="user-profile">
-    <img class="avatar" src="{{ MEDIA_URL }}{{userprofile.picture }}" alt="user profile picture"/>
+    <img class="avatar" src="{{ MEDIA_URL }}{{userprofile.picture }}" alt="No profile picture!"/>
     <div class="description">
         {{userprofile.about}}
         <br>
@@ -50,6 +48,9 @@ if (item) {
     <ul class="data" style="color:black;">
         {% if recipes %}
         {% for r in recipes %}
+        <div class="image">
+          <img class="cover" src="{{ MEDIA_URL }}{{r.picture}}" alt="{{r.title}}"/>
+        </div>
         <a href="/yumyum/recipe/{{r.slug}}/">{{r.title}}</a>: {{r.category}}
         <br>
         {%endfor%}
