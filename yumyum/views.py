@@ -232,7 +232,7 @@ def suggest_recipe(request):
         include_with = request.GET['suggestion']
     cat_list = get_recipe_list(100, include_with)
 
-    return render(request, 'yumyum/cats.html', {'cats': cat_list })
+    return render(request, 'yumyum/cook.html', {'cats': cat_list })
 
 def get_recipe_list2(max_results=0, include_with=''):
     cat_list = []
