@@ -213,3 +213,47 @@ def get_server_side_cookie(request, cookie, default_val=None):
     if not val:
         val = default_val
     return val
+
+def get_recipe_list(max_results=0, include_with=''):
+    cat_list = []
+    if include_with:
+        cat_list = Recipe.objects.filter(title__icontains=include_with)
+
+    if max_results > 0:
+        if len(cat_list) > max_results:
+            cat_list = cat_list[:max_results]
+    return cat_list
+
+def suggest_recipe(request):
+    cat_list = []
+    include_with = ''
+
+    if request.method == 'GET':
+        include_with = request.GET['suggestion']
+    cat_list = get_recipe_list(100, include_with)
+
+    return render(request, 'yumyum/cats.html', {'cats': cat_list })
+
+def get_recipe_list2(max_results=0, include_with=''):
+    cat_list = []
+    if include_with:
+        all_ingred = Ingredient.objects.all()
+        searching_ingred = Ingredient.objects.none()
+        for one_ingredient in include_with.split():
+            searching_ingred = searching_ingred.union(searching_ingred,all_ingred.filter(ingredient__icontains=one_ingredient))
+            cat_list.append(searching_ingred)
+
+    if max_results > 0:
+        if len(cat_list) > max_results:
+            cat_list = cat_list[:max_results]
+    return cat_list
+
+def suggest_recipe2(request):
+    cat_list = []
+    include_with = ''
+
+    if request.method == 'GET':
+        include_with = request.GET['suggestion2']
+    cat_list = get_recipe_list(100, include_with)
+
+    return render(request, 'yumyum/cats.html', {'cats': cat_list })
