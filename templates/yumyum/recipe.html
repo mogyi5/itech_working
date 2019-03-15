@@ -35,7 +35,7 @@ $(function() {
     <h1>{{recipe.title}} by <a href="/yumyum/profile/{{recipe.user}}/">{{recipe.user}}</a></h1>
   </div>
   <div class="image">
-    <img class="cover" src="{{ MEDIA_URL }}{{recipe.picture}}" alt="{{recipe.title}}"/>
+    <img class="cover" src="{{ MEDIA_URL }}{{recipe.picture}}" alt="{{recipe.title}} photo!"/>
   </div>
   <div class="method">
     <h3 style="text-align:center;font-family: 'Yellowtail', cursive; font-size: 2em; color:black;">Directions</h3>
@@ -70,14 +70,14 @@ $(function() {
       <h3 style="font-family: 'Yellowtail', cursive; font-size: 2em; padding-top:10px; color:black;">Add your
         review</h3>
         <form action="." method="post">
+          {% csrf_token %}
           <p>Rating</p>
           {{ review_form.rating }}
           <p>Title</p>
           {{review_form.comment_title}}
           <p>Add your review</p>
           {{review_form.comment_body}}
-          {% csrf_token %}
-          <br><a type="submit" class="btn btn-lg btn-primary" value="" onClick="removeDiv(this);">Add review</a>
+          <br><input id="sbmtbtn" type="submit" class="btn btn-lg btn-primary" value="Add review" onClick="removeDiv(this);">
         </form>
       </div>
       {% endif %}

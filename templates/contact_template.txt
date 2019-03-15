@@ -1,0 +1,8 @@
+Subject:
+{{ subject }}
+
+Message:
+{{ message|safe|striptags }}
+
+Sender:
+{{ sender }}
