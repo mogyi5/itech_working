@@ -7,6 +7,35 @@ Let's Cook! 😊
 
 {% block body_block %}
 
-<!-- Insert code here -->
+<!--<h1 style="font-family: 'Yellowtail', cursive; height:1%; font-size: 4.5em; text-align:center; padding-top:10%;">Search for a recipe!</h1 style="font-family: 'Yellowtail', cursive; height:1%; font-size: 4.5em; text-align:center; padding-top:10%;">-->
+
+
+<ul class="nav nav-list flex-column">
+  <li class="nav-item">Type recipe name here</li>
+  <form>
+  <li class="nav-item"><input class="search-query form-control" type="text"
+      name="suggestion" value="" id="suggestion" /> 
+  </li>
+  </form> 
+</ul>
+<hr>
+<div id="cats"> 
+</div>
+
+<ul class="nav nav-list flex-column">
+  <li class="nav-item">Type all the ingredients here</li>
+  <form>
+  <li class="nav-item"><input class="search-query form-control" type="text"
+      name="suggestion2" value="" id="suggestion2" />
+  </li>
+  </form>
+</ul>
+<hr>
+<div id="cats">
+</div>
+
+
+<!--<p style="font-family: 'Yellowtail', cursive; font-size: 2em; text-align:center; padding-top:10%;">OR...</p>-->
+<!--<h1 style="font-family: 'Yellowtail', cursive; font-size: 4.5em; text-align:center; padding-top:10%;">Add ingredients separated by ;</h1>-->
 
 {% endblock %}

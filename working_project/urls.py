@@ -18,6 +18,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from yumyum import views
 from django.core.urlresolvers import reverse
+from django.contrib.auth import views as auth_views
 
 
 from django.conf import settings
@@ -35,4 +36,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
+    url(r'^oauth/', include('social_django.urls', namespace="social")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

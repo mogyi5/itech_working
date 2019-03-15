@@ -12,8 +12,12 @@ urlpatterns = [
     # url(r'^review/', views.review, name='review'),
     url(r'^recipe/(?P<recipe_title_slug>[\w\-]+)/$', views.show_recipe, name='show_recipe'),
     url(r'^add_recipe/$', views.add_recipe, name='add_recipe'),
+<<<<<<< HEAD
     url(r'^suggest/$', views.suggest_recipe, name='suggest_recipe'),
     url(r'^suggest2/$', views.suggest_recipe2, name='suggest_recipe2'),
+=======
+
+>>>>>>> master
 #    url(r'^login/$', views.user_login, name='login'),
 #    url(r'^register/$', views.register, name='register'),
 

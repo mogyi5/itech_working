@@ -1,9 +1,12 @@
-﻿DB HAS BEEN POPULATED WITH SOME THINGS.
+﻿***********BEFORE YOU PUSH DELETE db.sqlite3 & THE FILES IN yumyum/pycache (except __init__)***************************
 
-TO RUN THIS AFTER CHANGES TO THE MODEL :
+pythonanywhere: 	yumyum, itech1234
 
-RUN THE COMMANDS
-  ****DELETE db.sqlite3*********
+TO RUN AFTER PULLING: 
+
+  pip install django-inlinecss - the first time
+  pip install django social-auth-app-django
+
   python manage.py makemigrations
   python manage.py migrate
   python populate_yumyum.py

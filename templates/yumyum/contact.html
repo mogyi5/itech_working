@@ -1,19 +1,55 @@
 {% extends 'yumyum/base.html' %}
 {% load staticfiles %}
+{% load inlinecss %}
+{% inlinecss "static/design/contactus.css" %}
 
 {%block title_block %}
 Contact
 {% endblock %}
 
 {% block body_block %}
+<br/>
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
 
-<h1>Contact Us</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <div class="form-actions">
-    <button type="submit">Send</button>
-  </div>
-</form>
-
+<div class="container contact">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="contact-info">
+                <img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image"/>
+                <h2 style="color:white;">Contact Us</h2>
+                <h4 style="color:white;">We would love to hear from you !</h4>
+            </div>
+        </div>
+        <div class="col-md-9" style="border-color: gray;border-style: solid;">
+            <div class="contact-form">
+                <form role="form" action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 {% endblock %}
+{% endinlinecss %}

@@ -6,6 +6,7 @@ django.setup()
 from yumyum.models import Category, Type, Ingredient, Recipe, RecipeIngredient, Review, UserProfile
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.core.files import File
 
 def populate():
 
@@ -22,40 +23,43 @@ def populate():
     user3 = User.objects.create_user(username='ru',email='dragrace@vh1.com',password='kittygirl')
 
     Profiles = {
-    "john":{"about": "I am a fun loving, free guy that loves to spice up his life. I am 23 and work all the time so the only way I can express myself is through cooking: by making literally spicy food so I feel the weight of the world crush me less."},
-    "donald":{"about": "I'm not actually Donald Trump, but the username wasn't taken so I thought why not? I still live with my parents but I feel better if I can help with the cooking... It is hard to get a job after graduation! Shame I studied English Literature instead of something useful at university!"},
-    "ru":{"about": "I am 28, single, and ready to make some kick-ass food for my pet chihuahua."}
+    "john":{"img":File(open('./media/profile_images/john.JPG','rb')), "about": "I am a fun loving, free guy that loves to spice up his life. I am 23 and work all the time so the only way I can express myself is through cooking: by making literally spicy food so I feel the weight of the world crush me less."},
+    "donald":{"img":File(open('./media/profile_images/don.JPG','rb')) ,"about": "I'm not actually Donald Trump, but the username wasn't taken so I thought why not? I still live with my parents but I feel better if I can help with the cooking... It is hard to get a job after graduation! Shame I studied English Literature instead of something useful at university!"},
+    "ru":{"img":File(open('./media/profile_images/ru.JPG','rb')) , "about": "I am 28, single, and ready to make some kick-ass food for my pet chihuahua."}
     }
 
     for p, p_data in Profiles.items():
-        add_profile(User.objects.get(username = p), p_data["about"])
+        add_profile(User.objects.get(username = p), p_data["img"], p_data["about"])
 
 
 
     Categories = {"Light":{
-    "Curried Fish & Leek Noodles" : { "servings":2, "cooking_time":10, "direction":"Defrost the frozen fish fillet in the fridge overnight. The next day, season the fish with salt and pepper and dust with the curry powder. Pan-fry it in a splash of olive oil over a medium heat until cooked. It will take about 5 minutes on each side, depending on the thickness of the fillet. Add the leek ribbons to the frying pan and cook them along with the fish. Serve the fish on a bed of leek noodles.", "user":user2},
+    "Curried Fish & Leek Noodles" : { "servings":2, "cooking_time":10, "direction":"Defrost the frozen fish fillet in the fridge overnight. The next day, season the fish with salt and pepper and dust with the curry powder. Pan-fry it in a splash of olive oil over a medium heat until cooked. It will take about 5 minutes on each side, depending on the thickness of the fillet. Add the leek ribbons to the frying pan and cook them along with the fish. Serve the fish on a bed of leek noodles.", "user":user2, "img":File(open('./media/recipe_images/curried-fish.JPG','rb'))},
+    "Maple Tamarind Glazed Salmon" : { "servings":4, "cooking_time":30, "direction":" Preheat the oven to 425F degrees and line a baking sheet with parchment paper. Season the salmon portions lightly with salt and pepper and lay a couple of inches apart on the prepared baking sheet. Whisk all of the ingredients for the glaze together until well combined. Liberally brush the glaze all over the salmon pieces. Bake for 10 minutes, then reapply another layer of the glaze and bake for an additional 10 minutes. Serve immediately.", "user":user3, "img":File(open('./static/images/slide3.JPG','rb'))},
     },
     "Pasta":{
-    "Smoked Mackerel & Kale Carbonara": { "servings":2, "cooking_time":15, "direction":"Bring a large pan of salted water to the boil and cook the spaghetti until al denta, throwing in the kale about 2 minutes before it's ready. Meanwhile, grab a bowl and mix the egg yolks with the grated parmesan and plenty of cracked black pepper. When the spaghetti and kale are cooked, transfer them to the bowl using tongs and mix everything together (the heat of the spaghetti will cook the egg yolk and create the sauce). Add a tablespoon of the cooking water to the pasta along with the flaked smoked mackerel, season if required, and serve with a drizzle of olive oil.", "user":user1,}
+    "Smoked Mackerel & Kale Carbonara": { "servings":2, "cooking_time":15, "direction":"Bring a large pan of salted water to the boil and cook the spaghetti until al dente, throwing in the kale about 2 minutes before it's ready. Meanwhile, grab a bowl and mix the egg yolks with the grated parmesan and plenty of cracked black pepper. When the spaghetti and kale are cooked, transfer them to the bowl using tongs and mix everything together (the heat of the spaghetti will cook the egg yolk and create the sauce). Add a tablespoon of the cooking water to the pasta along with the flaked smoked mackerel, season if required, and serve with a drizzle of olive oil.", "user":user1,"img":File(open('./media/recipe_images/carbonara.JPG','rb'))},
+    "Basically Spaghetti Pomodoro": { "servings":4, "cooking_time":35, "direction":"Bring a large pan of salted water to the boil. Meanwhile, open the can of tomatoes, drain contents in a colander set over a medium bowl. Poke a hole in the tomatoes and shake to drain liquid and seeds from the inside of each tomato. Set aside. Heat oil in a large pan, add smashed cloves of garlic and cook, stirring often until garlic is golden - about 3 minutes. Stir in the red pepper flakes and add drained tomatoes; increade heat to medium-high. Cook, stirring occasionally, until tomatoes are starting to break down, 6-8 minutes. Add reserved tomato liquid, add salt, basil, and reduce heat to a simmer. Cook until liquid is reduced, 8-10 minutes. Add pasta to the pot of water and cook, stirring occasionally.Just before it's done, scoop out one cup of cooking fluid with a heatproof measuring cup. When al dente, transfer the pasta to the pot with the tomatoes, and add half of the reserved cooking liquid. Cook the pasta, tossing constantly, until liquid is mostly absorbed. Slowly sprinkle in half of the parmesan, and toss until it melts into the sauce. Add more pasta water, until the sauce oozes. Remove pot from heat and add butter. Add finished pasta to plates and top with remaining cheese and basil leaves.", "user":user1,"img":File(open('./static/images/slide2.JPG','rb'))},
     },
     "Main":{
-    "Chicken & Creamed Spinach": {"servings": 2, "cooking_time": 40, "direction": "Season the chicken thigh with salt and pepper. Pan-fry it skin-side down in a splash of olive oil over a medium heat. After about 10 minutes, when the skin is golden brown, turn it over and cook it for a further 10 minutes. Add the garlic and, just as it starts to brown, throw in the cannellini beans and then the spinach. Once the spinach has wilted and the chicken in cooked through, pour over the cream, season again with salt and pepper, then simmer for a few minutes to thicken the sauce a bit and serve.", "user": user1,},
-    "Leek Tatin Quiche": { "servings":2, "cooking_time":30, "direction":"Grab a really small pan and place the leeks in it, standing them up like soldiers. Drizzle with a generous glug of olive oil, season with salt and pepper and start pan-frying over a medium heat. After about 10 minutes, turn each piece of leek over to cook on the other side. While the leeks continue cooking, whisk the eggs and season with salt and pepper. Preheat the grill. Pour the eggs over the leeks. Turn the heat down to low and cook slowly for about 10 minutes until the egg is almost cooked. Place the pan under the hot grill until the top is completely cooked and golden brown. Eat from pan.", "user":user3,}
+    "Chicken & Creamed Spinach": {"servings": 2, "cooking_time": 40, "direction": "Season the chicken thigh with salt and pepper. Pan-fry it skin-side down in a splash of olive oil over a medium heat. After about 10 minutes, when the skin is golden brown, turn it over and cook it for a further 10 minutes. Add the garlic and, just as it starts to brown, throw in the cannellini beans and then the spinach. Once the spinach has wilted and the chicken in cooked through, pour over the cream, season again with salt and pepper, then simmer for a few minutes to thicken the sauce a bit and serve.", "user": user1,"img":File(open('./media/recipe_images/creamed.JPG','rb'))},
+    "Leek Tatin Quiche": { "servings":2, "cooking_time":30, "direction":"Grab a really small pan and place the leeks in it, standing them up like soldiers. Drizzle with a generous glug of olive oil, season with salt and pepper and start pan-frying over a medium heat. After about 10 minutes, turn each piece of leek over to cook on the other side. While the leeks continue cooking, whisk the eggs and season with salt and pepper. Preheat the grill. Pour the eggs over the leeks. Turn the heat down to low and cook slowly for about 10 minutes until the egg is almost cooked. Place the pan under the hot grill until the top is completely cooked and golden brown. Eat from pan.", "user":user3,"img":File(open('./media/recipe_images/leek.JPG','rb'))}
     },
     "Vegetarian":{
-    "Welsh Rarebit": { "servings":2, "cooking_time":5, "direction":"Preheat your Grill to high. Mix the grated cheese and cream together in a bowl to create a cheesy spread with the consistency of mashed potato. Spread it onto the bread slices, top each slice with two halves of spring onion, splash with Worcestershire sauce, then cook under the grill for a few minutes until the cheese melts and starts to brown. Remove from the grill, sprinkle with cracked black pepper and serve straightaway.", "user":user3,},
-    "White Bean Dauphinoise": { "servings": 2, "cooking_time": 35, "direction": "Preheat your oven to 190C/gas mark 5. Throw the cannellini beans into an ovenproof dish with the garlic. Pour over the cream and sprinkle over most of the grated parmesan. Season with salt and pepper then stir everything together and bake in the oven for about 25 minutes. Once cooked, serve sprinkled with the remaining parmesan and some cracked black pepper.", "user":user2,},
+    "Welsh Rarebit": { "servings":2, "cooking_time":5, "direction":"Preheat your Grill to high. Mix the grated cheese and cream together in a bowl to create a cheesy spread with the consistency of mashed potato. Spread it onto the bread slices, top each slice with two halves of spring onion, splash with Worcestershire sauce, then cook under the grill for a few minutes until the cheese melts and starts to brown. Remove from the grill, sprinkle with cracked black pepper and serve straightaway.", "user":user3,"img":File(open('./media/recipe_images/welsh.JPG','rb'))},
+    "White Bean Dauphinoise": { "servings": 2, "cooking_time": 35, "direction": "Preheat your oven to 190C/gas mark 5. Throw the cannellini beans into an ovenproof dish with the garlic. Pour over the cream and sprinkle over most of the grated parmesan. Season with salt and pepper then stir everything together and bake in the oven for about 25 minutes. Once cooked, serve sprinkled with the remaining parmesan and some cracked black pepper.", "user":user2, "img":File(open('./media/recipe_images/dauphinoise.JPG','rb'))},
+    "Grilled Vegetable Wrap": { "servings":2, "cooking_time": 25, "direction": "1. Preheat grill or broiler. Toss together asparagus, bell pepper, squash, and oil on large baking sheet. Season with salt and pepper, if desired. Grill or broil vegetables 4 to 6 minutes per side, turning once. 2. Mash together beans, garlic, and chile sauce in small bowl until smooth. 3. Spread half of bean mixture over each tortilla. Top each with 3 basil leaves, 1/2 cup roasted vegetables, 4 onion slices, and 1/2 cup arugula. Fold bottom third of tortillas over vegetables, and roll up tightly, tucking in sides as you go. Cut wraps in half on diagonal. Serve immediately, or wrap each half in foil or wax paper, and chill until ready to eat.", "user":user1, "img":File(open('./static/images/slide1.JPG','rb'))},
     },
     }
 
     for c, c_data in Categories.items():
         cat = add_cat(c)
         for i, i_data in c_data.items():
-             add_recipe(i,i_data["servings"],cat,i_data["cooking_time"], i_data["direction"], i_data["user"])
+             add_recipe(i,i_data["servings"],cat,i_data["cooking_time"], i_data["direction"], i_data["user"], i_data["img"])
 
     # Create ingredients by type
     Types = {"Dairy": {
-    "Milk", "Cheddar", "Mozzarella", "Brie", "Single Cream", "Whipping Cream", "Parmesan"
+    "Milk", "Cheddar", "Mozzarella", "Brie", "Single Cream", "Whipping Cream", "Parmesan", "Butter"
     },
     "Meat": {
     "Beef Mince", "Lamb Chops", "Pork Steak", "Chicken Nuggets", "Chicken Breast", "Chicken Thighs", "Chicken Wings", "Bacon", "Fish Fillet", "Smoked Mackerel"
@@ -64,16 +68,16 @@ def populate():
     "Bananas", "Apples", "Oranges", "Lemons", "Raspberries", "Kiwis", "Mandarins", "Strawberries"
     },
     "Vegetables":{
-    "Spring Onions", "Onions", "Carrots", "Cabbage", "Iceberg Lettuce", "Bell Peppers", "Peas", "Potatoes", "Spinach", "Leeks", "Kale", "Cannellini Beans"
+    "Spring Onions", "Onions", "Carrots", "Cabbage", "Iceberg Lettuce", "Bell Peppers", "Peas", "Potatoes", "Spinach", "Leeks", "Kale", "Cannellini Beans", "Asparagus Spears", "Squash", "Red Onions", "Arugula Leaves"
     },
     "Seasoning":{
-    "Cumin", "Black Pepper", "White Pepper", "Salt", "Paprika", "Cayenne Pepper", "Cinnamon", "Cayenne Pepper", "Garlic", "Curry Powder"
+    "Cumin", "Black Pepper", "White Pepper", "Salt", "Paprika", "Cayenne Pepper", "Cinnamon", "Cayenne Pepper", "Garlic", "Curry Powder", "Basil Leaves", "Grated Ginger", "Chilli Flakes", "Chinese Five Spice"
     },
     "Sauces":{
-    "Worcestershire Sauce", "Sweet Chilli Sauce", "Soy Sauce", "Vinegar", "Cooking Wine", "Tomato Sauce"
+    "Worcestershire Sauce", "Sweet Chilli Sauce", "Soy Sauce", "Vinegar", "Cooking Wine", "Tomato Sauce", "Sriracha Sauce", "Maple Syrup"
     },
     "Cupboard":{
-    "Bread", "Flour", "Sugar", "Yeast", "Honey", "Lentils", "Canned Beans", "Canned Sweetcorn", "Dried Spaghetti", "Rice", "Olive Oil", "Eggs"
+    "Bread", "Flour", "Sugar", "Yeast", "Honey", "Lentils", "Canned Beans", "Canned Sweetcorn", "Dried Spaghetti", "Rice", "Olive Oil", "Eggs", "Tortillas", "Tamarind Paste", "Canned Tomatoes"
     }
     }
 
@@ -136,6 +140,39 @@ def populate():
     "Salt":{"quantity":1, "unit":'pinch'},
     "Black Pepper":{"quantity":1, "unit":'pinch'}
     },
+    "Grilled Vegetable Wrap":{
+    "Asparagus Spears":{"quantity":12, "unit":'pieces'},
+    "Bell Peppers":{"quantity":1, "unit":'pieces'},
+    "Squash":{"quantity":1, "unit":'pieces'},
+    "Olive Oil":{"quantity":1, "unit":'tbsp.'},
+    "Canned Beans":{"quantity":250, "unit":'g'},
+    "Garlic":{"quantity":1, "unit":'cloves'},
+    "Sriracha Sauce":{"quantity":1/2, "unit":'tsp'},
+    "Tortillas":{"quantity":2, "unit":'pieces'},
+    "Basil Leaves":{"quantity":6, "unit":'pieces'},
+    "Red Onions":{"quantity":1/2, "unit":'pieces'},
+    "Arugula Leaves":{"quantity":75, "unit":'g'},
+    },
+    "Maple Tamarind Glazed Salmon":{
+    "Tamarind Paste":{"quantity":4, "unit":'tbsp.'},
+    "Maple Syrup":{"quantity":3, "unit":'tbsp.'},
+    "Grated Ginger":{"quantity":1, "unit":'tsp'},
+    "Chilli Flakes":{"quantity":1, "unit":'pinch'},
+    "Chinese Five Spice":{"quantity":1/2, "unit":'tsp'},
+    "Salt":{"quantity":1, "unit":'pinch'},
+    "Black Pepper":{"quantity":1, "unit":'pinch'}
+    },
+    "Basically Spaghetti Pomodoro":{
+    "Canned Tomatoes":{"quantity":400, "unit":'g'},
+    "Garlic":{"quantity":4, "unit":'cloves'},
+    "Olive Oil":{"quantity":3, "unit":'tbsp.'},
+    "Chilli Flakes":{"quantity":1, "unit":'pinch'},
+    "Basil Leaves":{"quantity":10, "unit":'pieces'},
+    "Dried Spaghetti":{"quantity":450, "unit":'g'},
+    "Parmesan":{"quantity":150, "unit":'g'},
+    "Butter":{"quantity":2, "unit":'tbsp.'},
+    "Salt":{"quantity":3, "unit":'tbsp.'},
+    },
     }
 
 # Add ingredients to the recipes above.
@@ -149,6 +186,7 @@ def populate():
     Comments = {
     "Tasty!" : {"rating": 4, "comment_body": "Made it for my fussy son and he loved it! So easy and quick!", "user": user1, "recipe":"Welsh Rarebit"},
     "Best meal I have ever had!" : {"rating": 5, "comment_body": "I literally cried, this was so good...", "user": user2, "recipe":"Chicken & Creamed Spinach"},
+    "SO GOOD": {"rating": 5, "comment_body": "This is like cocaine for my tastebuds I cannot get enough please send help", "user": user2, "recipe":"Welsh Rarebit"},
     }
 
 # Add a couple of reviews
@@ -173,8 +211,8 @@ def add_ingredient(name, type):
     return i
 
 # adding the recipe
-def add_recipe(title, servings, category, cooking_time, direction, user):
-    r = Recipe.objects.get_or_create(category=category, title=title, servings = servings, cooking_time = cooking_time, direction = direction, user = user)[0]
+def add_recipe(title, servings, category, cooking_time, direction, user, picture):
+    r = Recipe.objects.get_or_create(category=category, title=title, servings = servings, cooking_time = cooking_time, direction = direction, user = user, picture=picture)[0]
     r.save()
     return r
 
@@ -191,8 +229,8 @@ def add_reviews(rating, comment_title, comment_body, user, recipe):
     return rev
 
 # make profiles for the users
-def add_profile(user, about):
-    p = UserProfile.objects.get_or_create(user = user, about=about)[0]
+def add_profile(user, picture, about):
+    p = UserProfile.objects.get_or_create(user = user, about=about, picture = picture)[0]
     return p
 
 ## making a superuser
