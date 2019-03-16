@@ -14,6 +14,7 @@ from yumyum.forms import RIFSet
 from django.core.mail import EmailMessage
 from django.template.loader import get_template
 from time import sleep
+from django.db.models import Avg
 
 @login_required
 def add_recipe(request):
@@ -156,6 +157,10 @@ def show_recipe(request, recipe_title_slug):
 
     context_dict['newr'] = newr
     context_dict['review_form'] = review_form
+
+    avg_rev = Review.objects.filter(recipe=recipe, active=True).aggregate(Avg('rating'))
+    print(avg_rev)
+    context_dict['avg_rev'] = avg_rev['rating__avg']
 
     return render(request, 'yumyum/recipe.html', context_dict)
 

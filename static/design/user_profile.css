@@ -1,51 +1,79 @@
-.title-pen {
-  color: #333;
-  font-family: "Coda", sans-serif;
-  text-align: center;
+/* .title-pen {
+color: #333;
+font-family: "Coda", sans-serif;
+text-align: center;
 }
 .title-pen span {
-  color: #55acee;
+color: #55acee;
+} */
+
+#profilecontainer {
+  background-image: linear-gradient(to right top, #f0f0f0, #f4f4f4, #f7f7f7, #fbfbfb, #ffffff);
+  color: black;
+  margin: 0% auto;
+  width: 60%;
+  padding: 10px;
+  text-align: center;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr 1fr 1fr; */
+  /* grid-template-areas: "Title Title Title Title" "image servingsetc ingredients ingredients" "method method method method" "comments comments comments comments"; */ */
+  border: 3px solid #b4b4b4;
+  -webkit-box-shadow: 0px 4px 23px -7px rgba(0, 0, 0, 0.77);
+  -moz-box-shadow: 0px 4px 23px -7px rgba(0, 0, 0, 0.77);
+  box-shadow: 0px 4px 23px -7px rgba(0, 0, 0, 0.77);
 }
 
-.user-profile {
-  margin: auto;
-	width: 25em;
-  height: 11em;
-  background: #fff;
-  border-radius: .3em;
+h1 {
+  font-family: 'Yellowtail', cursive;
+  font-size: 3.9vw;
+}
+
+h5 {
+  text-align: center;
+  font-family: 'Yellowtail', cursive;
+  font-size: 2vw;
+}
+/* .user-profile {
+margin: auto;
+width: 25em;
+height: 11em;
+background: #fff;
+border-radius: .3em;
 }
 
 .user-profile  .username {
-  margin: auto;
-  margin-top: -4.40em;
-  margin-left: 5.80em;
-  color: #658585;
-  font-size: 1.53em;
-  font-family: "Coda", sans-serif;
-  font-weight: bold;
+margin: auto;
+margin-top: -4.40em;
+margin-left: 5.80em;
+color: #658585;
+font-size: 1.53em;
+font-family: "Coda", sans-serif;
+font-weight: bold;
 }
 .user-profile  .bio {
-  margin: auto;
-  display: inline-block;
-  margin-left: 10.43em;
-  color: #e76043;
-  font-size: .87em;
-  font-family: "varela round", sans-serif;
+margin: auto;
+display: inline-block;
+margin-left: 10.43em;
+color: #e76043;
+font-size: .87em;
+font-family: "varela round", sans-serif;
 }
 .user-profile > .description {
-  margin: auto;
-  margin-top: 1.35em;
-  color: black;
-  font-size: .87em;
-  font-family: "varela round", sans-serif;
-  text-align: justify;
-}
-.user-profile > img.avatar {
-	padding: .7em;
+margin: auto;
+margin-top: 1.35em;
+color: black;
+font-size: .87em;
+font-family: "varela round", sans-serif;
+text-align: justify;
+} */
+
+.avatar {
+  padding: .7em;
   margin-left: .3em;
   margin-top: .3em;
-  height: 8.23em;
-  width: 8.23em;
+  max-height: 20vh;
+  max-width: 20vw;
   border-radius: 20em;
   display: block;
   margin-left: auto;
@@ -53,35 +81,29 @@
   object-fit: cover;
 }
 
-.user-profile ul.data {
-	/* margin: 2em auto; */
-	height: 3.70em;
-  background: #FCAF15;
-  text-align: center;
-  border-radius: 0 0 .3em .3em;
-  width: auto;
-}
-.user-profile li {
-	margin: 0 auto;
-  padding: 1.30em;
-  width: 33.33334%;
-  display: table-cell;
-  text-align: center;
-}
+/* .user-profile ul.data {
+margin: 2em auto;
+height: 3.70em;
+background: #FCAF15;
+text-align: center;
+border-radius: 0 0 .3em .3em;
+width: auto;
+} */
+/* .user-profile li {
+margin: 0 auto;
+padding: 1.30em;
+width: 33.33334%;
+display: table-cell;
+text-align: center;
+} */
 
-.user-profile span {
-	font-family: "varela round", sans-serif;
-	color: #e3eeee;
-  white-space: nowrap;
-  font-size: 1.27em;
-  font-weight: bold;
-}
-.user-profile span:hover {
-  color: #daebea;
-}
-
-.cover {
-  width: 400px;
-  height: 300px;
-  object-fit: cover;
-}
+/* .user-profile span {
+font-family: "varela round", sans-serif;
+color: #e3eeee;
+white-space: nowrap;
+font-size: 1.27em;
+font-weight: bold;
+} */
+/* .user-profile span:hover {
+color: #daebea;
+} */

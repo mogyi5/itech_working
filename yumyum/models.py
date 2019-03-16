@@ -74,7 +74,7 @@ class RecipeIngredient(models.Model):
 	)
 	recipe = models.ForeignKey(Recipe, null = True)
 	ingredient = models.ForeignKey(Ingredient, null=True)
-	quantity = models.IntegerField()
+	quantity = models.DecimalField(decimal_places=2, max_digits=5,)
 	unit = models.CharField(choices = UNITS, max_length=30)
 
 	class Meta:

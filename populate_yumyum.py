@@ -147,10 +147,10 @@ def populate():
     "Olive Oil":{"quantity":1, "unit":'tbsp.'},
     "Canned Beans":{"quantity":250, "unit":'g'},
     "Garlic":{"quantity":1, "unit":'cloves'},
-    "Sriracha Sauce":{"quantity":1/2, "unit":'tsp'},
+    "Sriracha Sauce":{"quantity":0.5, "unit":'tsp'},
     "Tortillas":{"quantity":2, "unit":'pieces'},
     "Basil Leaves":{"quantity":6, "unit":'pieces'},
-    "Red Onions":{"quantity":1/2, "unit":'pieces'},
+    "Red Onions":{"quantity":0.5, "unit":'pieces'},
     "Arugula Leaves":{"quantity":75, "unit":'g'},
     },
     "Maple Tamarind Glazed Salmon":{
@@ -158,7 +158,7 @@ def populate():
     "Maple Syrup":{"quantity":3, "unit":'tbsp.'},
     "Grated Ginger":{"quantity":1, "unit":'tsp'},
     "Chilli Flakes":{"quantity":1, "unit":'pinch'},
-    "Chinese Five Spice":{"quantity":1/2, "unit":'tsp'},
+    "Chinese Five Spice":{"quantity":0.5, "unit":'tsp'},
     "Salt":{"quantity":1, "unit":'pinch'},
     "Black Pepper":{"quantity":1, "unit":'pinch'}
     },
