@@ -91,7 +91,7 @@ def populate():
     RecipeIngredients = {
     "Curried Fish & Leek Noodles":
     {"Fish Fillet":{"quantity":2, "unit":'pieces'},
-    "Curry Powder":{"quantity":2, "unit":'tsp'},
+    "Curry Powder":{"quantity":2, "unit":'tsp.'},
     "Leeks":{"quantity":1, "unit":'pieces'},
     "Olive Oil":{"quantity":1, "unit":'tbsp.'},
     "Salt":{"quantity":1, "unit":'pinch'},
@@ -147,7 +147,7 @@ def populate():
     "Olive Oil":{"quantity":1, "unit":'tbsp.'},
     "Canned Beans":{"quantity":250, "unit":'g'},
     "Garlic":{"quantity":1, "unit":'cloves'},
-    "Sriracha Sauce":{"quantity":0.5, "unit":'tsp'},
+    "Sriracha Sauce":{"quantity":0.5, "unit":'tsp.'},
     "Tortillas":{"quantity":2, "unit":'pieces'},
     "Basil Leaves":{"quantity":6, "unit":'pieces'},
     "Red Onions":{"quantity":0.5, "unit":'pieces'},
@@ -156,9 +156,9 @@ def populate():
     "Maple Tamarind Glazed Salmon":{
     "Tamarind Paste":{"quantity":4, "unit":'tbsp.'},
     "Maple Syrup":{"quantity":3, "unit":'tbsp.'},
-    "Grated Ginger":{"quantity":1, "unit":'tsp'},
+    "Grated Ginger":{"quantity":1, "unit":'tsp.'},
     "Chilli Flakes":{"quantity":1, "unit":'pinch'},
-    "Chinese Five Spice":{"quantity":0.5, "unit":'tsp'},
+    "Chinese Five Spice":{"quantity":0.5, "unit":'tsp.'},
     "Salt":{"quantity":1, "unit":'pinch'},
     "Black Pepper":{"quantity":1, "unit":'pinch'}
     },
@@ -205,8 +205,7 @@ def add_cat(name):
 
 ## adding the ingredient
 def add_ingredient(name, type):
-    i = Ingredient.objects.get_or_create(name=name)[0]
-    i.type = type
+    i = Ingredient.objects.get_or_create(name=name, type=type)[0]
     i.save()
     return i
 

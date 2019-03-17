@@ -159,7 +159,6 @@ def show_recipe(request, recipe_title_slug):
     context_dict['review_form'] = review_form
 
     avg_rev = Review.objects.filter(recipe=recipe, active=True).aggregate(Avg('rating'))
-    print(avg_rev)
     context_dict['avg_rev'] = avg_rev['rating__avg']
 
     return render(request, 'yumyum/recipe.html', context_dict)

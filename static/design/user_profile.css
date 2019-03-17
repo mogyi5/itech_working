@@ -34,6 +34,10 @@ h5 {
   font-family: 'Yellowtail', cursive;
   font-size: 2vw;
 }
+
+#add_rec {
+  text-align: center;
+}
 /* .user-profile {
 margin: auto;
 width: 25em;

@@ -11,6 +11,7 @@ class RecipeIngredientForm(forms.ModelForm):
     class Meta:
         model = RecipeIngredient
         exclude = ('recipe',) # exclude this because it will be added to the current recipe anyway
+        unique_together = ('recipe', 'ingredient',)
 
 RIFSet = formset_factory(RecipeIngredientForm, extra = 1)
 
