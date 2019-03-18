@@ -2,6 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.db.models import Count
+from django.core.exceptions import ValidationError
 
 class Category(models.Model):
 	name = models.CharField(max_length = 32, unique=True)
@@ -44,6 +45,11 @@ class Ingredient(models.Model):
 		return self.name
 
 class Recipe(models.Model):
+
+	def number_positive_validator(value):
+		if (value < 0):
+			raise ValidationError('%s should not be negative' % value)
+
 	SERVINGS = (
 	 (1,'1'),
 	 (2,'2'),
@@ -54,7 +60,7 @@ class Recipe(models.Model):
 	)
 	picture = models.ImageField(upload_to='recipe_images', blank = True)
 	title = models.CharField(max_length=128, unique=True)
-	servings = models.IntegerField(choices=SERVINGS)
+	servings = models.IntegerField(choices=SERVINGS, validators=[number_positive_validator])
 	category = models.ForeignKey(Category)
 	cooking_time = models.IntegerField(default=30) #in minutes
 	direction = models.TextField(max_length=1500)
@@ -97,6 +103,11 @@ class RecipeIngredient(models.Model):
 		return self.ingredient
 
 class Review(models.Model):
+
+	def sensible_rating_validator(value):
+		if value < 1 or value > 5:
+			raise ValidationError('%s should be within range: 1-5' % value)
+
 	RATINGS = (
 		(1,'1'),
 		(2,'2'),
@@ -104,7 +115,7 @@ class Review(models.Model):
 	 	(4,'4'),
 		(5,'5'),
 	)
-	rating = models.IntegerField(choices=RATINGS)
+	rating = models.IntegerField(choices=RATINGS, validators=[sensible_rating_validator])
 	comment_title = models.CharField(max_length=100)
 	comment_body = models.TextField(max_length=1000)
 	user = models.ForeignKey(User)
