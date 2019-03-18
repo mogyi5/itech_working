@@ -41,9 +41,10 @@ h1 {
 
 input[type="text"],
 input[type="password"] {
+  background: transparent;
   /* display: block; */
   box-sizing: border-box;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   padding: 4px;
   width: 220px;
   height: 32px;
@@ -57,8 +58,8 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-  border-bottom: 2px solid #16a085;
-  color: #16a085;
+  border-bottom: 2px solid #FCAF15;
+  color: #FCAF15;
   transition: 0.2s ease;
 }
 
@@ -66,7 +67,7 @@ input[type="submit"] {
   margin-top: 28px;
   width: 120px;
   height: 32px;
-  background: #16a085;
+  background: #FCAF15;
   border: none;
   border-radius: 2px;
   color: #FFF;
