@@ -3,46 +3,50 @@ from django.forms import formset_factory
 from django.contrib.auth.models import User
 from yumyum.models import Ingredient, Recipe, RecipeIngredient, Review, UserProfile
 
-#Maybe done?
-#When user makes a new recipe, the form will be recipeingredientform and recipeform together
-#because of the nature of the database.
-class RecipeIngredientForm(forms.ModelForm):
 
+# Maybe done?
+# When user makes a new recipe, the form will be recipeingredientform and recipeform together
+# because of the nature of the database.
+class RecipeIngredientForm(forms.ModelForm):
     class Meta:
         model = RecipeIngredient
-        exclude = ('recipe',) # exclude this because it will be added to the current recipe anyway
+        exclude = ('recipe',)  # exclude this because it will be added to the current recipe anyway
         unique_together = ('recipe', 'ingredient',)
 
-RIFSet = formset_factory(RecipeIngredientForm, extra = 1)
+
+RIFSet = formset_factory(RecipeIngredientForm, extra=1)
+
 
 class RecipeForm(forms.ModelForm):
-
-    picture = forms.ImageField(help_text= "Upload a photo", required = False)
-    title = forms.CharField(max_length=128, help_text = "Recipe title", required = True)
-    cooking_time = forms.IntegerField(help_text= "Cooking time in minutes", required = True) #in minutes
-    direction = forms.CharField(widget=forms.Textarea, max_length=1000, help_text = "Cooking directions", required = True)
-    slug = forms.CharField(widget=forms.HiddenInput(), required = False)
+    picture = forms.ImageField(help_text="Upload a photo", required=False)
+    title = forms.CharField(max_length=128, help_text="Recipe title", required=True)
+    cooking_time = forms.IntegerField(help_text="Cooking time in minutes", required=True)  # in minutes
+    direction = forms.CharField(widget=forms.Textarea, max_length=1000, help_text="Cooking directions", required=True)
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Recipe
         exclude = ('slug', 'user')
 
+
 class ReviewForm(forms.ModelForm):
-    comment_body = forms.CharField(widget=forms.Textarea, max_length=200, help_text = "Add your review here!")
+    comment_body = forms.CharField(widget=forms.Textarea, max_length=200, help_text="Add your review here!")
 
     class Meta:
         model = Review
         exclude = ('recipe', 'active', 'user')
 
+
 # A form for contact us
 # change the sender from emailfield to user maybe
 class ContactForm(forms.Form):
     subject = forms.CharField(max_length=100)
-    message = forms.CharField(widget=forms.Textarea, initial = 'Your message here!')
-    sender = forms.EmailField(initial = 'Email address')
+    message = forms.CharField(widget=forms.Textarea, initial='Your message here!')
+    sender = forms.EmailField(initial='Email address')
     cc_myself = forms.BooleanField(required=False)
 
-#make a user
+
+# make a user
 # class UserForm(forms.ModelForm):
 #     username = forms.CharField(widget=forms.CharField)
 #     email = forms.CharField()
@@ -51,9 +55,19 @@ class ContactForm(forms.Form):
 #
 #     class Meta:
 #         model = User
-#         fields = ('username','email', 'password1', 'password2')
+#         fields = ('username', 'email', 'password1', 'password2')
+#
+#         def __init__(self, *args, **kwargs):
+#             super(UserCreateForm, self).__init__(*args, **kwargs)
+#
+#             for fieldname in ['username', 'password1', 'password2']:
+#                 self.fields[fieldname].help_text = None
 
-#make a user profile
+
+
+
+
+# make a user profile
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile

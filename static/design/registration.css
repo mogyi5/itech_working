@@ -3,24 +3,20 @@
   outline: none;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background: #DDD;
-  font-size: 16px;
-  color: #222;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
-}
 
-#login-box {
+.login-box {
+  box-sizing: border-box;
+  color: black;
   position: relative;
   margin: 5% auto;
   width: 600px;
-  height: 400px;
-  background: #FFF;
+  height: 450px;
+  background-image: linear-gradient(to right top, #f0f0f0, #f4f4f4, #f7f7f7, #fbfbfb, #ffffff);
   border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0px 4px 23px -7px rgba(0, 0, 0, 0.77);
+  -moz-box-shadow: 0px 4px 23px -7px rgba(0, 0, 0, 0.77);
+  box-shadow: 0px 4px 23px -7px rgba(0, 0, 0, 0.77);
+  border: 3px solid #FCAF15;
 }
 
 .left {
@@ -37,16 +33,18 @@ h1 {
   margin: 0 0 20px 0;
   font-weight: 300;
   font-size: 28px;
+  font-family: 'Yellowtail', cursive;
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
   background: transparent;
-  /* display: block; */
+  display: inline-block;
   box-sizing: border-box;
-  /* margin-bottom: 20px; */
+  margin-bottom: 5px;
   padding: 4px;
-  width: 220px;
+  width: 100%;
   height: 32px;
   border: none;
   border-bottom: 1px solid #AAA;
@@ -54,23 +52,25 @@ input[type="password"] {
   font-weight: 400;
   font-size: 15px;
   transition: 0.2s ease;
+  resize: vertical;
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus 
+input[type="email"]:focus{
   border-bottom: 2px solid #FCAF15;
   color: #FCAF15;
   transition: 0.2s ease;
 }
 
 input[type="submit"] {
-  margin-top: 28px;
+  margin-top: 20px;
   width: 120px;
   height: 32px;
   background: #FCAF15;
   border: none;
   border-radius: 2px;
-  color: #FFF;
+  color: black;
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
   text-transform: uppercase;
@@ -128,6 +128,7 @@ input[type="submit"]:active {
 
 button.social-signin {
   margin-bottom: 20px;
+  box-sizing: border-box;
   width: 220px;
   height: 36px;
   border: none;
@@ -161,3 +162,28 @@ button.social-signin.twitter {
 button.social-signin.google {
   background: #DD4B39;
 }
+
+
+
+.lt-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: "form-title form-title form-title" "username or media-buttons" "email or media-buttons" "password1 or media-buttons" "password2 or media-buttons" "signup-button . .";
+}
+
+.lt-form-title { grid-area: lt-form-title; }
+
+.lt-username { grid-area: lt-username; }
+
+.lt-email { grid-area: lt-email; }
+
+.lt-password1 { grid-area: lt-password1; }
+
+.lt-password2 { grid-area: lt-password2; }
+
+.lt-signup-button { grid-area: lt-signup-button; }
+
+.lt-or { grid-area: lt-or; }
+
+.lt-media-buttons { grid-area: lt-media-buttons; }
