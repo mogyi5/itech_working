@@ -1,7 +1,4 @@
-#Things to do:
-# 1. Group recipeingredients by recipe
-# 2. Make it prettier
-# 3. Have the recipe and recipeingredient related somehow?
+
 
 from django.contrib import admin
 from yumyum.models import Category, Type, Ingredient, Recipe, RecipeIngredient, Review

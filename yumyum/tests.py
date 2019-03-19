@@ -3,15 +3,21 @@ from yumyum.models import Category, Recipe, Type, Ingredient, RecipeIngredient, 
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
-from myapp.factories import UserFactory
-from myapp.forms import ProfileForm
+# from yumyum.forms import ProfileForm
+from django.urls import reverse
 
 class CategoryMethodTests(TestCase):
+
     # Ensure name cannot repeat
     def test_ensure_unique(self):
         first = Category.objects.create(name='cat1')
         with self.assertRaises(IntegrityError):
             Category.objects.create(name='cat1')
+
+    # Ensure str returns the title
+    def return_title(self):
+        first = Category.objects.create(name='cat1')
+        self.assertEqual(str(first), first.name)
 
     # Ensure number of recipes in cat function works
     def test_number_of_recipes(self):
@@ -85,37 +91,8 @@ class ReviewMethodTests(TestCase):
             review1 = Review.objects.create(rating = 7, comment_title="mytitle", comment_body= "i am commenting", user = user1, recipe=recipe1, active = True)
             review1.full_clean()
 
-class LoginTests(TestCase):
-
-    def create_user(self):
-        self.user = UserFactory()
-        self.client.login(username=self.user.email, password='password')
-
-    def form_data(self, first, last):
-        return ProfileForm(
-            user=self.user,
-            data={
-                'first_name': first,
-                'last_name': last,
-            }
-        )
-
-    def test_valid_data(self):
-        form = self.form_data('First', 'Last')
-        self.assertTrue(form.is_valid())
-
-    def test_missing_first_name(self):
-        form = self.form_data('', 'Last')
-        errors = form['first_name'].errors.as_data()
-        self.assertEqual(len(errors), 1)
-        self.assertEqual(errors[0].code, 'required')
-
-    def test_missing_last_name(self):
-        form = self.form_data('First', '')
-        errors = form['last_name'].errors.as_data()
-
-        self.assertEqual(len(errors), 1)
-        self.assertEqual(errors[0].code, 'required')
-## register
-## login
+## comments - active, non-active
+## submit comment maybe
+## submit contact form
 ## submit recipe
+## profile?
