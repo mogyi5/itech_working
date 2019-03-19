@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db import IntegrityError, transaction
 from yumyum.forms import RIFSet
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 from django.template.loader import get_template
 from time import sleep
 from django.db.models import Avg
@@ -91,21 +91,23 @@ def contact(request):
             message = request.POST.get('message','')
             sender = request.POST.get('sender','')
 
-            template = get_template('contact_template.txt')
-            context = { 'subject': subject,
-                        'message': message ,
-                        'sender': sender,
-            }
-            content = template.render(context)
+            send_mail(subject, message, sender, ['adamos.st@gmail.com',])
 
-            email = EmailMessage(
-                "Contact form:" + subject,
-                message,
-                "YumYum",
-                ['youremail@gmail.com'],
-                headers = {'Reply-To': sender }
-            )
-            email.send()
+            # template = get_template('contact_template.txt')
+            # context = { 'subject': subject,
+            #             'message': message ,
+            #             'sender': sender,
+            # }
+            # content = template.render(context)
+            #
+            # email = EmailMessage(
+            #     "Contact form:" + subject,
+            #     message,
+            #     "YumYum",
+            #     ['szaboki.reka@gmail.com'],
+            #     headers = {'Reply-To': sender }
+            # )
+            # email.send()
             messages.success(request, 'Your contact form was sent successfully!')
         else:
             messages.warning(request, 'Please correct the error below.')
