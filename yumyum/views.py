@@ -273,6 +273,7 @@ def search(request):
     query = request.GET.get('q')
     if query:
         results = Recipe.objects.filter(Q(title__icontains=query))
+        print(results)
     return render(request, 'yumyum/cats.html', {'cats': results })
 
     ## method 2---webhose

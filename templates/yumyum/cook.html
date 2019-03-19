@@ -27,7 +27,7 @@ Let's Cook! 😊
 <div>
   <br/>
   <form class="form-inline" id="user_form"
-        method="post" action="{% url 'show_recipe' recipe.slug %}">
+        method="post" action="{% url 'show_recipe' recipe_title_slug='welsh-rarebit' %}">
     {% csrf_token %}
     <div class="form-group">
       <input class="form-control" type="text" size="50" name="query" value="" id="query" />
