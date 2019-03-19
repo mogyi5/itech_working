@@ -1,5 +1,7 @@
 from django.test import TestCase
 from yumyum.models import Category, Recipe, Type, Ingredient, RecipeIngredient, Review
+from yumyum.forms import RecipeIngredientForm,RecipeForm,ReviewForm,ContactForm,UserProfileForm
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
@@ -15,7 +17,7 @@ class CategoryMethodTests(TestCase):
             Category.objects.create(name='cat1')
 
     # Ensure str returns the title
-    def return_title(self):
+    def test_return_title(self):
         first = Category.objects.create(name='cat1')
         self.assertEqual(str(first), first.name)
 
@@ -44,6 +46,11 @@ class TypeMethodTests(TestCase):
         ing3 = Ingredient.objects.create(name='ing3', type=type)
         ingnumber = type.num_of_ingredients()
         self.assertEqual(ingnumber, 3)
+
+    # Ensure str returns the title
+    def test_return_title(self):
+        first = Type.objects.create(name='type')
+        self.assertEqual(str(first), first.name)
 
 class IngredientMethodTests(TestCase):
     # Ensure the name of the ingredient is unique regardless of its type
@@ -91,8 +98,52 @@ class ReviewMethodTests(TestCase):
             review1 = Review.objects.create(rating = 7, comment_title="mytitle", comment_body= "i am commenting", user = user1, recipe=recipe1, active = True)
             review1.full_clean()
 
-## comments - active, non-active
-## submit comment maybe
-## submit contact form
-## submit recipe
-## profile?
+
+class AddRecipeViewTests(TestCase):
+
+    def test_recipe_form_missing(self):
+        user1 = User.objects.create(username = "user1", email="myemail@email.com")
+        category1 = Category.objects.create(name='mycategory')
+        form_data = {
+            {'title':'myrecipe'},
+            {'servings':'1'},
+            {'category':category1},
+            {'cooking_time':30},
+            {'direction':'just cook it'},
+            {'user': user1},
+        }
+        form = RecipeForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    # picture
+	# title
+	# servings
+	# category
+	# cooking_time
+	# direction
+	# slug
+	# user
+    def form_data(self, first, last):
+        return ProfileForm(
+            user=self.user,
+            data={
+                'first_name': first,
+                'last_name': last,
+            }
+        )
+    ## submit recipe
+    ## ingredient missing
+    ## recipe missing
+    ## field weird
+
+# class ProfileViewTests(TestCase):
+#     ## show recipe
+#     ## submit update
+#
+# class RecipeViewTests(TestCase):
+#     ## dont show inactive comments
+#     ## submit comment missing fields
+#     ## average value is the average
+#
+# class ContactFormTests(TestCase):
+#     ## contact form missing stuff
