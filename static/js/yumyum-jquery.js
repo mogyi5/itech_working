@@ -5,6 +5,13 @@ $(document).ready( function() {
   });
 });
 
+$('#suggestion').keyup(function(){ var query;
+  query = $(this).val();
+  $.get('/rango/suggest/', {suggestion: query}, function(data){
+    $('#cats').html(data);
+  });
+});
+
 function removeDiv(elem){
   $(elem).parent('div').remove();
 }

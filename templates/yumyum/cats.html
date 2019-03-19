@@ -1,11 +1,33 @@
-<ul class="nav nav-pills flex-column">
-	{% if cats %}
-		{% for c in cats %}
-		    {% if c == act_cat %}
-		        <li class="nav-item"><strong><a href="{% url 'show_recipe' c.slug %}">{{ c.title }}</a></strong></li>
-		    {% else  %}
-		         <li class="nav-item"><a href="{% url 'show_recipe' c.slug %}">{{ c.title }}</a></li>
-		    {% endif %}
-		{% endfor %}
-	{% endif %}
-</ul>
+{% extends 'yumyum/base.html' %}
+{% load staticfiles %}
+<!--<ul class="nav nav-pills flex-column">-->
+	<!--{% if cats %}-->
+		<!--{% for c in cats %}-->
+		    <!--{% if c == act_cat %}-->
+		        <!--<li class="nav-item"><strong><a href="{% url 'show_recipe' c.slug %}">{{ c.title }}</a></strong></li>-->
+		    <!--{% else  %}-->
+		         <!--<li class="nav-item"><a href="{% url 'show_recipe' c.slug %}">{{ c.title }}</a></li>-->
+		    <!--{% endif %}-->
+		<!--{% endfor %}-->
+	<!--{% endif %}-->
+<!--</ul>-->
+
+
+
+{%block title_block %}
+Search Results
+{% endblock %}
+
+{% block body_block %}
+{% if cats %}
+	{% for c in cats %}
+		{% if c == act_cat %}
+			<li class="nav-item"><strong><a href="{% url 'show_recipe' c.slug %}">{{ c.title }}</a></strong></li>
+		{% else  %}
+			<li class="nav-item"><a href="{% url 'show_recipe' c.slug %}">{{ c.title }}</a></li>
+		{% endif %}
+	{% endfor %}}
+{% endif %}
+
+
+{% endblock %}
