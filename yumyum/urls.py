@@ -8,8 +8,15 @@ urlpatterns = [
     url(r'^privacy/', views.privacy, name='privacy'),
     url(r'^terms/', views.terms, name='terms'),
     url(r'^profile/(?P<username>[\w\-]+)/$', views.profile, name='profile'),
+
+    ## method 2--webhose
     # url(r'search/$', views.search, name='search'),
+    ##
     # url(r'^review/', views.review, name='review'),
+
+    ## method 1
+    url(r'^results/$', views.search, name='search'),
+    ##
     url(r'^recipe/(?P<recipe_title_slug>[\w\-]+)/$', views.show_recipe, name='show_recipe'),
     url(r'^add_recipe/$', views.add_recipe, name='add_recipe'),
     url(r'^suggest/$', views.suggest_recipe, name='suggest_recipe'),

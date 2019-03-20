@@ -14,7 +14,10 @@ from yumyum.forms import RIFSet
 from django.core.mail import EmailMessage, send_mail
 from django.template.loader import get_template
 from time import sleep
-from django.db.models import Avg
+from django.db.models import Avg, Q
+from yumyum.webhose_search import run_query
+from django.views.generic import ListView
+
 
 @login_required
 def add_recipe(request):
@@ -114,9 +117,9 @@ def contact(request):
             print(form.errors)
     return render(request, 'yumyum/contact.html', {'form': form_class})
 
-def cook(request):
-    context_dict = {}
-    return render(request, 'yumyum/cook.html',context_dict)
+# def cook(request):
+#     context_dict = {}
+#     return render(request, 'yumyum/cook.html',context_dict)
 
 def show_recipe(request, recipe_title_slug):
     context_dict = {}
@@ -194,14 +197,7 @@ def profile(request, username):
 
     return render(request, 'yumyum/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form, 'recipes': recipes})
 
-# def search(request):
-#     result_list = []
-#     if request.method == 'POST':
-#         query = request.POST['query'].strip()
-#         if query:
-#              # Run our Webhose function to get the results list!
-#              result_list = run_query(query)
-#     return render(request, 'yumyum/search.html', {'result_list': result_list})
+
 
 def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', '1'))
@@ -238,7 +234,7 @@ def suggest_recipe(request):
         include_with = request.GET['suggestion']
     cat_list = get_recipe_list(100, include_with)
 
-    return render(request, 'yumyum/cook.html', {'cats': cat_list })
+    return render(request, 'yumyum/cats.html', {'cats': cat_list })
 
 def get_recipe_list2(max_results=0, include_with=''):
     cat_list = []
@@ -263,3 +259,46 @@ def suggest_recipe2(request):
     cat_list = get_recipe_list(100, include_with)
 
     return render(request, 'yumyum/cats.html', {'cats': cat_list })
+#
+# def search(request):
+#     ## method 1
+#     results = []
+#     query = request.GET.get('q')
+#     if query:
+#         results = Recipe.objects.filter(Q(title__icontains=query))
+#         print(results)
+#     return render(request, 'yumyum/cats.html', {'cats': results })
+
+def search(request):
+    ## method 1
+    # result = Recipe.objects.none()
+
+    inResult = []
+    query = request.GET.get('q')
+    if query:
+        result = []
+        k = [x.strip() for x in query.split(',')]
+        for one_ingredient in k:
+            inResult = Ingredient.objects.get(name__icontains=one_ingredient)
+            ri_results= inResult.recipeingredient_set.all()   #filter(Q(ingredient_in=inResult))
+            for ri in ri_results:
+                results = ri.recipe
+                # results_set = Recipe.objects.filter(id = results.id)
+                # result = result.union(result, results_set)
+                result.append(results)
+# question.tags.all().values_list('id', flat=True)) & interested_tags_set
+        sort_func = lambda recipe: len(set(k) & set(recipe.recipeingredient_set.all().values_list('ingredient', flat=True)))
+        rec_recipe_list = sorted(result, key=sort_func)
+    return render(request, 'yumyum/cats.html', {'cats': rec_recipe_list })
+    ## method 2---webhose
+
+    # result_list = []
+    # if request.method == 'POST':
+    #     query = request.POST['query'].strip()
+    #     if query:
+    #         result_list = run_query(query)
+    # return render(request, 'yumyum/cook.html', {'result_list': result_list})
+
+def cook(request):
+    context_dict = {}
+    return render(request, 'yumyum/cook.html',context_dict)

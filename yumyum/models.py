@@ -100,7 +100,7 @@ class RecipeIngredient(models.Model):
 		unique_together = ('recipe', 'ingredient',)
 
 	def __str__(self):
-		return self.ingredient
+		return self.ingredient.name
 
 class Review(models.Model):
 
