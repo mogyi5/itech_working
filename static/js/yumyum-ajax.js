@@ -1,12 +1,5 @@
-// $('#suggestion').keyup(function(){ var query;
-//     query = $(this).val();
-//     $.get('/yumyum/suggest/', {suggestion: query}, function(data){
-//         $('#cats').html(data);
-//     });
-// });
-
 $(document).ready(function() {
-  // JQuery code to be added in here.
+  // On typing, suggestions for recipes are automatically generated
   $('#suggestion2').keyup(function(){
     var query;
     query = $(this).val();

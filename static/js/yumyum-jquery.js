@@ -1,17 +1,23 @@
-
-$(document).ready( function() {
-  $("#add-btn").click( function() {
-    $( "#ing" ).clone().appendTo( $( "#ings" ) );
-  });
-});
-
-// $('#suggestion').keyup(function(){ var query;
-//   query = $(this).val();
-//   $.get('/rango/suggest/', {suggestion: query}, function(data){
-//     $('#cats').html(data);
-//   });
-// });
-
+//  I don't think we use this anywhere actually? The problem was solved with formfactory.
 function removeDiv(elem){
   $(elem).parent('div').remove();
 }
+
+// The function to change serving sizes.
+$(window).bind("load", function() {
+  $(function() {
+    $('.serving').bind('keyup', function(event) {
+      var previousValue = parseFloat($("#previousServing").val());
+      var newValue = parseFloat($(event.target).val());
+      if (previousValue && newValue) {
+        $('.ingredient').each(function(index, elem) {
+          var ingredientNow = $('.amount', elem);
+          var oldIngredientAmount = ingredientNow.text();
+          var newIngredientAmount = oldIngredientAmount * newValue / previousValue;
+          ingredientNow.text(newIngredientAmount);
+        });
+        $('#previousServing').val(newValue);
+      }
+    });
+  });
+});

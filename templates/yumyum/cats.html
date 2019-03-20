@@ -7,13 +7,13 @@
 			{% if cats %}
 			{% for c in cats %}
 			{% if c == act_cat %}
-			<div class="col-md-4">
+			<div class="col-md-6">
 				<a href="/yumyum/recipe/{{c.slug}}/"><img class="img-thumbnail img-thumbnail-search"
 						src="{{ MEDIA_URL }}{{c.picture}}" alt="{{c.title}}" /></img></a>
 				<br><a href="{% url 'show_recipe' recipe_title_slug=c.slug %}">{{ c.title }}</a>
 			</div>
 			{% else %}
-			<div class="col-md-4">
+			<div class="col-md-6">
 				<a href="/yumyum/recipe/{{c.slug}}/"><img class="img-thumbnail img-thumbnail-search"
 						src="{{ MEDIA_URL }}{{c.picture}}" alt="{{c.title}}" /></img></a>
 				<br><a href="{% url 'show_recipe' recipe_title_slug=c.slug %}">{{ c.title }}</a>

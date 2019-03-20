@@ -15,10 +15,10 @@ from django.core.mail import EmailMessage, send_mail
 from django.template.loader import get_template
 from time import sleep
 from django.db.models import Avg, Q
-from yumyum.webhose_search import run_query
 from django.views.generic import ListView
 
 
+# The view for uploading a recipe - formset factory is used: please be impressed
 @login_required
 def add_recipe(request):
     user = request.user
@@ -52,9 +52,8 @@ def add_recipe(request):
 
             try:
                 with transaction.atomic():
-                    # Replace the old with the new
+                    # Create new recipeingredients
                     RecipeIngredient.objects.bulk_create(new_ingredients)
-                    # And notify our users that it worked
                 messages.success(request, 'You have added a recipe successfully!')
                 sleep(1)
                 return redirect(reverse('show_recipe', args=(recipe.slug,)))
@@ -75,17 +74,14 @@ def add_recipe(request):
 
 
 def index(request):
-    # request.session.set_test_cookie()
+
     context_dict = {}
-
-    # visitor_cookie_handler(request)
-    # context_dict['visits'] = request.session['visits']
-
     response = render(request, 'yumyum/index.html', context_dict)
 
     return response
 
-
+# Contact form should work, if you change the email to your own, you can send yourself emails.
+# This is through the API mailgun, it is pretty cool.
 def contact(request):
     form_class = ContactForm
     if request.method == 'POST':
@@ -104,15 +100,16 @@ def contact(request):
             print(form.errors)
     return render(request, 'yumyum/contact.html', {'form': form_class})
 
+# The view for showing the recipe.
 def show_recipe(request, recipe_title_slug):
     context_dict = {}
 
     try:
         recipe = Recipe.objects.get(slug=recipe_title_slug)
         ingredients = RecipeIngredient.objects.filter(recipe=recipe)
-        reviews = Review.objects.filter(recipe=recipe, active=True).order_by('-rating')
+        reviews = Review.objects.filter(recipe=recipe, active=True).order_by('-rating') # THe recipe reviews.
         current_user = request.user
-        if request.user.is_authenticated():
+        if request.user.is_authenticated(): # Count the number of reviews, because the user should only be able to submit one.
             count_revs = Review.objects.filter(recipe=recipe, user=current_user).count()
             intcount = int(count_revs)
             context_dict['intcount'] = intcount
@@ -146,12 +143,13 @@ def show_recipe(request, recipe_title_slug):
     context_dict['newr'] = newr
     context_dict['review_form'] = review_form
 
+    # Return the average review after each review as well.
     avg_rev = Review.objects.filter(recipe=recipe, active=True).aggregate(Avg('rating'))
     context_dict['avg_rev'] = avg_rev['rating__avg']
 
     return render(request, 'yumyum/recipe.html', context_dict)
 
-
+# That's right we have a privacy and a terms page too.
 def privacy(request):
     context_dict = {}
     return render(request, 'yumyum/privacy.html', context_dict)
@@ -195,7 +193,7 @@ def get_recipe_list(max_results=0, include_with=''):
             cat_list = cat_list[:max_results]
     return cat_list
 
-
+# Use with the ajax - shows recipe suggestions inline
 def suggest_recipe2(request):
     cat_list = []
     include_with = ''
@@ -206,16 +204,21 @@ def suggest_recipe2(request):
 
     return render(request, 'yumyum/cats.html', {'cats': cat_list})
 
+# The search result shown if searching by ingredient.
 def search(request):
     inResult = []
     query = request.GET.get('q')
 
     if query:
         result = []
+        # a list of comma separated values turned into list
         k = [x.strip() for x in query.split(',')]
         for one_ingredient in k:
 
             try:
+                # Search the ingredients by *exact name* to avoid weird results.
+                # This however restrcits the search, as if you type 'pear', it will not Return
+                # recipes with the ingredient 'pears'
                 inResult = Ingredient.objects.get(name__iexact=one_ingredient)
             except:
                 inResult = None
@@ -225,9 +228,9 @@ def search(request):
                 for ri in ri_results:
                     results = ri.recipe
                     result.append(results)
-        # question.tags.all().values_list('id', flat=True)) & interested_tags_set
         set_result = set(result)
         re = list(set_result)
+        # try to sort the output to see most relevant recipes first, by the number of ingredients matching.
         sort_func = lambda recipe: len(
             set(recipe.recipeingredient_set.all().values_list('ingredient', flat=True)) & set(k))
         rec_recipe_list = sorted(re, key=sort_func)
