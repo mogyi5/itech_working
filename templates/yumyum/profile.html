@@ -5,81 +5,50 @@
 
 {% block title %}{{ selecteduser.username }} Profile{% endblock %}
 {% block body_block %}
-
-<!--user profile styling-->
-<link href="{% static 'design/user_profile.css' %}" rel="stylesheet">
-
-<style>
-.hidden{
-  display:none;
-}
-
-.unhidden{
-  display:block;
-}
-</style>
-
-<script type="text/javascript">
-function unhide(clickedButton, divID) {
-  var item = document.getElementById(divID);
-  if (item) {
-    if(item.className=='hidden'){
-      item.className = 'unhidden' ;
-      clickedButton.value = 'Edit Profile'
-    }else{
-      item.className = 'hidden';
-      clickedButton.value = 'Edit Profile'
-    }
-  }}
-</script>
-
 <br>
 <br>
-
-
-<div class="container" id="profilecontainer">
+<div id="profilecontainer">
   <div class="row">
     <div class="col-4">
-      <h1 class="title-pen"> User Profile for <span
-        style="color:#FCAF15">{{selecteduser.username}}</span></h1>
-        <img class="avatar" src="{{ MEDIA_URL }}{{userprofile.picture }}" alt="No profile picture!"/>
-        <div class="description">
-          {{userprofile.about}}
-        </div>
-        <br/>
-        {% if selecteduser.username == user.username %}
-        <div style="text-align: center;">
-          <input type="button" onclick="unhide(this, 'about')" class="btn btn-lg btn-primary" style="color:black;"
-          value="Edit Profile">
-        </div>
-        <div id="about" class="hidden">
-          <div class="editprofile" style="text-align:center;">
-            <form method="post" action="." enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ form.as_p }}
-              <input type="submit" style="background-color:#FCAF15;color:black" value="Update"/>
-            </form>
-          </div>
-        </div>
-        {% endif %}
+      <h1 class="title-pen"> User Profile for <span style="color:#FCAF15">{{selecteduser.username}}</span></h1>
+      <img class="avatar" src="{{ MEDIA_URL }}{{userprofile.picture }}" alt="No profile picture!" />
+      <div class="description">
+        {{userprofile.about}}
       </div>
-      <div class="col-8">
-        <h5>Uploaded Recipes</h5>
-        <div class="row">
-          {% if recipes %}
-          {% for r in recipes %}
-          <div class="col-md-4">
-            <a href="/yumyum/recipe/{{r.slug}}/"><img class="img-thumbnail" src="{{ MEDIA_URL }}{{r.picture}}" alt="{{r.title}}"/></img></a>
-            <a href="/yumyum/recipe/{{r.slug}}/">{{r.title}}</a>
-          </div>
-          {%endfor%}
-          {%endif%}
-        </div>
-        <a id="add_rec" role="button" href="{% url 'add_recipe' %}" class="btn btn-lg btn-primary" style="color:black;"
-           value="Upload Recipe!">Upload Recipe!</a>
+      <br />
+      {% if selecteduser.username == user.username %}
+      <div>
+        <input type="button" onclick="unhide(this, 'about')" class="btn btn-md btn-primary" value="Edit Profile">
       </div>
+      <div id="about" class="hidden">
+        <div class="editprofile" style="text-align:center;">
+          <form method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-md btn-primary" value="Update" />
+          </form>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    <div class="col-8">
+      <h1>Uploaded Recipes</h1>
+      <div class="row">
+        {% if recipes %}
+        {% for r in recipes %}
+        <div class="col-md-4">
+          <a href="/yumyum/recipe/{{r.slug}}/"><img class="img-thumbnail" src="{{ MEDIA_URL }}{{r.picture}}"
+              alt="{{r.title}}" /></img></a>
+          <a href="/yumyum/recipe/{{r.slug}}/">{{r.title}}</a>
+        </div>
+        {%endfor%}
+        {%endif%}
+      </div>
+      <a id="add_rec" role="button" href="{% url 'add_recipe' %}" class="btn btn-md btn-primary"
+        value="Upload Recipe!">Upload Recipe!</a>
     </div>
   </div>
+</div>
 
 {% endblock %}
 {% endinlinecss %}

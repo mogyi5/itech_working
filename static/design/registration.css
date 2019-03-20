@@ -122,8 +122,9 @@ input[type="submit"]:active {
   display: block;
   margin-bottom: 40px;
   font-size: 28px;
-  color: #FFF;
+  color: black;
   text-align: center;
+  font-family: 'Yellowtail', cursive;
 }
 
 button.social-signin {
@@ -162,28 +163,3 @@ button.social-signin.twitter {
 button.social-signin.google {
   background: #DD4B39;
 }
-
-
-
-.lt-grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-areas: "form-title form-title form-title" "username or media-buttons" "email or media-buttons" "password1 or media-buttons" "password2 or media-buttons" "signup-button . .";
-}
-
-.lt-form-title { grid-area: lt-form-title; }
-
-.lt-username { grid-area: lt-username; }
-
-.lt-email { grid-area: lt-email; }
-
-.lt-password1 { grid-area: lt-password1; }
-
-.lt-password2 { grid-area: lt-password2; }
-
-.lt-signup-button { grid-area: lt-signup-button; }
-
-.lt-or { grid-area: lt-or; }
-
-.lt-media-buttons { grid-area: lt-media-buttons; }

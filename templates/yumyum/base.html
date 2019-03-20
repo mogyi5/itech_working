@@ -8,41 +8,53 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description"
-          content="You have limited groceries home? You think you can not do any good food with them? That's where you are wrong! Use this webapp now and find out more!">
+        content="You have limited groceries home? You think you can not do any good food with them? That's where you are wrong! Use this webapp now and find out more!">
     <meta name="author"
-          content="Bootstrap authors: Mark Otto, Jacob Thornton, and Bootstrap contributors/ Website authors: Linda, Reka, Adamos">
+        content="Bootstrap authors: Mark Otto, Jacob Thornton, and Bootstrap contributors/ Website authors: Linda, Reka, Adamos">
     <meta name="generator" content="Jekyll v3.8.5">
     <title>YumYum - {% block title %}Recipes on the go!{% endblock %}</title>
 
     <!--Login css-->
-    <link href="{% static 'design/login.css' %}" rel="stylesheet">
+    <link href="{% static 'design/login.css' %}" rel="stylesheet" type="text/css">
+
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/jquery-3.js' %}"></script>
     <!--Contact us css-->
-    <link href="{% static 'design/contactus.css' %}" rel="stylesheet">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="{% static 'design/contactus.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/yum-jquery.min.js' %}"></script>
 
     <!-- Add icon library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="{% static 'design/social_media_icons.css' %}" rel="stylesheet">
+    <link href="{% static 'design/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'design/social_media_icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- index styling -->
+    <link href="{% static 'design/index.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- profile styling -->
+    <script src="{% static 'js/editprofile.js' %}"></script>
+    <link href="{% static 'design/user_profile.css' %}" rel="stylesheet">
 
     <!--Registration css-->
-    <link href="{% static 'design/registration.css' %}" rel="stylesheet">
+    <link href="{% static 'design/registration.css' %}" rel="stylesheet" type="text/css">
 
     <!-- favicon -->
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 
     <!--Carousel -->
+    <link href="{% static 'design/carousel.css' %}" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'design/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'design/bootstrap.css' %}" rel="stylesheet" type="text/css">
 
     <!--Add recipe styling-->
-    <link href="{% static 'design/add_recipe.css' %}" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+    <link href="{% static 'design/add_recipe.css' %}" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type="text/css">
+    <script src="{% static 'js/addremoveing.js' %}"></script>
 
     <!--search styling-->
     <link href="{% static 'design/search.css' %}" rel="stylesheet">
-    <script src="{% static 'design/search.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
 
     <!--Jquery-->
     <script src="{% static 'js/jquery-3.js' %}"></script>
@@ -53,140 +65,86 @@
     <script src="{% static 'js/yumyum-ajax.js' %}"></script>
 
     <!-- for the add ingredient page -->
-    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
     <script src="{% static 'js/jquery.formset.js' %}"></script>
 
     <!-- Brand font -->
-    <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Yellowtail" rel="stylesheet" type="text/css">
 
-    <script>
-  $(function () {
-    $('.ri-formset').formset({
-      addText: 'add ingredient',
-      deleteText: 'remove'
-    });
-  });
-
-
-    </script>
-
-
-    <style>
-
-    .elementToFadeInAndOut {
-    -webkit-animation: fadeinout 2s linear forwards;
-    animation: fadeinout 2s linear forwards;
-}
-
-@-webkit-keyframes fadeinout {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@keyframes fadeinout {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-
-  .bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-
-  @media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-      font-size: 3.5rem;
-    }
-  }
-
-    </style>
-
-    <!-- Custom styles for this template -->
-    <link href="{% static 'design/carousel.css' %}" rel="stylesheet">
+    <!--Fade in fade out style-->
+    <link href="{% static 'design/fadeinfadeout.css' %}" rel="stylesheet">
 
 </head>
 
 <body>
-<div class=elementToFadeInAndOut>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous"
+    <div class=elementToFadeInAndOut>
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous"
             src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.2&appId=157915260913696&autoLogAppEvents=1"></script>
-    <!-- Navigation -->
-    <header>
-        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-dark">
-            <a href="{% url 'index'%}"><img src="{% static 'images/logo.png' %}" width="auto" height="35px"></a>
-            <a class="navbar-brand" href="{% url 'index'%}">YumYum</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        <!-- Navigation -->
+        <header>
+            <nav class="navbar navbar-expand-md navbar-light fixed-top bg-dark">
+                <a href="{% url 'index'%}"><img src="{% static 'images/logo.png' %}" width="auto" height="35px"></a>
+                <a class="navbar-brand" href="{% url 'index'%}">YumYum</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'index'%}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contact'%}">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cook'%}" style="color:#A64AC9; font-weight:bold;">Start
-                            Cooking!</a>
-                    </li>
-                    {%if user.is_authenticated%}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'add_recipe' %}">Submit a
-                            Recipe!</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'profile' username=user.username %}">Your Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'auth_logout' %}?next=/yumyum/">Logout</a>
-                    </li>
-                    {%else%}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'registration_register' %}">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'auth_login' %}">Login</a>
-                    </li>
-                    {%endif%}
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <!-- End of navigation -->
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'index'%}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contact'%}">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cook'%}" style="color:#A64AC9; font-weight:bold;">Start
+                                Cooking!</a>
+                        </li>
+                        {%if user.is_authenticated%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'add_recipe' %}">Submit a
+                                Recipe!</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profile' username=user.username %}">Your Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'auth_logout' %}?next=/yumyum/">Logout</a>
+                        </li>
+                        {%else%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'registration_register' %}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'auth_login' %}">Login</a>
+                        </li>
+                        {%endif%}
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- End of navigation -->
 
-    <main role="main">
-        {%block body_block%}{%endblock%}
-        <hr class="featurette-divider">
+        <main role="main">
+            {%block body_block%}{%endblock%}
+            <hr class="featurette-divider">
 
-        <!-- FOOTER -->
-        <footer class="container">
-            <p class="float-right"><a href="">Back to top</a></p>
-            <p>© 2019 YumYum, Inc. · <a href="{% url 'privacy'%}">Privacy</a> · <a href="{% url 'terms'%}">Terms</a></p>
-        </footer>
-    </main>
-    <script src="{% static 'design/jquery-3.js' %}"></script>
-    <script>
-    window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')
+            <!-- FOOTER -->
+            <footer class="container">
+                <p class="float-right"><a href="">Back to top</a></p>
+                <p>© 2019 YumYum, Inc. · <a href="{% url 'privacy'%}">Privacy</a> · <a href="{% url 'terms'%}">Terms</a>
+                </p>
+            </footer>
+        </main>
 
 
+        <!--might not want this-->
+        <script>
+            window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')
+        </script>
 
-
-
-
-
-
-
-    </script>
-    <script src="{% static 'design/bootstrap.js' %}"></script>
-</div>
+    </div>
 </body>
 
 </html>
