@@ -11,20 +11,20 @@ Let's Cook! 😊
 
 <!---------------------------for autocomplete--------------------->
 
-<ul class="nav nav-list flex-column">
+<!-- <ul class="nav nav-list flex-column">
   <li class="nav-item">Type to find a category</li>
   <form>
     <li class="nav-item"><input class="search-query form-control" type="text"
                                 name="suggestion" value="" id="suggestion" /> </li>
   </form> </ul>
 <hr>
-<div id="cats"> </div>
+<div id="cats"> </div> -->
 
 <!---------------------------------------------------------------->
 
 <!--------------------------method 2;webhose---------------------->
 
-<div>
+<!-- <div>
   <br/>
   <form class="form-inline" id="user_form"
         method="post" action="{% url 'show_recipe' recipe_title_slug='welsh-rarebit' %}">
@@ -41,7 +41,7 @@ Let's Cook! 😊
     {% if result_list %}
     <h3>Results</h3>
     <!-- Display search results in an ordered list -->
-    <div class="list-group">
+    <!-- <div class="list-group">
       {% for result in result_list %}
       <div class="list-group-item">
         <h4 class="list-group-item-heading">
@@ -53,14 +53,14 @@ Let's Cook! 😊
     </div>
     {% endif %}
   </div>
-</div>
+</div> --> -->
 
 <!--------------------------------------------------------->
 
 <!-----------------------method 1-------------------------->
 
 <form method="GET" action="{% url 'search' %}">
-  <input name="q" value="{{request.GET.q}}" placeholder="Type Recipe name here...">
+  <input name="q" value="{{request.GET.q}}" placeholder="Type Ingredients here...">
   <button type="submit">
     Search
   </button>
@@ -75,7 +75,7 @@ Let's Cook! 😊
 {% endfor %} -->
 
 <ul class="nav nav-list flex-column">
-  <li class="nav-item">Type your ingredients here</li>
+  <li class="nav-item">Type Recipe name here</li>
   <form>
   <li class="nav-item"><input class="search-query form-control" type="text"
       name="suggestion2" value="" id="suggestion2" />

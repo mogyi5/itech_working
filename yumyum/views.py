@@ -266,16 +266,37 @@ def suggest_recipe2(request):
     cat_list = get_recipe_list(100, include_with)
 
     return render(request, 'yumyum/cats.html', {'cats': cat_list })
+#
+# def search(request):
+#     ## method 1
+#     results = []
+#     query = request.GET.get('q')
+#     if query:
+#         results = Recipe.objects.filter(Q(title__icontains=query))
+#         print(results)
+#     return render(request, 'yumyum/cats.html', {'cats': results })
 
 def search(request):
     ## method 1
-    results = []
+    # result = Recipe.objects.none()
+
+    inResult = []
     query = request.GET.get('q')
     if query:
-        results = Recipe.objects.filter(Q(title__icontains=query))
-        print(results)
-    return render(request, 'yumyum/cats.html', {'cats': results })
-
+        result = []
+        k = [x.strip() for x in query.split(',')]
+        for one_ingredient in k:
+            inResult = Ingredient.objects.get(name__icontains=one_ingredient)
+            ri_results= inResult.recipeingredient_set.all()   #filter(Q(ingredient_in=inResult))
+            for ri in ri_results:
+                results = ri.recipe
+                # results_set = Recipe.objects.filter(id = results.id)
+                # result = result.union(result, results_set)
+                result.append(results)
+# question.tags.all().values_list('id', flat=True)) & interested_tags_set
+        sort_func = lambda recipe: len(set(k) & set(recipe.recipeingredient_set.all().values_list('ingredient', flat=True)))
+        rec_recipe_list = sorted(result, key=sort_func)
+    return render(request, 'yumyum/cats.html', {'cats': rec_recipe_list })
     ## method 2---webhose
 
     # result_list = []
