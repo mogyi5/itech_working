@@ -51,6 +51,15 @@ def populate():
     "White Bean Dauphinoise": { "servings": 2, "cooking_time": 35, "direction": "Preheat your oven to 190C/gas mark 5. Throw the cannellini beans into an ovenproof dish with the garlic. Pour over the cream and sprinkle over most of the grated parmesan. Season with salt and pepper then stir everything together and bake in the oven for about 25 minutes. Once cooked, serve sprinkled with the remaining parmesan and some cracked black pepper.", "user":user2, "img":File(open('./media/recipe_images/dauphinoise.JPG','rb'))},
     "Grilled Vegetable Wrap": { "servings":2, "cooking_time": 25, "direction": "1. Preheat grill or broiler. Toss together asparagus, bell pepper, squash, and oil on large baking sheet. Season with salt and pepper, if desired. Grill or broil vegetables 4 to 6 minutes per side, turning once. 2. Mash together beans, garlic, and chile sauce in small bowl until smooth. 3. Spread half of bean mixture over each tortilla. Top each with 3 basil leaves, 1/2 cup roasted vegetables, 4 onion slices, and 1/2 cup arugula. Fold bottom third of tortillas over vegetables, and roll up tightly, tucking in sides as you go. Cut wraps in half on diagonal. Serve immediately, or wrap each half in foil or wax paper, and chill until ready to eat.", "user":user1, "img":File(open('./static/images/slide1.JPG','rb'))},
     },
+    "Cakes":{
+    "Blueberry Coffee Cake":{"servings":12, "cooking_time":90, "direction":"Mix butter, 1 cup sugar, flour, 2 eggs, 2 tsp vanilla, baking powder, and milk to make cake batter. Blend easily.  Add 3 cups of blueberries.  Put 2 1/2 cups of batter in pan. Mix cream cheese, 1/2 cup sugar, 1 egg, lemon juice and 1 tsp vanilla to make filling.  Put filling on top of batter.  Top with remaining batter. Make streusel topping from flour, butter, brown sugar, ad cinnamon.  Sprinkle on top of cake. Bake at 375 degrees for 1 hour and 5 minutes.  Check after 50 minutes.", "user":user3,"img":File(open('./media/recipe_images/blu.JPG','rb'))},
+    "Chocolate Cake":{"servings":15, "cooking_time":60, "direction":"Mix all ingredients together.  Pour in 1 cup boiling water.  Mix well. Bake about 35 minutes at 375 degrees.", "user":user1,"img":File(open('./media/recipe_images/choc.JPG','rb'))},
+    "Crazy Cake":{"servings":12, "cooking_time":45, "direction":"Mix first 5 ingredients well, about 4 minutes.  Bake at 350 degrees in a 9x13 pan for 35 minutes. Poke holes in warm cake and pour on mixture of powdered sugar and lemon juice.", "user":user1, "img":File(open('./media/recipe_images/cray.JFIF','rb'))},
+    "Fresh Apple Cake":{"servings":12, "cooking_time":60, "direction":"Mix apples and sugar well.  Add oil, nuts, and eggs.  Add vanilla and dry ingredients.  Bake at 350 degrees for 40-45 minutes.  Serve with whipped cream or top with cream cheese frosting.", "user":user1, "img":File(open('./media/recipe_images/apple_cake.JPG','rb'))},
+    "Fresh Pear Cake":{"servings":10, "cooking_time":75, "direction":"Butter and flour a 9 inch round pan.  Peel and slice pears.  Blend eggs, sugar, milk, and salt.  Add flour, mix well.  Fold 1/2 of pears into batter.  Pour into pan, fan remaining pears on top.  Dot with butter.  Bake at 350 degrees about 55 minutes.  Sprinkle with powdered sugar.", "user":user3,"img":File(open('./media/recipe_images/pear_cake.JPG','rb'))},
+    "Graham Cracker Cake":{"servings":8, "cooking_time":45, "direction":"Cream butter and sugar.  Add crushed crackers, sour milk, and soda.  Stir in nuts.  Bake in 10 inch square baking pan.  Bake in 350 degree oven for 30-35 minutes.  Serve with whipped cream or thin powdered sugar icing.", "user":user1, "img":File(open('./media/recipe_images/grah_cake.JPG','rb'))},
+    "Hot Water Chocolate Cake":{"servings":12, "cooking_time":45, "direction":"Mix all ingredients together.  Pour in 1 cup boiling water. Mix well.  Bake about 35 minutes at 375 degrees.", "user":user2, "img":File(open('./media/recipe_images/hot_water.JPG','rb'))},
+    },
     }
 
     for c, c_data in Categories.items():
@@ -60,25 +69,25 @@ def populate():
 
     # Create ingredients by type
     Types = {"Dairy": {
-    "Milk", "Cheddar", "Mozzarella", "Brie", "Single Cream", "Whipping Cream", "Parmesan", "Butter"
+    "Milk", "Cheddar", "Mozzarella", "Brie", "Single Cream", "Whipping Cream", "Parmesan", "Butter", "Cream Cheese", "Sour Milk"
     },
     "Meat": {
     "Beef Mince", "Lamb Chops", "Pork Steak", "Chicken Nuggets", "Chicken Breast", "Chicken Thighs", "Chicken Wings", "Bacon", "Fish Fillet", "Smoked Mackerel"
     },
     "Fruit": {
-    "Bananas", "Apples", "Oranges", "Lemons", "Raspberries", "Kiwis", "Mandarins", "Strawberries"
+    "Bananas", "Apples", "Oranges", "Lemons", "Raspberries", "Kiwis", "Mandarins", "Strawberries","Blueberries", "Pears"
     },
     "Vegetables":{
     "Spring Onions", "Onions", "Carrots", "Cabbage", "Iceberg Lettuce", "Bell Peppers", "Peas", "Potatoes", "Spinach", "Leeks", "Kale", "Cannellini Beans", "Asparagus Spears", "Squash", "Red Onions", "Arugula Leaves"
     },
     "Seasoning":{
-    "Cumin", "Black Pepper", "White Pepper", "Salt", "Paprika", "Cayenne Pepper", "Cinnamon", "Cayenne Pepper", "Garlic", "Curry Powder", "Basil Leaves", "Grated Ginger", "Chilli Flakes", "Chinese Five Spice"
+    "Cumin", "Black Pepper", "White Pepper", "Salt", "Paprika", "Cayenne Pepper", "Cinnamon", "Cayenne Pepper", "Garlic", "Curry Powder", "Basil Leaves", "Grated Ginger", "Chilli Flakes", "Chinese Five Spice", "Vanilla", "Cloves"
     },
     "Sauces":{
     "Worcestershire Sauce", "Sweet Chilli Sauce", "Soy Sauce", "Vinegar", "Cooking Wine", "Tomato Sauce", "Sriracha Sauce", "Maple Syrup"
     },
     "Cupboard":{
-    "Bread", "Flour", "Sugar", "Yeast", "Honey", "Lentils", "Canned Beans", "Canned Sweetcorn", "Dried Spaghetti", "Rice", "Olive Oil", "Eggs", "Tortillas", "Tamarind Paste", "Canned Tomatoes"
+    "Bread", "Flour", "Sugar", "Yeast", "Honey", "Lentils", "Canned Beans", "Canned Sweetcorn", "Dried Spaghetti", "Rice", "Olive Oil", "Eggs", "Tortillas", "Tamarind Paste", "Canned Tomatoes", "Lemon Juice", "Baking Powder", "Cocoa", "Lemon Cake Mix", "Lemon Jello", "Vegetable Oil", "Nuts", "Baking Soda", "Graham Crackers"
     }
     }
 
@@ -173,6 +182,80 @@ def populate():
     "Parmesan":{"quantity":150, "unit":'g'},
     "Butter":{"quantity":2, "unit":'tbsp.'},
     "Salt":{"quantity":3, "unit":'tbsp.'},
+    },
+    "Blueberry Coffee Cake":{
+    "Cream Cheese":{"quantity":350, "unit":'g'},
+    "Sugar":{"quantity":375, "unit":'g'},
+    "Eggs":{"quantity":3, "unit":'pieces'},
+    "Lemon Juice":{"quantity":1, "unit":'tbsp.'},
+    "Vanilla":{"quantity":3, "unit":'tsp.'},
+    "Butter":{"quantity":55, "unit":'g'},
+    "Flour":{"quantity":900, "unit":'g'},
+    "Baking Powder":{"quantity":2, "unit":'tbsp.'},
+    "Milk":{"quantity":250, "unit":'ml'},
+    "Blueberries":{"quantity":700, "unit":'g'},
+    },
+    "Chocolate Cake":{
+    "Butter":{"quantity":125, "unit":'g'},
+    "Sugar":{"quantity":500, "unit":'g'},
+    "Eggs":{"quantity":2, "unit":'pieces'},
+    "Cocoa":{"quantity":5, "unit":'tbsp.'},
+    "Salt":{"quantity":0.5, "unit":'tsp.'},
+    "Sour Milk":{"quantity":100, "unit":'ml'},
+    "Baking Powder":{"quantity":2, "unit":'tsp.'},
+    "Flour":{"quantity":500, "unit":'g'},
+    "Cloves":{"quantity":0.5, "unit":'tsp.'},
+    "Vanilla":{"quantity":1, "unit":'tsp.'},
+    },
+    "Crazy Cake":{
+    "Lemon Cake Mix":{"quantity":500, "unit":'g'},
+    "Lemon Jello":{"quantity":1, "unit":'piece'},
+    "Vegetable Oil":{"quantity":50, "unit":'ml'},
+    "Eggs":{"quantity":4, "unit":'pieces'},
+    "Sugar":{"quantity":450, "unit":'g'},
+    "Lemon Juice":{"quantity":125, "unit":'ml'},
+    },
+    "Fresh Apple Cake":{
+    "Apples":{"quantity":900, "unit":'g'},
+    "Sugar":{"quantity":450, "unit":'g'},
+    "Nuts":{"quantity":200, "unit":'g'},
+    "Eggs":{"quantity":2, "unit":'pieces'},
+    "Vanilla":{"quantity":2, "unit":'tsp.'},
+    "Flour":{"quantity":450, "unit":'g'},
+    "Baking Powder":{"quantity":2, "unit":'tsp.'},
+    "Cinnamon":{"quantity":2, "unit":'tsp.'},
+    "Vegetable Oil":{"quantity":100, "unit":'ml'},
+    "Baking Soda":{"quantity":1, "unit":'tsp.'},
+    "Salt":{"quantity":1, "unit":'tsp.'},
+    },
+    "Fresh Pear Cake":{
+    "Butter":{"quantity":2, "unit":'tbsp.'},
+    "Flour":{"quantity":400, "unit":'g'},
+    "Pears":{"quantity":3, "unit":'pieces'},
+    "Eggs":{"quantity":2, "unit":'pieces'},
+    "Sugar":{"quantity":200, "unit":'g'},
+    "Milk":{"quantity":100, "unit":'ml'},
+    "Salt":{"quantity":1, "unit":'pinch'},
+    },
+    "Graham Cracker Cake":{
+    "Butter":{"quantity":100, "unit":'g'},
+    "Sugar":{"quantity":200, "unit":'g'},
+    "Sour Milk":{"quantity":200, "unit":'ml'},
+    "Graham Crackers":{"quantity":32, "unit":'pieces'},
+    "Baking Soda":{"quantity":1, "unit":'tsp.'},
+    "Nuts":{"quantity":200, "unit":'g'},
+    },
+    "Hot Water Chocolate Cake":{
+    "Butter":{"quantity":100, "unit":'g'},
+    "Sugar":{"quantity":450, "unit":'g'},
+    "Eggs":{"quantity":2, "unit":'pieces'},
+    "Cocoa":{"quantity":5, "unit":'tbsp.'},
+    "Salt":{"quantity":0.5, "unit":'tsp.'},
+    "Sour Milk":{"quantity":100, "unit":'ml'},
+    "Baking Soda":{"quantity":2, "unit":'tsp.'},
+    "Flour":{"quantity":500, "unit":'g'},
+    "Cloves":{"quantity":0.5, "unit":'tsp.'},
+    "Vanilla":{"quantity":1, "unit":'tsp.'},
     },
     }
 
