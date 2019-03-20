@@ -1,4 +1,41 @@
 .names {
-    font-family: 'Yellowtail', cursive; 
+    font-family: 'Yellowtail', cursive;
     font-size: 3em;
+}
+
+.top-panel {
+    width: 100%;
+    height: 100vh;
+    background: transparent;
+    position: absolute;
+    z-index: 10;
+    top: 0%;
+}
+
+.top-panel::before {
+    content: '⇣';
+    color: black;
+    font-weight: bolder;
+    position: absolute;
+    opacity: 0.7;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    font-size: 100px;
+    width: 60px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 10px;
+    bottom: 20px;
+    left: 10%;
+    margin-left: -30px;
+    animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+    50% {
+        transform: translateY(-50%);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }
