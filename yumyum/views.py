@@ -289,7 +289,7 @@ def search(request):
 # question.tags.all().values_list('id', flat=True)) & interested_tags_set
         sort_func = lambda recipe: len(set(k) & set(recipe.recipeingredient_set.all().values_list('ingredient', flat=True)))
         rec_recipe_list = sorted(result, key=sort_func)
-    return render(request, 'yumyum/cats.html', {'cats': rec_recipe_list })
+    return render(request, 'yumyum/search_result.html', {'cats': rec_recipe_list })
     ## method 2---webhose
 
     # result_list = []
