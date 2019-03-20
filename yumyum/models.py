@@ -81,7 +81,7 @@ class RecipeIngredient(models.Model):
 		ordering = ['recipe']
 
 	def __str__(self):
-		return self.ingredient
+		return self.ingredient.name
 
 class Review(models.Model):
 	RATINGS = (
