@@ -14,8 +14,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="254" column="37" lean-forward="true" selection-start-line="254" selection-start-column="37" selection-end-line="254" selection-end-column="37" />
+            <state relative-caret-position="409">
+              <caret line="252" column="51" lean-forward="true" selection-start-line="252" selection-start-column="51" selection-end-line="252" selection-end-column="51" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -78,11 +78,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="318" />
-    <option name="y" value="67" />
-    <option name="width" value="1072" />
-    <option name="height" value="685" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1280" />
+    <option name="height" value="800" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -122,10 +120,10 @@
     <configuration />
   </component>
   <component name="ToolWindowManager">
-    <frame x="206" y="23" width="1072" height="685" extended-state="0" />
+    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17602284" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14694202" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -246,8 +244,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="254" column="37" lean-forward="true" selection-start-line="254" selection-start-column="37" selection-end-line="254" selection-end-column="37" />
+        <state relative-caret-position="409">
+          <caret line="252" column="51" lean-forward="true" selection-start-line="252" selection-start-column="51" selection-end-line="252" selection-end-column="51" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
