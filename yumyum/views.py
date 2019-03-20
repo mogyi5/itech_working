@@ -4,8 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from yumyum.models import Category,Type,Ingredient,Recipe,RecipeIngredient,Review, UserProfile
-from yumyum.forms import RecipeIngredientForm,RecipeForm,ReviewForm,ContactForm,UserProfileForm
+from yumyum.models import Category, Type, Ingredient, Recipe, RecipeIngredient, Review, UserProfile
+from yumyum.forms import RecipeIngredientForm, RecipeForm, ReviewForm, ContactForm, UserProfileForm
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -21,12 +21,11 @@ from django.views.generic import ListView
 
 @login_required
 def add_recipe(request):
-
     user = request.user
 
     if request.method == 'POST':
         recipe_form = RecipeForm(request.POST, request.FILES)
-        ri_formset = RIFSet(request.POST,  request.FILES)
+        ri_formset = RIFSet(request.POST, request.FILES)
 
         if recipe_form.is_valid() and ri_formset.is_valid():
             # Save user info
@@ -48,18 +47,19 @@ def add_recipe(request):
                 unit = ri.cleaned_data.get('unit')
 
                 if ingredient and quantity and unit:
-                    new_ingredients.append(RecipeIngredient(recipe=recipe , ingredient=ingredient, quantity=quantity, unit = unit))
+                    new_ingredients.append(
+                        RecipeIngredient(recipe=recipe, ingredient=ingredient, quantity=quantity, unit=unit))
 
             try:
                 with transaction.atomic():
-                    #Replace the old with the new
+                    # Replace the old with the new
                     RecipeIngredient.objects.bulk_create(new_ingredients)
                     # And notify our users that it worked
                 messages.success(request, 'You have added a recipe successfully!')
                 sleep(1)
                 return redirect(reverse('show_recipe', args=(recipe.slug,)))
 
-            except IntegrityError: #If the transaction failed
+            except IntegrityError:  # If the transaction failed
                 messages.error(request, 'There was an error adding the recipe.')
 
     else:
@@ -73,28 +73,30 @@ def add_recipe(request):
     }
     return render(request, 'yumyum/add_recipe.html', context_dict)
 
+
 def index(request):
-    request.session.set_test_cookie()
+    # request.session.set_test_cookie()
     context_dict = {}
 
-    visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
+    # visitor_cookie_handler(request)
+    # context_dict['visits'] = request.session['visits']
 
     response = render(request, 'yumyum/index.html', context_dict)
 
     return response
 
+
 def contact(request):
-    form_class  = ContactForm
+    form_class = ContactForm
     if request.method == 'POST':
         form = form_class(data=request.POST)
 
         if form.is_valid():
-            subject = request.POST.get('subject','')
-            message = request.POST.get('message','')
-            sender = request.POST.get('sender','')
+            subject = request.POST.get('subject', '')
+            message = request.POST.get('message', '')
+            sender = request.POST.get('sender', '')
 
-            send_mail(subject, message, sender, ['adamos.st@gmail.com',])
+            send_mail(subject, message, sender, ['adamos.st@gmail.com', ])
 
             # template = get_template('contact_template.txt')
             # context = { 'subject': subject,
@@ -117,6 +119,7 @@ def contact(request):
             print(form.errors)
     return render(request, 'yumyum/contact.html', {'form': form_class})
 
+
 # def cook(request):
 #     context_dict = {}
 #     return render(request, 'yumyum/cook.html',context_dict)
@@ -127,10 +130,10 @@ def show_recipe(request, recipe_title_slug):
     try:
         recipe = Recipe.objects.get(slug=recipe_title_slug)
         ingredients = RecipeIngredient.objects.filter(recipe=recipe)
-        reviews = Review.objects.filter(recipe = recipe, active = True).order_by('-rating')
+        reviews = Review.objects.filter(recipe=recipe, active=True).order_by('-rating')
         current_user = request.user
         if request.user.is_authenticated():
-            count_revs = Review.objects.filter(recipe=recipe, user = current_user).count()
+            count_revs = Review.objects.filter(recipe=recipe, user=current_user).count()
             intcount = int(count_revs)
             context_dict['intcount'] = intcount
         context_dict['recipe'] = recipe
@@ -168,13 +171,16 @@ def show_recipe(request, recipe_title_slug):
 
     return render(request, 'yumyum/recipe.html', context_dict)
 
+
 def privacy(request):
     context_dict = {}
-    return render(request, 'yumyum/privacy.html',context_dict)
+    return render(request, 'yumyum/privacy.html', context_dict)
+
 
 def terms(request):
     context_dict = {}
     return render(request, 'yumyum/terms.html', context_dict)
+
 
 @login_required
 def profile(request, username):
@@ -183,7 +189,7 @@ def profile(request, username):
     except User.DoesNotExist:
         return redirect('index')
 
-    recipes = Recipe.objects.filter(user = user)
+    recipes = Recipe.objects.filter(user=user)
     userprofile = UserProfile.objects.get_or_create(user=user)[0]
     form = UserProfileForm({'about': userprofile.about, 'picture': userprofile.picture})
 
@@ -195,26 +201,9 @@ def profile(request, username):
         else:
             print(form.errors)
 
-    return render(request, 'yumyum/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form, 'recipes': recipes})
+    return render(request, 'yumyum/profile.html',
+                  {'userprofile': userprofile, 'selecteduser': user, 'form': form, 'recipes': recipes})
 
-
-
-def visitor_cookie_handler(request):
-    visits = int(get_server_side_cookie(request, 'visits', '1'))
-    last_visit_cookie = get_server_side_cookie(request,'last_visit',str(datetime.now()))
-    last_visit_time = datetime.strptime(last_visit_cookie[:-7],'%Y-%m-%d %H:%M:%S')
-    if (datetime.now() - last_visit_time).days > 0:
-        visits = visits + 1
-        request.session['last_visit'] = str(datetime.now())
-    else:
-        request.session['last_visit'] = last_visit_cookie
-    request.session['visits'] = visits
-
-def get_server_side_cookie(request, cookie, default_val=None):
-    val = request.session.get(cookie)
-    if not val:
-        val = default_val
-    return val
 
 def get_recipe_list(max_results=0, include_with=''):
     cat_list = []
@@ -226,29 +215,6 @@ def get_recipe_list(max_results=0, include_with=''):
             cat_list = cat_list[:max_results]
     return cat_list
 
-def suggest_recipe(request):
-    cat_list = []
-    include_with = ''
-
-    if request.method == 'GET':
-        include_with = request.GET['suggestion']
-    cat_list = get_recipe_list(100, include_with)
-
-    return render(request, 'yumyum/cats.html', {'cats': cat_list })
-
-def get_recipe_list2(max_results=0, include_with=''):
-    cat_list = []
-    if include_with:
-        all_ingred = Ingredient.objects.all()
-        searching_ingred = Ingredient.objects.none()
-        for one_ingredient in include_with.split():
-            searching_ingred = searching_ingred.union(searching_ingred,all_ingred.filter(ingredient__icontains=one_ingredient))
-            cat_list.append(searching_ingred)
-
-    if max_results > 0:
-        if len(cat_list) > max_results:
-            cat_list = cat_list[:max_results]
-    return cat_list
 
 def suggest_recipe2(request):
     cat_list = []
@@ -258,47 +224,41 @@ def suggest_recipe2(request):
         include_with = request.GET['suggestion2']
     cat_list = get_recipe_list(100, include_with)
 
-    return render(request, 'yumyum/cats.html', {'cats': cat_list })
-#
-# def search(request):
-#     ## method 1
-#     results = []
-#     query = request.GET.get('q')
-#     if query:
-#         results = Recipe.objects.filter(Q(title__icontains=query))
-#         print(results)
-#     return render(request, 'yumyum/cats.html', {'cats': results })
+    return render(request, 'yumyum/cats.html', {'cats': cat_list})
+
 
 def search(request):
-    ## method 1
-    # result = Recipe.objects.none()
-
     inResult = []
     query = request.GET.get('q')
+
     if query:
         result = []
         k = [x.strip() for x in query.split(',')]
         for one_ingredient in k:
-            inResult = Ingredient.objects.get(name__icontains=one_ingredient)
-            ri_results= inResult.recipeingredient_set.all()   #filter(Q(ingredient_in=inResult))
-            for ri in ri_results:
-                results = ri.recipe
-                # results_set = Recipe.objects.filter(id = results.id)
-                # result = result.union(result, results_set)
-                result.append(results)
-# question.tags.all().values_list('id', flat=True)) & interested_tags_set
-        sort_func = lambda recipe: len(set(k) & set(recipe.recipeingredient_set.all().values_list('ingredient', flat=True)))
-        rec_recipe_list = sorted(result, key=sort_func)
-    return render(request, 'yumyum/search_result.html', {'cats': rec_recipe_list })
-    ## method 2---webhose
+            try:
+                inResult = Ingredient.objects.get(name__iexact=one_ingredient)
+            except:
+                inResult = None
 
-    # result_list = []
-    # if request.method == 'POST':
-    #     query = request.POST['query'].strip()
-    #     if query:
-    #         result_list = run_query(query)
-    # return render(request, 'yumyum/cook.html', {'result_list': result_list})
+            if inResult:
+                ri_results = inResult.recipeingredient_set.all()
+                for ri in ri_results:
+                    results = ri.recipe
+                    result.append(results)
+        # question.tags.all().values_list('id', flat=True)) & interested_tags_set
+        set_result = set(result)
+        re = list(set_result)
+        sort_func = lambda recipe: len(
+            set(recipe.recipeingredient_set.all().values_list('ingredient', flat=True)) & set(k))
+        rec_recipe_list = sorted(re, key=sort_func)
+
+        if len(rec_recipe_list) == 0:
+            rec_recipe_list = None
+
+
+    return render(request, 'yumyum/search_result.html', {'cats': rec_recipe_list})
+
 
 def cook(request):
     context_dict = {}
-    return render(request, 'yumyum/cook.html',context_dict)
+    return render(request, 'yumyum/cook.html', context_dict)
