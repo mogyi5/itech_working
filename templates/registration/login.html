@@ -1,39 +1,23 @@
 {% extends "yumyum/base.html" %}
+{% block title %}Login{% endblock %}
 {% block body_block %}
-
-<!--<form method="post" class="login" action=".">-->
-<!--{% csrf_token %}-->
-<!--{{ form.as_p }}-->
-<!--&lt;!&ndash;<input type="text" placeholder="Username">&ndash;&gt;-->
-<!--&lt;!&ndash;<input type="password" placeholder="Password">&ndash;&gt;-->
-<!--<input type="submit" value="Log in"/>-->
-<!--<input type="hidden" name="next" value="{{ next }}"/>-->
-<!--<button>Login</button>-->
-<!--</form>-->
-
-<!--<p>-->
-<!--Not a member?-->
-<!--<a href="{% url 'registration_register' %}">Register</a>-->
-<!--</p>-->
 
 <div class="login-form">
     <form method="post" class="login" action=".">
         <h2 class="text-center">Log in</h2>
         <div class="form-group">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form }}
         </div>
         <div class="form-group">
-            <button type="submit" value="Log in" class="btn btn-primary btn-block">Log in</button>
+            <button type="submit" value="Log in" class="btn btn-md btn-primary">Log in</button>
             <input type="hidden" name="next" value="{{ next }}"/>
         </div>
         <div class="clearfix">
             <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
         </div>
-        <a href="#" class="pull-right">Forgot Password?</a>
+        <a href="{% url 'registration_register' %}" class="pull-left">Create an Account</a>
+        <a class="pull-right"><s>Forgot Password?</s></a>
     </form>
-    <p class="text-center"><a href="{% url 'registration_register' %}">Create an Account</a></p>
 </div>
-
-
 {% endblock %}

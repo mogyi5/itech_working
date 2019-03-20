@@ -2,54 +2,41 @@
 {% load staticfiles %}
 {% load inlinecss %}
 {% inlinecss "static/design/contactus.css" %}
-
-{%block title_block %}
-Contact
-{% endblock %}
+{% block title %}Contact us{% endblock %}
 
 {% block body_block %}
-<br/>
+<br />
 {% if messages %}
-  <ul class="messages">
+<ul class="messages">
     {% for message in messages %}
-      <li class="{{ message.tags }}">{{ message }}</li>
+    <li class="{{ message.tags }}">{{ message }}</li>
     {% endfor %}
-  </ul>
+</ul>
 {% endif %}
 
-<div class="container contact">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="contact-info">
-                <img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image"/>
-                <h2 style="color:white;">Contact Us</h2>
-                <h4 style="color:white;">We would love to hear from you !</h4>
-            </div>
+<div id="row-contact" class="row">
+    <div class="col-md-3">
+        <div class="contact-info">
+            <img src="{% static 'images/mail.png' %}"
+                style="width:100px;height:auto;" alt="image" />
+            <h2>Contact Us</h2>
+            <h4>We would love to hear from you !</h4>
         </div>
-        <div class="col-md-9" style="border-color: gray;border-style: solid;">
-            <div class="contact-form">
-                <form role="form" action="" method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
+    </div>
+    <div class="col-md-9" style="border-color: #fcaf15;border-style: solid;">
+        <div class="contact-form">
+            <form role="form" action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-md btn-primary">Submit</button>
                     </div>
                 </div>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 {% endblock %}
 {% endinlinecss %}
