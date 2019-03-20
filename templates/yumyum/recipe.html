@@ -7,30 +7,136 @@ Recipe
 
 {% block body_block %}
 
+<!--recipe styling-->
+<link href="{% static 'design/recipe.css' %}" rel="stylesheet">
+
 <script type="text/javascript">
 $(function() {
-    $('.serving').bind('keyup', function(event) {
-        var previousValue = parseFloat($("#previousServing").val());
-        var newValue = parseFloat($(event.target).val());
-        if (previousValue && newValue) {
-            $('.ingredient').each(function(index, elem) {
-                var ingredientNow = $('.amount', elem);
-                var oldIngredientAmount = ingredientNow.text();
-                var newIngredientAmount = oldIngredientAmount * newValue / previousValue;
-                ingredientNow.text(newIngredientAmount);
-            });
-            $('#previousServing').val(newValue);
-        }
-    });
+  $('.serving').bind('keyup', function(event) {
+    var previousValue = parseFloat($("#previousServing").val());
+    var newValue = parseFloat($(event.target).val());
+    if (previousValue && newValue) {
+      $('.ingredient').each(function(index, elem) {
+        var ingredientNow = $('.amount', elem);
+        var oldIngredientAmount = ingredientNow.text();
+        var newIngredientAmount = oldIngredientAmount * newValue / previousValue;
+        ingredientNow.text(newIngredientAmount);
+      });
+      $('#previousServing').val(newValue);
+    }
+  });
 });
 </script>
 
-<br>
-<br>
-<br>
-<br>
 
-<div class="grid-containerRecipe">
+<div class="container" id="recipecontainer">
+  <div class="row">
+    <div class="col">
+      <h1>{{recipe.title}} by <a href="/yumyum/profile/{{recipe.user}}/">{{recipe.user}}</a></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <img  class="cover" src="{{ MEDIA_URL }}{{recipe.picture}}" alt="{{recipe.title}} photo!"/>
+    </div>
+    <div class="col">
+      <h3> Rating: {{avg_rev}}</h3>
+      <ul>
+        <li><strong>Servings:</strong>  <input type="text" name="serving" class="serving" value={{recipe.servings}} /> </li>
+        <input type="hidden" id="previousServing" value={{recipe.servings}}/>
+        <li><strong>Category:</strong> {{recipe.category}}</li>
+        <li><strong>Cooking Time:</strong> {{recipe.cooking_time}} minutes</li>
+      </ul>
+    </div>
+    <div class="col">
+          <h3>Ingredients</h3>
+      <ul class="ingredients">
+        {%for i in recipe_ingredients %}
+        <li class="ingredient" ><strong> {{i.ingredient}}</strong> <span class="amount">{{i.quantity|floatformat}}</span> {{i.unit}} <br/> </li>
+        {%endfor%}
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3>Directions</h3>
+      <p style="text-align: left;">
+        {{recipe.direction}} <br/>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3>Reviews</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" style="padding-right:20px; border-right: 1px solid #ccc;">
+      {%if user.is_authenticated and user.username != recipe.user.username%}
+
+      {% if intcount > 0 or newr %}
+      <h4>Thanks for submitting a review!</h4>
+      {% else %}
+
+      <div style="text-align:left;">
+        <h3 style="padding-top:10px;">Add your
+          review</h3>
+          <form action="." method="post">
+            {% csrf_token %}
+            <p>Rating</p>
+            {{ review_form.rating }}
+            <p>Title</p>
+            {{review_form.comment_title}}
+            <p>Add your review</p>
+            {{review_form.comment_body}}
+            <br><input id="sbmtbtn" type="submit" class="btn btn-lg btn-primary" value="Add review" onClick="removeDiv(this);">
+          </form>
+        </div>
+        {% endif %}
+
+        {% endif %}
+    </div>
+    <div class="col">
+      {%if reviews%}
+      {% for r in reviews %}
+      <p><strong><a href="/yumyum/profile/{{r.user}}/">{{r.user}}</a>: {{r.comment_title}} Rating:
+        {{r.rating}}</strong><br>
+        {{r.comment_body}}
+      </p>
+      {%endfor%}
+      {% else %}
+      {%if user.is_authenticated %}
+      <p>There are no reviews yet!</p>
+      {%else%}
+      <p>There are no reviews yet! <a href="{% url 'auth_login' %}">Sign in</a> to add a review!</p>
+      {%endif%}
+      {%endif%}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3 style="text-align:center;font-family: 'Yellowtail', cursive; font-size: 2em; padding-top:10px; color:black;">Share
+        this!</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" style="text-align: center;">
+      <a style="box-sizing: unset;" target="_blank" data-href="window.location.href" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" data-mobile-iframe="true" data-size="large" class="fa fa-facebook"></a>
+
+      <!--twitter button-->
+
+      <a style="box-sizing: unset;" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="fa fa-twitter" data-show-count="false"
+      data-layout="button" data-size="large" data-mobile-iframe="true"></a>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+      <!--pinterest button-->
+
+      <a style="box-sizing: unset;" href="https://www.pinterest.com/pin/create/button/" class="fa fa-pinterest" data-pin-do="buttonBookmark" data-pin-tall="true"></a>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="grid-containerRecipe">
   <div class="Title">
     <h1>{{recipe.title}} by <a href="/yumyum/profile/{{recipe.user}}/">{{recipe.user}}</a></h1>
   </div>
@@ -84,126 +190,47 @@ $(function() {
 
       {% endif %}
     </div>
-    <div class="ingredients2">
-      <h3 style="font-family: 'Yellowtail', cursive; font-size: 2em;">Ingredients</h3>
-      <ul class="ingredients" style="list-style-type:none;">
-        {%for i in recipe_ingredients %}
-        <li class="ingredient" ><strong> {{i.ingredient}}</strong> <span class="amount">{{i.quantity}}</span> {{i.unit}} <br/> </li>
-        {%endfor%}
-      </ul>
+
+
+      <div class="ingredients2">
+        <h3 style="font-family: 'Yellowtail', cursive; font-size: 2em;">Rating : {{avg_rev}}</h3>
+        <ul class="ingredients" style="list-style-type:none;">
+          {%for i in recipe_ingredients %}
+          <li class="ingredient" ><strong> {{i.ingredient}}</strong> <span class="amount">{{i.quantity}}</span> {{i.unit}} <br/> </li>
+          {%endfor%}
+        </ul>
+      </div>
+      <div class="servingsetc">
+        <h3 style="font-family: 'Yellowtail', cursive; font-size: 2em;">Ingredients</h3>
+        <ul>
+          <li><strong>Servings:</strong>  <input type="text" name="serving" class="serving" value={{recipe.servings}} /> </li>
+          <input type="hidden" id="previousServing" value={{recipe.servings}}/>
+          <li><strong>Category:</strong> {{recipe.category}}</li>
+          <li><strong>Cooking Time:</strong> {{recipe.cooking_time}} minutes</li>
+        </ul>
     </div>
-    <div class="servingsetc">
-      <ul>
-        <li><strong>Servings:</strong>  <input type="text" name="serving" class="serving" value={{recipe.servings}} /> </li>
-         <input type="hidden" id="previousServing" value={{recipe.servings}}/>
-        <li><strong>Category:</strong> {{recipe.category}}</li>
-        <li><strong>Cooking Time:</strong> {{recipe.cooking_time}} minutes</li>
-      </ul>
-    </div>
 
 
-  </div>
+  </div> -->
 
-  <h3 style="text-align:center;font-family: 'Yellowtail', cursive; font-size: 2em; padding-top:10px; color:black;">Share
+  <!-- <h3 style="text-align:center;font-family: 'Yellowtail', cursive; font-size: 2em; padding-top:10px; color:black;">Share
     this!</h3><br>
-    <div class="socialbuttons">
+    <div class="socialbuttons"> -->
 
       <!--facebook button-->
 
-      <a style="box-sizing: unset;" target="_blank" data-href="window.location.href" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" data-mobile-iframe="true" data-size="large" class="fa fa-facebook"></a>
+      <!-- <a style="box-sizing: unset;" target="_blank" data-href="window.location.href" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" data-mobile-iframe="true" data-size="large" class="fa fa-facebook"></a> -->
 
       <!--twitter button-->
 
-      <a style="box-sizing: unset;" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="fa fa-twitter" data-show-count="false"
+      <!-- <a style="box-sizing: unset;" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="fa fa-twitter" data-show-count="false"
       data-layout="button" data-size="large" data-mobile-iframe="true"></a>
-      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
 
       <!--pinterest button-->
 
-      <a style="box-sizing: unset;" href="https://www.pinterest.com/pin/create/button/" class="fa fa-pinterest" data-pin-do="buttonBookmark" data-pin-tall="true"></a>
+      <!-- <a style="box-sizing: unset;" href="https://www.pinterest.com/pin/create/button/" class="fa fa-pinterest" data-pin-do="buttonBookmark" data-pin-tall="true"></a> -->
       <!--<script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>-->
-    </div>
-
-
-    <!--&lt;!&ndash;FB ICON&ndash;&gt;-->
-    <!--<div class="fb-share-button" data-href="window.location.href" data-layout="button" data-size="large"-->
-    <!--data-mobile-iframe="true"><a target="_blank"-->
-    <!--href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"-->
-    <!--class="fb-xfbml-parse-ignore">Share</a></div>-->
-
-    <!--&lt;!&ndash;TWITTER ICON&ndash;&gt;-->
-    <!--<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false"-->
-    <!--data-layout="button" data-size="large" data-mobile-iframe="true">Tweet</a>-->
-    <!--<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
-
-
-    <!--&lt;!&ndash;PINTEREST ICON&ndash;&gt;-->
-    <!--<a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" data-pin-tall="true"></a>-->
-    <!--<script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>-->
-
-    <!--<h1>{{recipe.title}}</h1>-->
-    <!--<img src="{{ MEDIA_URL }}{{recipe.picture}}" width="300" height="300" alt="{{recipe.title}}"/>-->
-    <!--<br/>-->
-    <!--<p><strong>Servings:</strong>-->
-    <!--{{rcipe.servings}} <br/>-->
-    <!--<strong>Category:</strong>-->
-    <!--{{recipe.category}} <br/>-->
-    <!--<strong>Cooking Time:</strong>-->
-    <!--{{recipe.cooking_time}} minutes <br/></p>-->
-    <!--<h3>Ingredients</h3>-->
-    <!--{%for i in recipe_ingredients %}-->
-    <!--<strong> {{i.ingredient}}</strong>  {{i.quantity}} {{i.unit}} <br/>-->
-    <!--{%endfor%}-->
-    <!--<h3>Method</h3>-->
-    <!--<p>-->
-    <!--<strong>Direction:</strong>-->
-    <!--{{recipe.direction}} <br/>-->
-    <!--<strong>Uploaded by:</strong>-->
-    <!--<a href="/yumyum/profile/{{recipe.user}}/">{{recipe.user}}</a> <br/>-->
-    <!--</p>-->
-
-    <!--<div class="fb-share-button" data-href="window.location.href" data-layout="button" data-size="large"-->
-    <!--data-mobile-iframe="true"><a target="_blank"-->
-    <!--href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"-->
-    <!--class="fb-xfbml-parse-ignore">Share</a></div>-->
-    <!--<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false"-->
-    <!--data-layout="button" data-size="large" data-mobile-iframe="true">Tweet</a>-->
-    <!--<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
-    <!--<a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" data-pin-tall="true"></a>-->
-    <!--<script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>-->
-
-
-    <!--<h3>Reviews</h3>-->
-    <!--{%if reviews%}-->
-    <!--{% for r in reviews %}-->
-    <!--<p><strong><a href="/yumyum/profile/{{r.user}}/">{{r.user}}</a>: {{r.comment_title}} Rating: {{r.rating}}</strong><br>-->
-    <!--{{r.comment_body}}-->
-    <!--</p>-->
-    <!--{%endfor%}-->
-    <!--{% else %}-->
-    <!--{%if user.is_authenticated %}-->
-    <!--<p>There are no reviews yet!</p>-->
-    <!--{%else%}-->
-    <!--<p>There are no reviews yet! <a href="{% url 'auth_login' %}">Sign in</a> to add a review!</p>-->
-    <!--{%endif%}-->
-    <!--{%endif%}-->
-
-    <!--{%if user.is_authenticated and user.username != recipe.user.username%}-->
-
-    <!--{% if intcount > 0 or newr %}-->
-    <!--<h2>Thanks for submitting a review!</h2>-->
-    <!--{% else %}-->
-
-    <!--<div>-->
-    <!--<h2>Add your review</h2>-->
-    <!--<form action="." method="post">-->
-    <!--{{ review_form.as_ul }}-->
-    <!--{% csrf_token %}-->
-    <!--<p><input type="submit" value="Add review" onClick="removeDiv(this);"></p>-->
-    <!--</form>-->
-    <!--</div>-->
-    <!--{% endif %}-->
-
-    <!--{% endif %}-->
+    <!-- </div> -->
 
     {% endblock %}
