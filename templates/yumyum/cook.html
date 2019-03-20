@@ -7,11 +7,13 @@
 <br>
 <div class="search">
   <form method="GET" action="{% url 'search' %}">
+    <h3 class="names">Enter Ingredients Separated by Commas (;)</h3>
     <input class="field" name="q" value="{{request.GET.q}}" placeholder="Type Ingredients here..." type="text">
     <button class="btn btn-md btn-primary" type="submit">Search</button>
   </form>
-  <h1 class="orsearch">or...</h1>
-  <input class="field" type="text" name="suggestion2" value="" id="suggestion2" placeholder="Type recipe name here" />
+  <h1 class="orsearch">or...</h1><br>
+  <h3 class="names">Start typing a recipe name!</h3>
+  <input class="field" type="text" name="suggestion2" value="" id="suggestion2" placeholder="Type Recipe Name here..." />
 </div>
 <div id="cats1"></div>
 </div>
