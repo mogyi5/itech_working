@@ -5,8 +5,9 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
-# from yumyum.forms import ProfileForm
 from django.urls import reverse
+
+## Testing the model.
 
 class CategoryMethodTests(TestCase):
 
@@ -97,55 +98,3 @@ class ReviewMethodTests(TestCase):
         with self.assertRaises(ValidationError):
             review1 = Review.objects.create(rating = 7, comment_title="mytitle", comment_body= "i am commenting", user = user1, recipe=recipe1, active = True)
             review1.full_clean()
-
-
-class AddRecipeViewTests(TestCase):
-
-    def test_recipe_form_missing(self):
-        user1 = User.objects.create(username = "user1", email="myemail@email.com")
-        category1 = Category.objects.create(name='mycategory')
-        form_data = {
-            {'title':'myrecipe'},
-            {'servings':'1'},
-            {'category':category1},
-            {'cooking_time':30},
-            {'direction':'just cook it'},
-            {'user': user1},
-        }
-        form = RecipeForm(data=form_data)
-        self.assertTrue(form.is_valid())
-
-    # picture
-	# title
-	# servings
-	# category
-	# cooking_time
-	# direction
-	# slug
-	# user
-    def form_data(self, first, last):
-        return ProfileForm(
-            user=self.user,
-            data={
-                'first_name': first,
-                'last_name': last,
-            }
-        )
-    ## submit recipe
-    ## ingredient missing
-    ## recipe missing
-    ## field weird
-
-# class ProfileViewTests(TestCase):
-#     ## show recipe
-#     ## submit update
-#
-# class RecipeViewTests(TestCase):
-#     ## dont show inactive comments
-#     ## submit comment missing fields
-#     ## average value is the average
-#
-# class ContactFormTests(TestCase):
-#     ## contact form missing stuff
-
-#   optional REGISTRATION AND LOGIN TESTS ?????????????????????????????????????????

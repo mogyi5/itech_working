@@ -95,34 +95,14 @@ def contact(request):
             subject = request.POST.get('subject', '')
             message = request.POST.get('message', '')
             sender = request.POST.get('sender', '')
+            send_mail(subject, message, sender, ['szaboki.reka@gmail.com',])
 
-            send_mail(subject, message, sender, ['adamos.st@gmail.com', ])
 
-            # template = get_template('contact_template.txt')
-            # context = { 'subject': subject,
-            #             'message': message ,
-            #             'sender': sender,
-            # }
-            # content = template.render(context)
-            #
-            # email = EmailMessage(
-            #     "Contact form:" + subject,
-            #     message,
-            #     "YumYum",
-            #     ['szaboki.reka@gmail.com'],
-            #     headers = {'Reply-To': sender }
-            # )
-            # email.send()
             messages.success(request, 'Your contact form was sent successfully!')
         else:
             messages.warning(request, 'Please correct the error below.')
             print(form.errors)
     return render(request, 'yumyum/contact.html', {'form': form_class})
-
-
-# def cook(request):
-#     context_dict = {}
-#     return render(request, 'yumyum/cook.html',context_dict)
 
 def show_recipe(request, recipe_title_slug):
     context_dict = {}
@@ -226,7 +206,6 @@ def suggest_recipe2(request):
 
     return render(request, 'yumyum/cats.html', {'cats': cat_list})
 
-
 def search(request):
     inResult = []
     query = request.GET.get('q')
@@ -235,6 +214,7 @@ def search(request):
         result = []
         k = [x.strip() for x in query.split(',')]
         for one_ingredient in k:
+
             try:
                 inResult = Ingredient.objects.get(name__iexact=one_ingredient)
             except:

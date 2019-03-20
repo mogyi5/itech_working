@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models import Count
 from django.core.exceptions import ValidationError
 
+# A category model has just a name, used to identify recipes
 class Category(models.Model):
 	name = models.CharField(max_length = 32, unique=True)
 
@@ -11,6 +12,7 @@ class Category(models.Model):
 		ordering = ['name']
 		verbose_name_plural = 'categories'
 
+# A function to help count the number of recipes in a category
 	def num_of_recipes(self):
 		counter =  Recipe.objects.filter(category = self).annotate(Count("id"))
 		return len(counter)
@@ -20,6 +22,7 @@ class Category(models.Model):
 		return self.name
 
 
+# The same as category, except a type applies to ingredients
 class Type(models.Model):
 	name = models.CharField(max_length = 32, unique=True)
 
@@ -34,6 +37,7 @@ class Type(models.Model):
 	def __str__(self):
 		return self.name
 
+# An ingredient has a name and a type. The name must be unique.
 class Ingredient(models.Model):
 	name = models.CharField(max_length=32, unique=True)
 	type = models.ForeignKey(Type)
@@ -44,8 +48,10 @@ class Ingredient(models.Model):
 	def __str__(self):
 		return self.name
 
+# A recipe consists of the below attributes.
 class Recipe(models.Model):
 
+# A validator to make sure the number of servings and cooking time are sensible.
 	def number_positive_validator(value):
 		if (value < 0):
 			raise ValidationError('%s should not be negative' % value)
@@ -58,14 +64,16 @@ class Recipe(models.Model):
 	 (5,'5'),
 	 (6,'6'),
 	)
+	# picture does not have to be present
 	picture = models.ImageField(upload_to='recipe_images', blank = True)
+	# unique title
 	title = models.CharField(max_length=128, unique=True)
 	servings = models.IntegerField(choices=SERVINGS, validators=[number_positive_validator])
 	category = models.ForeignKey(Category)
-	cooking_time = models.IntegerField(default=30) #in minutes
+	cooking_time = models.IntegerField(default=30, validators=[number_positive_validator]) #in minutes
 	direction = models.TextField(max_length=1500)
 	slug = models.SlugField(unique=True)
-	user = models.ForeignKey(User)
+	user = models.ForeignKey(User) # the user who uploaded the recipe
 
 	class Meta:
 		ordering = ['category','title']
@@ -77,6 +85,7 @@ class Recipe(models.Model):
 	def __str__(self):
 		return self.title
 
+# A recipeingredient is just an ingredient associated with a recipe. Here we can add the quantity and unit, becasue it's different for every recipe.
 class RecipeIngredient(models.Model):
 	UNITS = (
 	 ('tsp.', 'tsp.'),
@@ -92,16 +101,17 @@ class RecipeIngredient(models.Model):
 	)
 	recipe = models.ForeignKey(Recipe, null = True)
 	ingredient = models.ForeignKey(Ingredient, null=True)
-	quantity = models.DecimalField(decimal_places=2, max_digits=5,)
-	unit = models.CharField(choices = UNITS, max_length=30)
+	quantity = models.DecimalField(decimal_places=2, max_digits=5,)	#a decimal field because we could have 0.5 lemon for example
+	unit = models.CharField(choices = UNITS, max_length=30) # the units have to be from a choice for evenness and imperial measurements suck anyways.
 
 	class Meta:
 		ordering = ['recipe']
-		unique_together = ('recipe', 'ingredient',)
+		unique_together = ('recipe', 'ingredient',)  # one recipe can have one ingredient only once
 
 	def __str__(self):
 		return self.ingredient.name
 
+# A review has a title, body, rating (from 1 - 5), the user, recipe and active.
 class Review(models.Model):
 
 	def sensible_rating_validator(value):
@@ -120,7 +130,7 @@ class Review(models.Model):
 	comment_body = models.TextField(max_length=1000)
 	user = models.ForeignKey(User)
 	recipe = models.ForeignKey(Recipe)
-	active = models.BooleanField(default=True)
+	active = models.BooleanField(default=True) # for moderation purposes, if someone is abusive we set active to false and it will not show.
 
 	def __str__(self):
 		return self.comment_title
@@ -128,10 +138,11 @@ class Review(models.Model):
 	class Meta:
 		ordering = ['recipe','rating']
 
+# A user has username/password etc, as well as an about, and a profile picture.
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 
-	about = models.TextField(max_length = 500) #a short story about yourself, maybe?
+	about = models.TextField(max_length = 500) #a short story about yourself
 	picture = models.ImageField(upload_to='profile_images', blank = True)
 
 	def __str__(self):

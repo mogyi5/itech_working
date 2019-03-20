@@ -3,8 +3,6 @@ from django.forms import formset_factory
 from django.contrib.auth.models import User
 from yumyum.models import Ingredient, Recipe, RecipeIngredient, Review, UserProfile
 
-
-# Maybe done?
 # When user makes a new recipe, the form will be recipeingredientform and recipeform together
 # because of the nature of the database.
 class RecipeIngredientForm(forms.ModelForm):
@@ -13,10 +11,11 @@ class RecipeIngredientForm(forms.ModelForm):
         exclude = ('recipe',)  # exclude this because it will be added to the current recipe anyway
         unique_together = ('recipe', 'ingredient',)
 
-
+# Make a formset factory so many recipeinredients can be added to a recipe at the same time.
 RIFSet = formset_factory(RecipeIngredientForm, extra=1)
 
-
+# Recipe form, self explanatory really, slug and user excluded as slug is generated and user is the
+# logged in user.
 class RecipeForm(forms.ModelForm):
     picture = forms.ImageField(help_text="Upload a photo", required=False)
     title = forms.CharField(max_length=128, help_text="Recipe title", required=True)
@@ -28,7 +27,7 @@ class RecipeForm(forms.ModelForm):
         model = Recipe
         exclude = ('slug', 'user')
 
-
+# Again, pretty self explanatory.
 class ReviewForm(forms.ModelForm):
     comment_body = forms.CharField(widget=forms.Textarea, max_length=200, help_text="Add your review here!")
 
@@ -43,31 +42,8 @@ class ContactForm(forms.Form):
     subject = forms.CharField(max_length=100)
     message = forms.CharField(widget=forms.Textarea, initial='Your message here!')
     sender = forms.EmailField(initial='Email address')
-    cc_myself = forms.BooleanField(required=False)
 
-
-# make a user
-# class UserForm(forms.ModelForm):
-#     username = forms.CharField(widget=forms.CharField)
-#     email = forms.CharField()
-#     password1 = forms.CharField(widget=forms.CharField)
-#     password2 = forms.CharField(widget=forms.CharField)
-#
-#     class Meta:
-#         model = User
-#         fields = ('username', 'email', 'password1', 'password2')
-#
-#         def __init__(self, *args, **kwargs):
-#             super(UserCreateForm, self).__init__(*args, **kwargs)
-#
-#             for fieldname in ['username', 'password1', 'password2']:
-#                 self.fields[fieldname].help_text = None
-
-
-
-
-
-# make a user profile
+# Edit a user profile after registration in the profile. We only care about the 'about' and the picture
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile

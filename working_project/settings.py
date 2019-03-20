@@ -95,12 +95,12 @@ WSGI_APPLICATION = 'working_project.wsgi.application'
 # for the contact form
 DEFAULT_FROM_EMAIL = 'testing@example.com'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-MAILGUN_ACCESS_KEY = '86ddbc2d10fc149f503df8ae693a739b-985b58f4-1f81318f'
-MAILGUN_SERVER_NAME = 'mg.ourproj.space'
+MAILGUN_ACCESS_KEY = 'b43d8f6236da034e8c3db3590159c8c5-985b58f4-27ea773f'
+MAILGUN_SERVER_NAME = 'ng.ourproj.space'
 EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'postmaster@mg.ourproj.space'
-EMAIL_HOST_PASSWORD = '74eaefc3f0cffc44425375bff7a1dc24-985b58f4-7331171e'
+EMAIL_HOST_USER = 'postmaster@ng.ourproj.space'
+EMAIL_HOST_PASSWORD = '65cba3f232685edfa308cc96f135c565-985b58f4-40f9c185'
 EMAIL_USE_TLS = True
 
 # Database
