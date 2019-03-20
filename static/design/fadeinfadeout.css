@@ -1,6 +1,6 @@
     .elementToFadeInAndOut {
-        -webkit-animation: fadeinout 2s linear forwards;
-        animation: fadeinout 2s linear forwards;
+        -webkit-animation: fadeinout 1s linear forwards;
+        animation: fadeinout 1s linear forwards;
     }
 
     @-webkit-keyframes fadeinout {

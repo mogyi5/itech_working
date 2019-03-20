@@ -1,93 +1,23 @@
 {% extends 'yumyum/base.html' %}
 {% load staticfiles %}
-
-{%block title_block %}
-Let's Cook! 😊
-{% endblock %}
+{% block title %}Let's Cook! 😊{% endblock %}
 
 {% block body_block %}
-
-<!--<h1 style="font-family: 'Yellowtail', cursive; height:1%; font-size: 4.5em; text-align:center; padding-top:10%;">Search for a recipe!</h1 style="font-family: 'Yellowtail', cursive; height:1%; font-size: 4.5em; text-align:center; padding-top:10%;">-->
-
-<!---------------------------for autocomplete--------------------->
-
-<!-- <ul class="nav nav-list flex-column">
-  <li class="nav-item">Type to find a category</li>
-  <form>
-    <li class="nav-item"><input class="search-query form-control" type="text"
-                                name="suggestion" value="" id="suggestion" /> </li>
-  </form> </ul>
-<hr>
-<div id="cats"> </div> -->
-
-<!---------------------------------------------------------------->
-
-<!--------------------------method 2;webhose---------------------->
-
-<!-- <div>
-  <br/>
-  <form class="form-inline" id="user_form"
-        method="post" action="{% url 'show_recipe' recipe_title_slug='welsh-rarebit' %}">
-    {% csrf_token %}
-    <div class="form-group">
-      <input class="form-control" type="text" size="50" name="query" value="" id="query" />
-    </div>
-    <button class="btn btn-primary" type="submit" name="submit"
-            value="Search">Search</button>
+<br>
+<br>
+<div class="search">
+  <form method="GET" action="{% url 'search' %}">
+    <h3 class="names">Enter Ingredients Separated by Commas (;)</h3>
+    <input class="field" name="q" value="{{request.GET.q}}" placeholder="Type Ingredients here..." type="text">
+    <button class="btn btn-md btn-primary" type="submit">Search</button>
   </form>
-
-
-  <div>
-    {% if result_list %}
-    <h3>Results</h3>
-    <!-- Display search results in an ordered list -->
-    <!-- <div class="list-group">
-      {% for result in result_list %}
-      <div class="list-group-item">
-        <h4 class="list-group-item-heading">
-          <a href="{{ result.link }}">{{ result.title }}</a>
-        </h4>
-        <p class="list-group-item-text">{{ result.summary }}</p>
-      </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-  </div>
-</div> --> -->
-
-<!--------------------------------------------------------->
-
-<!-----------------------method 1-------------------------->
-
-<form method="GET" action="{% url 'search' %}">
-  <input name="q" value="{{request.GET.q}}" placeholder="Type Ingredients here...">
-  <button type="submit">
-    Search
-  </button>
-</form>
-
-  <!----------------------------------------------------->
-
-<!------------------------AJAX way----------------->
-
-<!-- {% for c in cats %}
-  <h1><a href="{% url 'show_recipe' slug=c.slug">{{c.title}}</a> </h1>
-{% endfor %} -->
-
-<ul class="nav nav-list flex-column">
-  <li class="nav-item">Type Recipe name here</li>
-  <form>
-  <li class="nav-item"><input class="search-query form-control" type="text"
-      name="suggestion2" value="" id="suggestion2" />
-  </li>
-  </form>
-</ul>
-<hr>
-<div id="cats1">
+  <h1 class="orsearch">or...</h1><br>
+  <h3 class="names">Start typing a recipe name!</h3>
+  <input class="field" type="text" name="suggestion2" value="" id="suggestion2" placeholder="Type Recipe Name here..." />
+</div>
+<div id="cats1"></div>
+</div>
 </div>
 
-
-<!--<p style="font-family: 'Yellowtail', cursive; font-size: 2em; text-align:center; padding-top:10%;">OR...</p>-->
-<!--<h1 style="font-family: 'Yellowtail', cursive; font-size: 4.5em; text-align:center; padding-top:10%;">Add ingredients separated by ;</h1>-->
 
 {% endblock %}

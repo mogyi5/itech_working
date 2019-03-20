@@ -5,11 +5,12 @@
 
 
 .login-box {
+  text-align: center;
   box-sizing: border-box;
   color: black;
   position: relative;
   margin: 5% auto;
-  width: 600px;
+  width: 320px;
   height: 450px;
   background-image: linear-gradient(to right top, #f0f0f0, #f4f4f4, #f7f7f7, #fbfbfb, #ffffff);
   border-radius: 2px;
@@ -44,7 +45,7 @@ input[type="email"] {
   box-sizing: border-box;
   margin-bottom: 5px;
   padding: 4px;
-  width: 100%;
+  /* width: 100%; */
   height: 32px;
   border: none;
   border-bottom: 1px solid #AAA;

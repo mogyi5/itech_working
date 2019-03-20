@@ -1,0 +1,41 @@
+{% extends 'yumyum/base.html' %}
+{% load staticfiles %}
+{%block title_block %}
+Search Results
+{% endblock %}
+
+{% block body_block %}
+
+
+<div class="contsearch">
+    <h1>What do you think, chef?</h1>
+    <div class="col-12">
+        <div class="row">
+            {% if cats %}
+            {% for c in cats %}
+
+            {% if c == act_cat %}
+            <div class="col-md-4">
+
+                <a href="/yumyum/recipe/{{c.slug}}/"><img class="img-thumbnail img-thumbnail-search"
+                                                          src="{{ MEDIA_URL }}{{c.picture}}" alt="{{c.title}}"/></img>
+                </a>
+                <br><a href="{% url 'show_recipe' recipe_title_slug=c.slug %}">{{ c.title }}</a>
+            </div>
+            {% else %}
+            <div class="col-md-4">
+                <a href="/yumyum/recipe/{{c.slug}}/"><img class="img-thumbnail img-thumbnail-search"
+                                                          src="{{ MEDIA_URL }}{{c.picture}}" alt="{{c.title}}"/></img>
+                </a>
+                <br><a href="{% url 'show_recipe' recipe_title_slug=c.slug %}">{{ c.title }}</a>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% else %}
+            <h3 style="font-family: 'Yellowtail',cursive; ">Sorry! Nothing matches your search</h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
