@@ -94,23 +94,8 @@ def contact(request):
             message = request.POST.get('message','')
             sender = request.POST.get('sender','')
 
-            send_mail(subject, message, sender, ['adamos.st@gmail.com',])
+            send_mail(subject, message, sender, ['szaboki.reka@gmail.com',])
 
-            # template = get_template('contact_template.txt')
-            # context = { 'subject': subject,
-            #             'message': message ,
-            #             'sender': sender,
-            # }
-            # content = template.render(context)
-            #
-            # email = EmailMessage(
-            #     "Contact form:" + subject,
-            #     message,
-            #     "YumYum",
-            #     ['szaboki.reka@gmail.com'],
-            #     headers = {'Reply-To': sender }
-            # )
-            # email.send()
             messages.success(request, 'Your contact form was sent successfully!')
         else:
             messages.warning(request, 'Please correct the error below.')
@@ -270,9 +255,6 @@ def suggest_recipe2(request):
 #     return render(request, 'yumyum/cats.html', {'cats': results })
 
 def search(request):
-    ## method 1
-    # result = Recipe.objects.none()
-
     inResult = []
     query = request.GET.get('q')
     if query:
@@ -286,8 +268,9 @@ def search(request):
                 # results_set = Recipe.objects.filter(id = results.id)
                 # result = result.union(result, results_set)
                 result.append(results)
-# question.tags.all().values_list('id', flat=True)) & interested_tags_set
-        sort_func = lambda recipe: len(set(k) & set(recipe.recipeingredient_set.all().values_list('ingredient', flat=True)))
+                print(results.recipeingredient_set.all())
+
+        sort_func = lambda recipe: len(set(k) & set(recipe.recipeingredient_set.all()))
         rec_recipe_list = sorted(result, key=sort_func)
     return render(request, 'yumyum/cats.html', {'cats': rec_recipe_list })
     ## method 2---webhose

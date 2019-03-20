@@ -10,7 +10,7 @@ from django.core.files import File
 
 def populate():
 
-## superuser details
+## making a superuser
     username = 'itech'
     email = 'szaboki.reka@gmail.com'
     password = 'yumyum1234'
@@ -22,6 +22,7 @@ def populate():
     user2 = User.objects.create_user(username='donald',email='donald@trump.com',password='billions' )
     user3 = User.objects.create_user(username='ru',email='dragrace@vh1.com',password='kittygirl')
 
+# populating the profiles also
     Profiles = {
     "john":{"img":File(open('./media/profile_images/john.JPG','rb')), "about": "I am a fun loving, free guy that loves to spice up his life. I am 23 and work all the time so the only way I can express myself is through cooking: by making literally spicy food so I feel the weight of the world crush me less."},
     "donald":{"img":File(open('./media/profile_images/don.JPG','rb')) ,"about": "I'm not actually Donald Trump, but the username wasn't taken so I thought why not? I still live with my parents but I feel better if I can help with the cooking... It is hard to get a job after graduation! Shame I studied English Literature instead of something useful at university!"},
@@ -32,7 +33,7 @@ def populate():
         add_profile(User.objects.get(username = p), p_data["img"], p_data["about"])
 
 
-
+# have recipes in each category
     Categories = {"Light":{
     "Curried Fish & Leek Noodles" : { "servings":2, "cooking_time":10, "direction":"Defrost the frozen fish fillet in the fridge overnight. The next day, season the fish with salt and pepper and dust with the curry powder. Pan-fry it in a splash of olive oil over a medium heat until cooked. It will take about 5 minutes on each side, depending on the thickness of the fillet. Add the leek ribbons to the frying pan and cook them along with the fish. Serve the fish on a bed of leek noodles.", "user":user2, "img":File(open('./media/recipe_images/curried-fish.JPG','rb'))},
     "Maple Tamarind Glazed Salmon" : { "servings":4, "cooking_time":30, "direction":" Preheat the oven to 425F degrees and line a baking sheet with parchment paper. Season the salmon portions lightly with salt and pepper and lay a couple of inches apart on the prepared baking sheet. Whisk all of the ingredients for the glaze together until well combined. Liberally brush the glaze all over the salmon pieces. Bake for 10 minutes, then reapply another layer of the glaze and bake for an additional 10 minutes. Serve immediately.", "user":user3, "img":File(open('./static/images/slide3.JPG','rb'))},
@@ -187,6 +188,7 @@ def populate():
     "Tasty!" : {"rating": 4, "comment_body": "Made it for my fussy son and he loved it! So easy and quick!", "user": user1, "recipe":"Welsh Rarebit"},
     "Best meal I have ever had!" : {"rating": 5, "comment_body": "I literally cried, this was so good...", "user": user2, "recipe":"Chicken & Creamed Spinach"},
     "SO GOOD": {"rating": 5, "comment_body": "This is like cocaine for my tastebuds I cannot get enough please send help", "user": user2, "recipe":"Welsh Rarebit"},
+    "Not good": {"rating": 2, "comment_body": "This gave me diarrhea", "user": user3, "recipe":"Basically Spaghetti Pomodoro"},
     }
 
 # Add a couple of reviews

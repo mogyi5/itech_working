@@ -1,9 +1,8 @@
-
-
 from django.contrib import admin
 from yumyum.models import Category, Type, Ingredient, Recipe, RecipeIngredient, Review
 from yumyum.models import UserProfile
 
+#Displaying and filtering each admin site sensibly.
 class RecipeAdmin(admin.ModelAdmin):
 	list_display = ('title', 'category', 'user')
 	prepopulated_fields = {'slug':('title',)}
